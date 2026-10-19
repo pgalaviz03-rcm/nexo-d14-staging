@@ -1,0 +1,201 @@
+{
+  "date": "2026-10-19",
+  "reference_sha256": "7292b154cade135610d6be38d8b7cd61ec479499d2ab884755ad60d57cc60996",
+  "reference_pages_visually_reviewed": 23,
+  "reference_status": "Specification only; original mockup, CSV and backend not supplied with this PDF",
+  "candidate_based_on": "NEXO v0.5 deployed commit e03d737ba70a2a12b8cf0ccc9a23acfaa60a50f0",
+  "candidate_deployed_to_cloud": false,
+  "active_app_source_replaced": false,
+  "candidate_status": "User confirmed candidate login, period/source filters and documentary brief; full CI pending",
+  "local_candidate_tests": {
+    "passed": 22,
+    "failed": 0,
+    "scope": "14 ORM/query/route membership tests and 8 safe diagnostics tests; no HTTP login/MFA or PostgreSQL integration rerun"
+  },
+  "javascript_syntax": "passed with Node --check",
+  "browser_preview_attempt": "127.0.0.1:8001 refused connection from browser after sandbox process start; helper stopped; human launcher provided",
+  "schema_changes": false,
+  "new_grants": false,
+  "new_external_services": false,
+  "ai_enabled": false,
+  "recurring_jobs_enabled": false,
+  "authorized_budget": {
+    "USD": 0,
+    "MXN": 0
+  },
+  "historical_hash_preserved": true,
+  "items": [
+    {
+      "id": "A01",
+      "componente": "Base técnica",
+      "nexo_actual": "Roles, MFA, proyecto, RLS y pruebas existentes",
+      "atalaya_documento": "Especificación; sin backend entregado",
+      "decision": "Conservar NEXO",
+      "estado": "Existente",
+      "prioridad": "P0",
+      "aceptacion": "No cambiar permisos ni proveedor para incorporar módulos"
+    },
+    {
+      "id": "A02",
+      "componente": "RSS y procedencia",
+      "nexo_actual": "Dos fuentes registradas; local 20 noticias; nube 10",
+      "atalaya_documento": "RSS y extracción propuestos",
+      "decision": "Conservar lector seguro y estados por entorno",
+      "estado": "Comprobado local",
+      "prioridad": "P0",
+      "aceptacion": "No duplicados; fuente, enlace, fecha y extracto presentes"
+    },
+    {
+      "id": "A03",
+      "componente": "Explorador",
+      "nexo_actual": "Búsqueda de texto y máximo de resultados",
+      "atalaya_documento": "Filtros por periodo, red, medio, tema y actor",
+      "decision": "Periodo, medio y origen en consulta de servidor",
+      "estado": "Candidato implementado",
+      "prioridad": "P1",
+      "aceptacion": "24h/7d/30d; fecha de ingreso si falta publicación; aislamiento"
+    },
+    {
+      "id": "A04",
+      "componente": "Resumen documental",
+      "nexo_actual": "No había briefing real",
+      "atalaya_documento": "Briefing narrativo por IA y envío diario",
+      "decision": "Listado factual bajo filtros, conteos y enlaces; sin IA",
+      "estado": "Candidato implementado",
+      "prioridad": "P1",
+      "aceptacion": "Hasta 100 registros; truncamiento visible; cero resultados sin inventar"
+    },
+    {
+      "id": "A05",
+      "componente": "Temas",
+      "nexo_actual": "Búsqueda manual; ejemplos separados",
+      "atalaya_documento": "Catálogo editable y corrección humana",
+      "decision": "Diseñar etiquetas manuales y revisiones con evidencia",
+      "estado": "Pendiente",
+      "prioridad": "P2",
+      "aceptacion": "Guardar quién corrigió, cuándo y versión de etiqueta"
+    },
+    {
+      "id": "A06",
+      "componente": "Contenido social agregado",
+      "nexo_actual": "Sin conectores de redes",
+      "atalaya_documento": "CSV de Apify y luego webhooks",
+      "decision": "Evaluar muestra minimizada; no cargar perfiles de afinidad",
+      "estado": "Pendiente de insumo",
+      "prioridad": "P2",
+      "aceptacion": "CSV real autorizado, campos y cobertura identificados antes de adaptar"
+    },
+    {
+      "id": "A07",
+      "componente": "IA y evaluación",
+      "nexo_actual": "IA apagada y rechazada en nube por configuración",
+      "atalaya_documento": "Clasificador, agrupador, redactor y chat",
+      "decision": "Separar clasificación de cálculo; evaluar muestra revisada",
+      "estado": "No habilitado",
+      "prioridad": "P3",
+      "aceptacion": "Presupuesto explícito, reserva atómica y validación de calidad por campo"
+    },
+    {
+      "id": "A08",
+      "componente": "Indicadores de tono",
+      "nexo_actual": "Solo gráficos de demostración",
+      "atalaya_documento": "Ánimo y percepción 0–100 ponderados",
+      "decision": "No llamar ánimo poblacional al tono de contenidos seleccionados",
+      "estado": "Requiere validación",
+      "prioridad": "P3",
+      "aceptacion": "Cobertura, n, faltantes, fórmula versionada y límites de interpretación"
+    },
+    {
+      "id": "A09",
+      "componente": "Territorio",
+      "nexo_actual": "45 secciones históricas preservadas",
+      "atalaya_documento": "Municipios y futura colonia/sección",
+      "decision": "Conservar archivo histórico separado; ubicación solo con evidencia",
+      "estado": "Histórico conservado",
+      "prioridad": "P2",
+      "aceptacion": "Permitir desconocido; no deducir domicilio ni afinidad de personas"
+    },
+    {
+      "id": "A10",
+      "componente": "Alertas",
+      "nexo_actual": "Sin monitor recurrente",
+      "atalaya_documento": "Umbrales y mensajería automática",
+      "decision": "Primero errores de fuente y volumen agregado dentro del sitio",
+      "estado": "Pendiente",
+      "prioridad": "P3",
+      "aceptacion": "Línea base, mínimos de volumen, deduplicación y destinatario autorizado"
+    },
+    {
+      "id": "A11",
+      "componente": "Costos y extracción",
+      "nexo_actual": "Planes gratuitos; IA apagada",
+      "atalaya_documento": "USD 130–430 según escenario del documento",
+      "decision": "Mantener USD 0; cotizar cada adaptador antes de activarlo",
+      "estado": "Sin gasto nuevo",
+      "prioridad": "P0",
+      "aceptacion": "No convertir estimaciones del PDF en precios vigentes ni autorización"
+    },
+    {
+      "id": "A12",
+      "componente": "Reportes y exportación",
+      "nexo_actual": "Exportación histórica y registros reales",
+      "atalaya_documento": "PDFs con gráficos y narrativa",
+      "decision": "Resumen documental primero; reportes con procedencia después",
+      "estado": "Resumen candidato",
+      "prioridad": "P2",
+      "aceptacion": "Toda afirmación trazable; distinguir evidencia, hipótesis y demo"
+    },
+    {
+      "id": "A13",
+      "componente": "Fidelidad individual",
+      "nexo_actual": "No implementada",
+      "atalaya_documento": "Perfiles de comentaristas y segmentos de lealtad",
+      "decision": "Fuera; alternativa: conteos agregados por contenido/fuente",
+      "estado": "Excluido",
+      "prioridad": "Fuera",
+      "aceptacion": "No construir perfiles de afinidad política ni rankings de ciudadanos"
+    },
+    {
+      "id": "A14",
+      "componente": "Monitoreo de equipo",
+      "nexo_actual": "No implementado",
+      "atalaya_documento": "Ranking de personas por interacción política",
+      "decision": "Fuera de esta integración",
+      "estado": "Excluido",
+      "prioridad": "Fuera",
+      "aceptacion": "No crear listas de activación o persuasión política por persona"
+    },
+    {
+      "id": "A15",
+      "componente": "Focus y persuasión territorial",
+      "nexo_actual": "No operativo",
+      "atalaya_documento": "Simulación de votantes y cruce electoral por colonia",
+      "decision": "Fuera; conservar análisis descriptivo de datos públicos",
+      "estado": "Excluido",
+      "prioridad": "Fuera",
+      "aceptacion": "No microsegmentar ni adaptar mensajes políticos por características personales"
+    },
+    {
+      "id": "A16",
+      "componente": "Respaldo y recuperación",
+      "nexo_actual": "SQLite cifrado y restauración aislada comprobados",
+      "atalaya_documento": "Se remite a NEXO como base",
+      "decision": "Mantener ensayo local; completar copia externa de nube",
+      "estado": "Nube pendiente",
+      "prioridad": "P0",
+      "aceptacion": "Recuperación real de DB y Auth; medir RPO/RTO; no prometer cobertura inexistente"
+    }
+  ],
+  "human_acceptance": {
+    "date": "2026-10-19",
+    "login": true,
+    "last_7_days_and_source_filter": true,
+    "brief_with_titles_and_links": true,
+    "no_error_reported": true
+  },
+  "agent_browser_verification": "Not performed: browser URL policy denied access to the candidate tab. No workaround attempted.",
+  "local_full_suite": "Attempted with an authorized new temporary directory; stalled before producing test results, interrupted. Not counted as passing.",
+  "candidate_branch": "nexo-atalaya-explorador",
+  "candidate_branch_url": "https://github.com/pgalaviz03-rcm/nexo-d14-staging/tree/nexo-atalaya-explorador",
+  "full_ci_result": "pending"
+}

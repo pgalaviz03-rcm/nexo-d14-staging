@@ -8,6 +8,7 @@ from pydantic import BaseModel,Field
 from .models import FeedSource, NewsArticle, AuditEvent
 from .listening import validate_feed_url, fetch_rss, parse_feed, normalize_url, digest_url, safe_text
 from .controls import take_quota
+from .news_review import query_articles, article_record, documentary_brief
 
 class FeedInput(BaseModel):
     title:str=Field(min_length=3,max_length=180)
@@ -102,18 +103,28 @@ def install_rss_api(app,db,current_user,allow):
             raise HTTPException(502,'La fuente no pudo sincronizarse; los registros históricos se conservan')
 
     @app.get('/api/projects/{pid}/articles')
-    def articles(pid:int,q:str='',limit:int=60,user=Depends(current_user),session:Session=Depends(db)):
+    def articles(pid:int,q:str='',limit:int=60,days:int=0,source_id:int=0,origin:str='all',
+                 user=Depends(current_user),session:Session=Depends(db)):
         allow(pid,user,session)
-        if len(q)>100:raise HTTPException(422,'Búsqueda demasiado extensa')
-        limit=max(1,min(limit,100))
-        stmt=select(NewsArticle).where(NewsArticle.project_id==pid)
-        if q.strip():
-            token='%'+q.strip().replace('%','\\%').replace('_','\\_')+'%'
-            stmt=stmt.where(NewsArticle.title.ilike(token,escape='\\') | NewsArticle.abstract.ilike(token,escape='\\'))
-        rows=session.scalars(stmt.order_by(NewsArticle.id.desc()).limit(limit)).all()
-        return [dict(id=x.id,title=x.title,url=x.url,publisher=x.publisher,
-           abstract=x.abstract,origin=x.origin,published_at=x.published_at.isoformat() if x.published_at else None,
-           ingested_at=x.ingested_at.isoformat()) for x in rows]
+        try:
+            statement=query_articles(pid,q,days,source_id,origin)
+        except ValueError as exc:
+            raise HTTPException(422,str(exc))
+        rows=session.scalars(statement.limit(max(1,min(limit,100)))).all()
+        return [article_record(row) for row in rows]
+
+    @app.get('/api/projects/{pid}/articles/brief')
+    def brief(pid:int,q:str='',days:int=0,source_id:int=0,origin:str='all',
+              user=Depends(current_user),session:Session=Depends(db)):
+        allow(pid,user,session)
+        now=datetime.now(timezone.utc)
+        try:
+            statement=query_articles(pid,q,days,source_id,origin,now=now)
+        except ValueError as exc:
+            raise HTTPException(422,str(exc))
+        # One extra row makes truncation explicit; no unbounded count or external calls.
+        rows=session.scalars(statement.limit(101)).all()
+        return documentary_brief(rows,now,dict(q=q,days=days,source_id=source_id,origin=origin))
 
     @app.post('/api/projects/{pid}/articles/import')
     async def import_articles_csv(pid:int,file:UploadFile=File(...),user=Depends(current_user),session:Session=Depends(db)):

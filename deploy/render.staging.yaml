@@ -1,0 +1,31 @@
+# PREPARACIÓN GRATUITA. Crear solo tras conectar cuentas y verificar repositorio privado.
+previews:
+  generation: 'off'
+services:
+  - type: web
+    name: nexo-d14-staging
+    runtime: docker
+    plan: free
+    region: virginia
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    autoDeployTrigger: 'off'
+    healthCheckPath: /api/ready
+    envVars:
+      - key: NEXO_ENV
+        value: staging
+      - key: NEXO_STORAGE_MODE
+        value: database
+      - key: NEXO_AI_ENABLED
+        value: 'false'
+      - key: NEXO_PUBLIC_ORIGIN
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+      - key: NEXO_SUPABASE_URL
+        sync: false
+      - key: NEXO_SUPABASE_PUBLISHABLE_KEY
+        sync: false
+      - key: NEXO_RSS_ALLOWED_HOSTS
+        value: ''
+# CA del proyecto como Secret File: /etc/secrets/supabase-ca.crt.

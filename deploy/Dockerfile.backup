@@ -1,0 +1,5 @@
+FROM postgres:18-bookworm
+RUN apt-get update && apt-get install -y --no-install-recommends age awscli && rm -rf /var/lib/apt/lists/*
+COPY scripts/backup.sh /backup.sh
+USER 999
+ENTRYPOINT ["bash","/backup.sh"]

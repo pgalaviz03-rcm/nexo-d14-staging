@@ -1,0 +1,32 @@
+# PLANTILLA DE PAGO. NO AUTORIZADA. No sincronizar con presupuesto actual.
+previews:
+  generation: 'off'
+services:
+  - type: web
+    name: nexo-d14-production
+    runtime: docker
+    plan: 0.5c-512mb
+    region: virginia
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    autoDeployTrigger: 'off'
+    healthCheckPath: /api/ready
+    envVars:
+      - key: NEXO_ENV
+        value: production
+      - key: NEXO_RELEASE_APPROVED
+        value: 'false'
+      - key: NEXO_STORAGE_MODE
+        value: database
+      - key: NEXO_AI_ENABLED
+        value: 'false'
+      - key: NEXO_PUBLIC_ORIGIN
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+      - key: NEXO_SUPABASE_URL
+        sync: false
+      - key: NEXO_SUPABASE_PUBLISHABLE_KEY
+        sync: false
+      - key: NEXO_RSS_ALLOWED_HOSTS
+        value: ''

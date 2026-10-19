@@ -1,0 +1,14 @@
+# OPCIONAL DE PAGO. No crear con la autorización actual.
+services:
+  - type: cron
+    name: nexo-d14-backup-production
+    runtime: docker
+    region: virginia
+    plan: 0.5c-512mb
+    dockerfilePath: ./deploy/Dockerfile.backup
+    dockerContext: .
+    autoDeployTrigger: 'off'
+    schedule: '17 8 * * *'
+    envVars:
+      - fromGroup: nexo-backup-production
+# Grupo secreto independiente con deploy/backup.env.example y CA como Secret File.

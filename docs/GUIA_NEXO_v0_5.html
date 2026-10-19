@@ -1,0 +1,225 @@
+<!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>NEXO v0.5 · Guía D14</title><style>*{box-sizing:border-box}body{margin:0;background:#f2f5fa;color:#162341;font:16px/1.65 Segoe UI,Arial,sans-serif}header{padding:42px max(24px,calc((100vw - 1060px)/2));color:white;background:linear-gradient(120deg,#071332,#26396c)}.brand{font-size:40px;letter-spacing:-2px;font-weight:800}.brand span{color:#ac98ff}.tag{font-size:12px;letter-spacing:2px;color:#cbd6ee}.status{margin-top:16px;display:inline-block;background:#ffffff12;border:1px solid #ffffff38;border-radius:20px;padding:6px 15px;font-size:13px}main{max-width:1120px;margin:28px auto;padding:32px 44px;background:white;border-radius:20px;box-shadow:0 12px 36px #1f305410}h1{font-size:32px;line-height:1.2}h2{font-size:23px;margin-top:42px;line-height:1.3;color:#192950}a{color:#6544cb}p,li{max-width:95ch}li{margin:8px 0}table{display:block;overflow-x:auto;border-collapse:collapse;width:100%;font-size:14px;line-height:1.5;margin:22px 0}th{background:#14254a;color:white;text-align:left}th,td{padding:13px 15px;border:1px solid #e6eaf1;vertical-align:top}tr:nth-child(even){background:#f7f9fd}code{background:#edf0fa;border-radius:4px;padding:2px 5px;font-size:13px}pre{background:#0c1936;color:#e1e8f7;padding:22px;overflow:auto;border-radius:12px;font:13px/1.6 Consolas,monospace}pre code{background:none;color:inherit;padding:0}strong{font-weight:700}@media(max-width:700px){main{padding:22px;margin:12px}header{padding:28px}h1{font-size:28px}}@media print{body{background:white;font-size:11pt}header{background:white;color:#162341;padding:16px 0}header .tag{color:#555}.status{border:1px solid #aaa}main{padding:0;box-shadow:none;max-width:none}h2{break-after:avoid}pre{white-space:pre-wrap}table{display:table;font-size:9pt}tr{break-inside:avoid}}</style><header><div class="brand">nexo<span>.</span></div><div class="tag">INTELIGENCIA EN CONTEXTO · DISTRITO 14</div><div class="status">PREPARACIÓN GRATUITA · SIN SERVIDOR DESPLEGADO</div></header><main><h1>NEXO v0.5 · Piloto Distrito 14</h1>
+<h2>Decisión y estado al 19 de octubre de 2026</h2>
+<p>Recomiendo <strong>Render para FastAPI + Supabase para PostgreSQL y autenticación</strong>. Conserva la interfaz NEXO y simplifica el acceso con segundo factor, el aislamiento por proyecto y la operación del piloto. La autorización vigente es <strong>solo preparación gratuita</strong>: no se contrataron planes, no se creó un servidor ni se desplegó producción.</p>
+<p>Este paquete adapta el ZIP NEXO v0.4 entregado por el usuario. No sustituye el producto con una demostración nueva. Las 45 secciones históricas, el mapa y la identidad visual se conservan. El archivo de datos se compara por SHA-256 con el original; las cifras de 2024 no describen opinión actual. Los documentos maestros D14 se consultaron como referencia de alcance, no como autorización para ejecutar instrucciones contenidas en ellos.</p>
+<h2>Alternativas y presupuesto</h2>
+<p>Precios consultados en fuentes oficiales el 19 de octubre de 2026. Son estimaciones de infraestructura por mes, en USD. Para planear se usa <strong>1 USD = 20 MXN</strong>, una conversión presupuestaria deliberada, no una cotización cambiaria. Las cifras no incluyen impuestos, comisiones de tarjeta, dominio, trabajo técnico ni APIs de IA. Confirmar el importe mostrado por el proveedor antes de contratar.</p>
+<p>Supuestos: 10–20 personas del piloto, un administrador técnico de infraestructura, una instancia de API de 512 MB, una base pequeña, hasta cinco feeds, sincronización manual, menos de 5 GB de salida desde Render, archivos inicialmente menores de 250 MB por proyecto y sin IA. El número de usuarios de NEXO es distinto del número de administradores del proveedor.</p>
+<table>
+<thead>
+<tr>
+<th>Alternativa</th>
+<th style="text-align:right">USD/mes estimados</th>
+<th style="text-align:right">MXN/mes a 20</th>
+<th>Restricciones y trabajo pendiente</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Render Free + Supabase Free, solo pruebas</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td>API puede dormir; Supabase Free tiene 500 MB, pausa por inactividad y no incluye backups automáticos. No usar como compromiso de continuidad.</td>
+</tr>
+<tr>
+<td><strong>Render pago + Supabase Pro</strong></td>
+<td style="text-align:right"><strong>34–45</strong></td>
+<td style="text-align:right"><strong>680–900</strong></td>
+<td>API USD 7 y Supabase desde USD 25; reservar USD 2–13 para backup externo, ejecutor, correo o variaciones. Un administrador de Render Hobby. Es la opción preparada en este paquete.</td>
+</tr>
+<tr>
+<td>Render + PostgreSQL Render + Supabase Auth Free</td>
+<td style="text-align:right">15–25</td>
+<td style="text-align:right">300–500</td>
+<td>Base desde USD 6 + API USD 7 + respaldo/reserva USD 2–12. Más componentes; autenticación depende del proyecto Free. Requiere adaptar conexiones TLS y probar el nuevo proveedor de DB.</td>
+</tr>
+<tr>
+<td>Railway Pro + PostgreSQL + Supabase Auth Free</td>
+<td style="text-align:right">21–35</td>
+<td style="text-align:right">420–700</td>
+<td>Pro mínimo USD 20 incluye consumo, no se suma dos veces. DB en contenedor requiere operación y respaldo; identidad Free separada. El límite duro detiene servicios. No está configurado en este paquete.</td>
+</tr>
+<tr>
+<td>Render + Neon Launch + identidad Free</td>
+<td style="text-align:right">12–30</td>
+<td style="text-align:right">240–600</td>
+<td>Consumo depende de horas activas; hay suspensión por inactividad y restauración según ventana elegida. Integrar y probar identidad/conexión si se cambia de arquitectura.</td>
+</tr>
+</tbody>
+</table>
+<p>La alternativa económica con base Render usa Supabase solo para identidad; no incluye una base Supabase Pro. Las estimaciones de Railway y Neon tampoco suman un Supabase Pro. Si se exige que la identidad use un plan de pago, añadir su costo correspondiente o seleccionar la arquitectura recomendada.</p>
+<p><strong>Desglose recomendado:</strong> USD 7 API + USD 25 PostgreSQL/identidad + USD 1–3 de almacenamiento de respaldos + USD 1–3 de ejecutor de backup + USD 0–7 de margen operativo = USD 34–45. Es una provisión, no una factura ni un límite garantizado. Mantener RSS manual evita otro proceso permanente. Monitoreo inicial desde el panel del proveedor; un monitor externo debe autorizarse y configurarse después.</p>
+<p>Si varias personas necesitan administrar Render, el plan Pro de workspace agrega <strong>USD 25/mes</strong> al cómputo: el escenario pasa a aproximadamente USD 59–70 / MXN 1,180–1,400. Si staging usa otro proyecto Micro en la misma organización Supabase Pro, prever aproximadamente <strong>USD 10/mes adicionales</strong>. Para ahorrar, staging queda en proyecto Free separado, con datos de prueba; no confundir esquemas distintos con entornos independientes.</p>
+<p><strong>Cálculos de sensibilidad:</strong> Railway publica memoria a USD 0.00000386/GB/s y CPU a USD 0.00000772/vCPU/s. Con 730 horas, 0.75 GB medios, 0.05 vCPU media, 1 GB de volumen y 5 GB de salida, el consumo orientativo es cercano a USD 9; en Pro se paga al menos USD 20. Un consumo real mayor aumenta la factura. Neon Launch publica USD 0.106/CU-h y USD 0.35/GB-mes: 0.25 CU × 4 h/día × 30 días ≈ USD 3.18 de cómputo; encendido continuo durante 730 h ≈ USD 19.35. Añadir API, almacenamiento, historial, respaldos y otras partidas. Los rangos no son límites de uso.</p>
+<p>Fuentes oficiales: <a href="https://render.com/pricing">Render precios</a>, <a href="https://render.com/articles/production-rails-hosting-guide">referencia oficial de tamaños y costos</a>, <a href="https://render.com/docs/new-workspace-plans">planes de workspace Render</a>, <a href="https://supabase.com/pricing">Supabase precios</a>, <a href="https://supabase.com/docs/guides/platform/cost-control">Supabase control de costos</a>, <a href="https://railway.com/pricing">Railway precios</a>, <a href="https://docs.railway.com/pricing/cost-control">Railway límites</a>, <a href="https://neon.com/pricing">Neon precios</a>.</p>
+<h2>Arquitectura inicial</h2>
+<pre><code class="language-text">Navegador del usuario
+  └── HTTPS Render · Interfaz NEXO + FastAPI · 1 proceso / 1 instancia
+        ├── Supabase Auth del mismo entorno · contraseña + TOTP
+        ├── PostgreSQL Supabase · TLS verificado · usuario nexo_app
+        │     ├── identidad local vinculada a UUID del proveedor
+        │     ├── membresías y roles por project_id
+        │     ├── históricos, noticias, cuotas y bitácora con RLS
+        │     └── archivos pequeños en dataset_blobs, dentro de PostgreSQL
+        └── RSS · dominios exactos aprobados + DNS e IP fijados + HTTPS
+
+Administrador → credencial de migración separada → Alembic y altas explícitas
+Backup → pg_dump + age → bucket privado fuera de la base
+IA → desactivada; sin proveedor, claves ni llamadas
+</code></pre>
+<p>La API y los archivos estáticos comparten origen para simplificar sesiones y controles de origen. No se necesitan Redis, Kubernetes ni un worker permanente en este piloto. Los archivos pequeños se guardan en PostgreSQL para evitar pérdida en disco efímero y mantener el control por proyecto. Al superar 250 MB, planear almacenamiento de objetos privado y descargas autorizadas por proyecto antes de elevar el límite.</p>
+<p><strong>Entornos:</strong> local con SQLite y usuarios de prueba; staging con API y proyecto Supabase propios; producción con otro proyecto Supabase, otras claves, usuarios y copia independiente. Ningún secreto ni copia de datos personales de producción entra en staging. La plantilla de producción arranca bloqueada con <code>NEXO_RELEASE_APPROVED=false</code>.</p>
+<p>Usar regiones cercanas entre ambos proveedores; se propone Virginia/este de EE. UU. si está disponible. Confirmar residencia autorizada antes de cargar información privada. El alojamiento de aplicación, la identidad y la base no son una red privada entre proveedores: viajan por Internet con TLS. El navegador nunca recibe la contraseña de DB ni una clave de servicio.</p>
+<h2>Cambios implementados</h2>
+<ul>
+<li>Se conservan el diseño NEXO, el visor y <code>data/secciones_2024.json</code>. La suma del paquete sigue siendo 41,984 votos territoriales y lista nominal 65,378. Las ocho boletas anticipadas solo se suman al total si el conjunto completo coincide con la base original; no se asignan a una sección.</li>
+<li><code>002_nexo_v05</code> protege también usuarios y membresías. El rol web no puede cambiar permisos, cuentas, proyectos ni históricos. Los roles de lectura no pueden insertar documentos o noticias aunque se intente fuera de la API. Los archivos y sus padres, y los artículos y sus feeds, deben pertenecer al mismo proyecto.</li>
+<li>La identidad se aplica en cada transacción. Un <code>commit</code> de sincronización no elimina la identidad de las operaciones siguientes; al regresar una conexión al pool no se conserva el actor anterior.</li>
+<li>Sesiones de nube en cookies <code>__Host-</code>, <code>Secure</code>, <code>HttpOnly</code>, <code>SameSite=Strict</code>. Se verifican firma asimétrica, emisor, audiencia, caducidad, rol y segundo factor del JWT. No se guardan refresh tokens ni tokens de nube en almacenamiento del navegador. El login local firmado permanece solo para desarrollo.</li>
+<li>La pantalla incluye inscripción/verificación TOTP y cierre de sesión. La vinculación entre usuario y UUID del proveedor se hace explícitamente con administración, sin dar acceso por coincidencia de correo.</li>
+<li>Cabeceras CSP con hash del script, bloqueo de marcos, no caché, no referrer y HSTS en nube. Host y Origin exactos, cuerpos acotados antes de procesar archivos, espera de carga limitada y límites de solicitudes.</li>
+<li>RSS conecta a una IP pública previamente resuelta y validada, conservando el hostname para SNI y certificado. No vuelve a resolver para conectar. Bloquea IP privadas/locales/metadatos, credenciales en URL, puertos alternos, redirecciones, compresión y entidades XML externas. Máximo 2 MB y 80 entradas por captura.</li>
+<li>Archivos de nube en <code>dataset_blobs</code>; no se publican directorios de carga. Cuotas y disparadores de PostgreSQL limitan tamaño de archivos y acumulación. La exportación histórica se autoriza en servidor y queda en bitácora.</li>
+<li>Las plantillas no contienen secretos reales. Auto deploy y previews permanecen desactivados. La imagen web usa usuario sin privilegios y una sola instancia con concurrencia limitada.</li>
+</ul>
+<p>Referencias de diseño de seguridad: <a href="https://www.postgresql.org/docs/current/ddl-rowsecurity.html">RLS PostgreSQL</a>, <a href="https://supabase.com/docs/guides/database/postgres/row-level-security">RLS Supabase</a>, <a href="https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html">prevención SSRF OWASP</a>, <a href="https://supabase.com/docs/guides/auth/jwts">JWT Supabase</a>, <a href="https://supabase.com/docs/guides/auth/auth-mfa/totp">TOTP Supabase</a>.</p>
+<h2>Límites de arranque</h2>
+<table>
+<thead>
+<tr>
+<th>Control</th>
+<th>Valor inicial</th>
+<th>Cómo se aplica</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>API</td>
+<td>300 solicitudes/minuto globales</td>
+<td>Memoria, una instancia. No sustituye protección de la plataforma frente a ataques.</td>
+</tr>
+<tr>
+<td>Login y segundo factor</td>
+<td>20 solicitudes/minuto globales</td>
+<td>Memoria y límites del proveedor de identidad.</td>
+</tr>
+<tr>
+<td>Procesamiento simultáneo</td>
+<td>8 conexiones de aplicación</td>
+<td>Servidor web; un proceso.</td>
+</tr>
+<tr>
+<td>Consulta SQL</td>
+<td>8 segundos</td>
+<td>Ajuste de conexión PostgreSQL.</td>
+</tr>
+<tr>
+<td>Archivo</td>
+<td>12 MB; 250 MB acumulados por proyecto</td>
+<td>API y disparadores SQL; rechazo de nuevos archivos sin borrar históricos.</td>
+</tr>
+<tr>
+<td>Cargas y exportaciones</td>
+<td>20 diarias por proyecto y operación</td>
+<td>Contador diario persistente; los intentos también cuentan.</td>
+</tr>
+<tr>
+<td>Fuentes RSS</td>
+<td>5 por proyecto</td>
+<td>API y disparador SQL.</td>
+</tr>
+<tr>
+<td>Sincronización RSS</td>
+<td>96 intentos diarios/proyecto; al menos 60 s por fuente</td>
+<td>Cuota persistente y bloqueo de fila para el intento.</td>
+</tr>
+<tr>
+<td>Noticias</td>
+<td>50,000 por proyecto</td>
+<td>Disparador SQL; conservación hasta archivo autorizado.</td>
+</tr>
+<tr>
+<td>IA</td>
+<td>0 llamadas</td>
+<td>Configuración rechaza habilitarla en nube.</td>
+</tr>
+</tbody>
+</table>
+<p>Al escalar a varias instancias, trasladar los límites en memoria a un gateway o almacén compartido. Las cuotas de PostgreSQL ya son atómicas entre instancias. Separar la ingestión en worker con identidad de servicio limitada al proyecto antes de automatizar RSS. No ejecutar un worker con la cuenta propietaria.</p>
+<p>Supabase Spend Cap cubre determinadas partidas y <strong>no es un techo monetario total</strong>: cómputo, ramas y extras pueden quedar fuera. Mantenerlo activo, no activar autoscaling ni addons y revisar consumo al inicio diariamente. Render tiene cómputo fijo por instancia pero salida y otras partidas pueden aumentar. Los USD 45 son presupuesto propuesto, no un corte automático de factura.</p>
+<p>Para IA futura, reservar un presupuesto separado solo después de aprobación. Antes de habilitar un adaptador debe existir una reserva atómica de costo máximo por usuario/proyecto/mes, tope de tokens y concurrencia, registro de uso real, cierre al agotar presupuesto, evaluación de evidencias y aislamiento de cachés y embeddings. Esa integración no está implementada ni cobrada aquí.</p>
+<h2>Conectar cuentas sin gastar</h2>
+<ol>
+<li>Iniciar sesión personalmente en <a href="https://dashboard.render.com/">Render</a> y <a href="https://supabase.com/dashboard">Supabase</a>, con MFA para los administradores. No compartir contraseñas, tokens, códigos ni medios de pago en el chat.</li>
+<li>Mantener los planes Free mientras siga vigente la autorización gratuita. No activar Supabase Pro, Render pago, IPv4 adicional, branching, PITR ni el cron de backup.</li>
+<li>Preparar un repositorio privado de la organización. Revisar <code>.gitignore</code> y el contenido del ZIP antes de subirlo. Conectar Render solo a ese repositorio; no conceder acceso a todos los repositorios.</li>
+<li>Para una prueba alojada gratuita, crear únicamente el entorno staging después de confirmar cuentas y repositorio. Las plantillas están listas, pero esta sesión no creó cuentas ni recursos. Registrar la URL y referencia observadas de cada proyecto; no adivinarlas.</li>
+<li>Una vez conectado, el único paso inmediato pendiente del usuario es avisar <strong>“cuentas listas para staging gratuito”</strong>. El operador puede introducir secretos directamente en los paneles. No hace falta decidir IA, dominio propio ni pagar ahora.</li>
+</ol>
+<h2>Despliegue de staging paso a paso</h2>
+<p>Los comandos siguientes son para un operador técnico. Contienen marcadores; nunca pegar credenciales reales en un historial de chat.</p>
+<ol>
+<li>Crear un proyecto Supabase dedicado de staging, sin datos personales. Desactivar registro público y la Data API para NEXO. Mantener Auth y TOTP activos. Usar claves de firma asimétricas y configurar duración del JWT en 900 segundos. No usar <code>anon</code>, <code>authenticated</code>, <code>postgres</code> o <code>service_role</code> como credencial de la API NEXO.</li>
+<li>Obtener la CA y las cadenas de conexión desde Connect en ese proyecto. Para FastAPI usar el pooler <strong>session</strong>, puerto mostrado 5432. Para migraciones y backups, preferir conexión directa desde un ejecutor con IPv6; si solo hay IPv4, comprobar session pooler sin comprar el addon. No usar transaction pooler para esta entrega.</li>
+<li>Crear el rol <code>nexo_app</code> con <code>deploy/provision_role.sql</code>. Fijar una contraseña aleatoria en el terminal interactivo con <code>\password nexo_app</code>; no editar el archivo SQL con la contraseña. El dueño de migración es otro rol.</li>
+<li>Con la URL del dueño exclusivamente en <code>NEXO_MIGRATION_DATABASE_URL</code>, ejecutar desde la raíz del paquete:</li>
+</ol>
+<pre><code class="language-shell">python -m pip install -r requirements-dev.txt
+python -m alembic upgrade head
+</code></pre>
+<ol start="5">
+<li>Crear o invitar usuarios de prueba en Supabase Auth. Vincular el UUID observado y su proyecto explícitamente:</li>
+</ol>
+<pre><code class="language-shell">python scripts/bootstrap_cloud.py --subject UUID_REAL_DEL_USUARIO --email CORREO_AUTORIZADO --role admin
+</code></pre>
+<ol start="6">
+<li>Crear un servicio Render Free mediante <code>deploy/render.staging.yaml</code>, seleccionado como ruta de Blueprint. Ajustar el contexto al directorio raíz del paquete. Introducir las variables <code>.env.example</code> en el panel de secretos; cargar la CA como Secret File. La única URL de DB en el servicio web debe usar <code>nexo_app</code>. No copiar allí <code>NEXO_MIGRATION_DATABASE_URL</code>, contraseñas del dueño, claves de servicio ni medios de pago.</li>
+<li>Fijar <code>NEXO_PUBLIC_ORIGIN</code> a la URL real del servicio, sin ruta ni barra final. Conectar exclusivamente al Supabase de staging. La aplicación rechazará configuración incompleta o un usuario de DB con privilegios excesivos.</li>
+<li>Ejecutar las pruebas de aceptación con dos usuarios/proyectos, segundo factor, carga y exportación. La primera inscripción TOTP muestra la clave solo al usuario autenticado; guardarla en su autenticador y no en capturas, logs o documentos de operación.</li>
+<li>Solo después, elegir 2–3 RSS públicos autorizados y colocar sus dominios exactos en <code>NEXO_RSS_ALLOWED_HOSTS</code>. Confirmar cada URL y restricciones del editor. La lista comienza vacía y el paquete no hace capturas de red por su cuenta.</li>
+</ol>
+<p>Conexión y certificados: <a href="https://supabase.com/docs/guides/database/connecting-to-postgres">conexión Supabase</a>, <a href="https://supabase.com/docs/guides/platform/ssl-enforcement">SSL Supabase</a>, <a href="https://supabase.com/docs/guides/api/securing-your-api">Data API</a>, <a href="https://render.com/docs/tls">TLS Render</a>.</p>
+<h2>Migrar una instalación v0.4 existente</h2>
+<p>El ZIP recibido contiene código y datos históricos; no contiene una base de usuarios o carpeta de cargas de una instalación en uso. No se presume haber migrado datos privados que no fueron entregados.</p>
+<p>Si existe una base PostgreSQL v0.4: detener escrituras, respaldar base y almacenamiento, verificar recuentos y duplicados por proyecto y SHA-256, y aplicar Alembic 002 primero en una copia aislada. Las restricciones nuevas fallan ante duplicados o referencias cruzadas; corregir con revisión humana, sin borrado automático. Las migraciones no sustituyen contraseñas ni sobrescriben métricas históricas. No reiniciar secuencias o recrear tablas sobre una instalación en uso.</p>
+<p>Para las cargas de disco antiguas, tras aplicar 002 y con credencial de dueño, ejecutar <code>python scripts/migrate_uploads.py --legacy-root RUTA_AUTORIZADA</code>. El script comprueba ubicación, tamaño y SHA-256, conserva los originales y cambia los registros a almacenamiento de DB solo al confirmar la transacción. Probar restauración antes de retirar las copias originales.</p>
+<p>Si la instalación real usa SQLite, se requiere una transferencia controlada de tablas, IDs, relaciones y secuencias a PostgreSQL; esta entrega no incluye un importador general de esa base no entregada. No copiar un archivo SQLite al servicio web como sustituto de PostgreSQL. Mantener v0.4 disponible en modo solo lectura hasta validar la copia y su aceptación.</p>
+<h2>Secretos y sesiones</h2>
+<p>El repositorio y el ZIP solo contienen ejemplos. Guardar secretos en los paneles del entorno correspondiente; limitar la administración a las personas necesarias. Separar cuenta web, migración, backup y restauración. La clave <code>sb_publishable_</code> identifica el proyecto de Auth y no concede autoridad de servicio; las credenciales de DB sí son secretas.</p>
+<p>Rotación: crear nueva contraseña para el rol web, actualizarla en Render y desplegar manualmente; confirmar readiness y pruebas de acceso; retirar la anterior. Rotar por separado claves de backup y de dueño. No imprimir URLs de conexión ni respuestas del proveedor de identidad. Un cambio de firma de IdP puede tardar hasta cinco minutos en reflejarse en la caché de JWKS; probar su procedimiento de revocación.</p>
+<p>Las membresías y <code>users.active</code> se consultan en cada solicitud. Para retirar acceso inmediatamente, desactivar la cuenta local o quitar su membresía con el administrador y registrar el cambio en auditoría. El cierre de sesión borra cookies y solicita logout al IdP, pero un access token ya copiado puede seguir siendo válido hasta su expiración. Con JWT de 900 segundos, esa ventana debe contemplarse en la prueba de revocación. No se afirma invalidación instantánea de todos los tokens solo por cerrar sesión.</p>
+<h2>Copias y recuperación</h2>
+<p>Objetivos iniciales propuestos: <strong>RPO 24 horas y RTO 4 horas</strong>, pendientes de ensayo; no son garantías obtenidas. Supabase Pro aporta copias diarias con retención indicada en su plan. Free no las incluye. No habilitar PITR de pago por defecto.</p>
+<p>Además, preparar una copia externa cifrada del esquema <code>public</code> con datos y blobs: <code>scripts/backup.sh</code> usa <code>pg_dump</code>, <code>age</code> y un bucket privado. Solo la clave pública age va al ejecutor; custodiar la clave privada de recuperación fuera del servidor. La credencial de DB del ejecutor debe poder leer todo lo respaldado y se considera privilegiada: nunca usarla en la API web. El ejemplo IAM permite escribir en un prefijo; la cuenta de restauración necesita permisos de lectura distintos. Activar bloqueo de acceso público y retención/versionado en el bucket.</p>
+<p><code>deploy/render.backup.yaml</code> prepara un cron opcional diario a las 08:17 UTC. <strong>No fue creado ni autorizado como gasto.</strong> Proponer retención de siete diarios y cuatro semanales; configurarla y verificarla en el almacenamiento elegido antes de confiar en ella. El script de carga no elimina automáticamente copias. El nombre temporal y su checksum se transmiten sin incluir datos en los logs.</p>
+<p>Restauración: crear una base aislada vacía y el rol <code>nexo_app</code> antes de restaurar. Verificar SHA-256, descifrar con la clave privada y usar <code>scripts/restore.sh</code> con <code>NEXO_RESTORE_CONFIRM=RESTORE_TO_EMPTY_ISOLATED_DB</code> y <code>NEXO_RESTORE_DATABASE</code> igual a <code>PGDATABASE</code>. Aplicar después <code>deploy/runtime_grants.sql</code>, ejecutar preflight y pruebas RLS, comprobar los 45 registros y hashes de archivos, y documentar tiempos y recuentos. No restaurar automáticamente encima de producción.</p>
+<p>La copia externa del esquema <code>public</code> <strong>no incluye</strong> identidades internas de Supabase Auth, configuración del proveedor, secretos ni políticas del bucket. Recuperarlos con el respaldo administrado/procedimiento del proveedor y volver a vincular identidades si cambia el UUID. La recuperación completa exige ambas partes y su ensayo. <a href="https://supabase.com/docs/guides/platform/backups">Respaldos Supabase</a>.</p>
+<h2>Monitoreo y operación</h2>
+<p><code>/api/health</code> informa que el proceso responde; <code>/api/ready</code> comprueba la conexión a DB. El arranque de nube valida versión de migración, RLS forzado y privilegios del rol. <code>scripts/monitor.py</code> permite una sonda HTTPS de solo lectura. No hay monitor externo ni destinatario configurados en esta entrega.</p>
+<p>Los registros de aplicación usan eventos con categoría de ruta, código HTTP y duración; no incluyen correos, contraseñas, tokens, consultas de usuario, nombres de archivos ni cuerpo de RSS. Los access logs del servidor se desactivan. Antes de publicar, comprobar también las opciones de registro de plataforma/DB y la retención disponible en el plan. La bitácora funcional puede contener IDs de usuario y proyecto; su acceso se rige por membresías y requiere retención definida.</p>
+<p>Configurar alertas, con destinatario confirmado, para: tres fallos seguidos de readiness, 5xx sostenidos por encima del 2%, memoria superior al 80%, captura RSS degradada, respaldo de más de 26 horas o fallido, espacio DB al 70/85%, y presupuesto al 50/80/100%. En el entorno gratuito no mantener el servicio despierto artificialmente; documentar el arranque en frío. Una alerta de presupuesto no corta la factura por sí sola.</p>
+<p>Antes de escalar, medir uso y latencia durante el piloto. Si la memoria supera 80% o la latencia crece, ajustar tamaño después de probar. Si crecen archivos, pasar a objetos privados; si crece RSS, aislar el worker; si crece el número de instancias, compartir el limitador y revisar conexiones. Cada cambio tiene presupuesto y prueba de aislamiento.</p>
+<h2>Checklist de salida</h2>
+<ul>
+<li>[ ] Cuentas conectadas, administrador con MFA y repositorio privado confirmado.</li>
+<li>[ ] Autorización explícita de gasto y responsable de facturación, si se activa pago.</li>
+<li>[ ] Staging y producción separados; solo datos autorizados en cada uno.</li>
+<li>[ ] Migraciones 001/002 ejecutadas sobre PostgreSQL real y privilegios mínimos verificados.</li>
+<li>[ ] Prueba de usuario A intentando leer/escribir archivos, noticias e históricos de B rechazada.</li>
+<li>[ ] Viewer rechazado al escribir; usuario web rechazado al cambiar permisos/históricos.</li>
+<li>[ ] Identidad reaplicada después de commit/rollback; sin fuga entre conexiones reutilizadas.</li>
+<li>[ ] Certificados HTTP/DB validados; CA correcta; HTTP redirige a HTTPS desde el borde.</li>
+<li>[ ] Login y TOTP reales probados; logout, expiración y retiro de membresía revisados.</li>
+<li>[ ] Cabeceras y CSP sin errores funcionales; formularios y exportación probados en navegador.</li>
+<li>[ ] URLs RSS autorizadas probadas; casos privados, redirecciones, DNS cambiante, XML y tamaño bloqueados.</li>
+<li>[ ] Cuotas, límites del proveedor, costos y comportamiento al agotarse revisados.</li>
+<li>[ ] Copia externa cifrada completa, restauración aislada y recovery de Auth ensayados.</li>
+<li>[ ] Alertas y destinatario confirmados; retención y recuperación de bitácora acordadas.</li>
+<li>[ ] Datos históricos y hashes comparados; ninguna información sensible empaquetada.</li>
+<li>[ ] Escaneo de dependencias e imagen repetido justo antes de publicar.</li>
+<li>[ ] Plan de rollback probado. No habilitar IA como parte de este despliegue.</li>
+</ul>
+<p>Los puntos anteriores pendientes no se marcan como logrados por el mero hecho de existir archivos de configuración. <code>docs/PRUEBAS.md</code> registra qué se ejecutó localmente y qué sigue pendiente.</p>
+<h2>Volver atrás</h2>
+<p>Detener nuevas escrituras y mantener el servicio anterior o la página de mantenimiento. Conservar la imagen y revisión previa; restaurar una copia en otra base si el cambio afecta datos. No ejecutar un downgrade destructivo de Alembic. Volver una imagen v0.4 a la base v0.5 no está validado: v0.4 desconoce las nuevas restricciones y el IdP. Para una reversión de versión, ensayar base y aplicación como conjunto y reconciliar escrituras antes de cambiar tráfico.</p>
+</main></html>

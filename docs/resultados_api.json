@@ -1,0 +1,172 @@
+{
+  "date": "2026-10-19",
+  "tests": [
+    {
+      "test": "test_auth_projects_and_data_isolation",
+      "status": "passed"
+    },
+    {
+      "test": "test_upload_and_project_boundaries",
+      "status": "passed"
+    },
+    {
+      "test": "test_validation_invalid_file",
+      "status": "passed"
+    },
+    {
+      "test": "test_actor_survives_commits_and_does_not_leak",
+      "status": "skipped"
+    },
+    {
+      "test": "test_parse_and_url_rules",
+      "status": "passed"
+    },
+    {
+      "test": "test_feed_register_sync_and_boundaries",
+      "status": "passed"
+    },
+    {
+      "test": "test_csv_import_dedup_and_error",
+      "status": "passed"
+    },
+    {
+      "test": "test_failed_feed_keeps_existing_articles",
+      "status": "passed"
+    },
+    {
+      "test": "test_durable_upload_and_no_path_leak",
+      "status": "passed"
+    },
+    {
+      "test": "test_export_audited_and_scoped",
+      "status": "passed"
+    },
+    {
+      "test": "test_oversized_chunked_body_before_parser",
+      "status": "passed"
+    },
+    {
+      "test": "test_security_headers_and_script_hash",
+      "status": "passed"
+    },
+    {
+      "test": "test_cloud_origin_and_host_rejected",
+      "status": "passed"
+    },
+    {
+      "test": "test_project_quota_commits_attempt",
+      "status": "passed"
+    },
+    {
+      "test": "test_bounded_memory_limiter",
+      "status": "passed"
+    },
+    {
+      "test": "test_cloud_fails_closed",
+      "status": "passed"
+    },
+    {
+      "test": "test_jwt_valid",
+      "status": "passed"
+    },
+    {
+      "test": "test_jwt_wrong_claims[change0]",
+      "status": "passed"
+    },
+    {
+      "test": "test_jwt_wrong_claims[change1]",
+      "status": "passed"
+    },
+    {
+      "test": "test_jwt_wrong_claims[change2]",
+      "status": "passed"
+    },
+    {
+      "test": "test_jwt_wrong_claims[change3]",
+      "status": "passed"
+    },
+    {
+      "test": "test_jwt_wrong_claims[change4]",
+      "status": "passed"
+    },
+    {
+      "test": "test_jwt_wrong_claims[change5]",
+      "status": "passed"
+    },
+    {
+      "test": "test_jwt_signature_and_alg_rejected",
+      "status": "passed"
+    },
+    {
+      "test": "test_ssrf_urls_blocked[https://127.0.0.1/feed]",
+      "status": "passed"
+    },
+    {
+      "test": "test_ssrf_urls_blocked[https://[::1]/rss]",
+      "status": "passed"
+    },
+    {
+      "test": "test_ssrf_urls_blocked[https://169.254.169.254/latest]",
+      "status": "passed"
+    },
+    {
+      "test": "test_ssrf_urls_blocked[file:///etc/passwd]",
+      "status": "passed"
+    },
+    {
+      "test": "test_ssrf_urls_blocked[http://feed.example/rss]",
+      "status": "passed"
+    },
+    {
+      "test": "test_ssrf_urls_blocked[https://feed.example:22/rss]",
+      "status": "passed"
+    },
+    {
+      "test": "test_ssrf_urls_blocked[https://x:y@feed.example/rss]",
+      "status": "passed"
+    },
+    {
+      "test": "test_ssrf_urls_blocked[https://feed.example/rss\\r\\nX:evil]",
+      "status": "passed"
+    },
+    {
+      "test": "test_ssrf_urls_blocked[https://feed.example\\\\@evil.test/rss]",
+      "status": "passed"
+    },
+    {
+      "test": "test_ssrf_urls_blocked[https://feed.example./rss]",
+      "status": "passed"
+    },
+    {
+      "test": "test_dns_mixed_private_addresses_rejected",
+      "status": "passed"
+    },
+    {
+      "test": "test_fetch_connects_to_pinned_address_and_no_redirects",
+      "status": "passed"
+    },
+    {
+      "test": "test_xml_entities_and_bombs_rejected",
+      "status": "passed"
+    },
+    {
+      "test": "test_historical_totals_preserved",
+      "status": "passed"
+    },
+    {
+      "test": "test_cloud_login_mfa_flow_and_cookie",
+      "status": "passed"
+    },
+    {
+      "test": "test_pinned_socket_uses_numeric_ip_and_original_tls_host",
+      "status": "passed"
+    }
+  ],
+  "passed": 39,
+  "skipped": 1,
+  "failed": 0,
+  "notes": [
+    "External IdP mocked; no real provider login",
+    "PostgreSQL TCP/pool integration skipped; PGlite SQL run separately"
+  ]
+}

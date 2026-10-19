@@ -1,0 +1,13 @@
+{
+  "source_zip": "NEXO_v0_4_Paquete_Tecnico_D14.zip",
+  "source_zip_sha256": "6212230a8133bf72f9f252a34d6ea164a41e40313b141f156934cfbe22b4f432",
+  "historical_file": "data/secciones_2024.json",
+  "historical_sha256": "52abc9dcd5414f28c7a5d8e6e837af14dcc3dbbd51a074b8908f55de92b66a22",
+  "historical_bytes_unchanged": true,
+  "sections": 45,
+  "territorial_votes": 41984,
+  "nominal_list": 65378,
+  "external_electoral_source_reverified": false,
+  "private_user_database_supplied": false,
+  "note": "Datos agregados del paquete original; sin revalidación externa del cómputo en esta sesión."
+}

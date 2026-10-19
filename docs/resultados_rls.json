@@ -1,0 +1,72 @@
+{
+  "engine": "PGlite PostgreSQL WASM",
+  "version": {
+    "version": "PostgreSQL 18.6 (PGlite 0.5.10) on wasm32-unknown-emscripten, compiled by emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 6.0.5 (1db513782be24469589d7cb8a1f1834e9a33f271), 32-bit"
+  },
+  "tests": [
+    {
+      "test": "No actor sees zero private rows",
+      "status": "passed"
+    },
+    {
+      "test": "Alice sees only project A",
+      "status": "passed"
+    },
+    {
+      "test": "Cannot add membership",
+      "status": "passed"
+    },
+    {
+      "test": "Cannot escalate membership",
+      "status": "passed"
+    },
+    {
+      "test": "Cannot alter historical data",
+      "status": "passed"
+    },
+    {
+      "test": "Cannot read another user password row",
+      "status": "passed"
+    },
+    {
+      "test": "Cannot insert another project article",
+      "status": "passed"
+    },
+    {
+      "test": "Can add own project dataset and blob",
+      "status": "passed"
+    },
+    {
+      "test": "Cannot alter feed URLs through DB role",
+      "status": "passed"
+    },
+    {
+      "test": "Viewer reads historical data",
+      "status": "passed"
+    },
+    {
+      "test": "Viewer cannot insert article",
+      "status": "passed"
+    },
+    {
+      "test": "Viewer cannot insert dataset",
+      "status": "passed"
+    },
+    {
+      "test": "Bob cannot see project A blob",
+      "status": "passed"
+    },
+    {
+      "test": "Bob sees only project B",
+      "status": "passed"
+    },
+    {
+      "test": "Transaction-local actor is cleared on commit",
+      "status": "passed"
+    },
+    {
+      "test": "All tenant and identity tables have forced RLS",
+      "status": "passed"
+    }
+  ]
+}

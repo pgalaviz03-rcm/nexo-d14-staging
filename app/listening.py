@@ -11,7 +11,7 @@ from defusedxml import ElementTree
 
 MAX_FEED_BYTES = 2_000_000
 MAX_ITEMS = 80
-MAX_DESCRIPTION = 1300
+MAX_DESCRIPTION = 360
 
 
 def normalize_url(url: str) -> str:

@@ -14,7 +14,7 @@
   "app/main.py": "6cad0d5150a3502d4af9c57c3704082b188b9de16fb727208ba5d18a1e1760e6",
   "app/models.py": "ad6d4181acc60b7366cf408587dd520bb29e7be48f17a8b9761ec08450393b08",
   "app/preflight.py": "8f3adcb0930150aeb1be8b02c8315fc7c1efcc7842d66117cedfd0adb730c879",
-  "app/rss_api.py": "27d79ea0982af9df0ca7d0c4737d94b120471f5992b69d7a95b4728b194a6a6c",
+  "app/rss_api.py": "cf0cf75442587678bd0cbcb63082c64ff802f8dd667976d82bdcdde5ce1619bc",
   "app/security.py": "46fba2749d987df6e650c35e501ec241c84c11cb721ce943c5c1de01812a1221",
   "compose.yaml": "2bf44ffab55cbdbb09f0c9af72dd9d4b57abe145f0f9dc084bae1e604e60c0bb",
   "data/secciones_2024.json": "52abc9dcd5414f28c7a5d8e6e837af14dcc3dbbd51a074b8908f55de92b66a22",
@@ -61,6 +61,7 @@
   "tests/rls.pglite.mjs": "0a5d543486622ba4266652eddc70cd1f0a65e61e4530ce32168db328f435ae0c",
   "tests/test_app.py": "e668b16e9ac9e97a4f64d53728ea450b6a81ff037e7ffba80b002adf663dbd78",
   "tests/test_backup_local.py": "7f35a5196489fe262cc78873bcd3538b0bca05dfff9e7a023187322eea084d8b",
+  "tests/test_feed_diagnostics.py": "ae8d80ec793e017d927c4b0c441d0cbe0dd5faecf1396a57dcc413b7cd9e2178",
   "tests/test_postgres.py": "2829e9523a74e47f0757d35cccd41cdf276400d23aff2b4d9506cd85e1b946b8",
   "tests/test_rss.py": "a9fa52a31a9b8accef518713163674eee0a7905d893e4f61da6cc207e1759acc",
   "tests/test_security_v05.py": "0b7360c1ac9bfe55c0281c70ba5bcbd51ec4b25451a1f2450cf5d42a0ddcdce3"

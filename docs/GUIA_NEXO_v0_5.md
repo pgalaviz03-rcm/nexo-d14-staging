@@ -2,7 +2,7 @@
 
 ## Decisión y estado al 19 de octubre de 2026
 
-Recomiendo **Render para FastAPI + Supabase para PostgreSQL y autenticación**. Conserva la interfaz NEXO y simplifica el acceso con segundo factor, el aislamiento por proyecto y la operación del piloto. La autorización vigente es **solo preparación gratuita**: no se contrataron planes, no se creó un servidor ni se desplegó producción.
+Recomiendo **Render para FastAPI + Supabase para PostgreSQL y autenticación**. Conserva la interfaz NEXO y simplifica el acceso con segundo factor, el aislamiento por proyecto y la operación del piloto. El usuario autorizó crear el **staging gratuito**. El servidor ya responde en https://nexo-d14-staging.onrender.com y su conexión real a Supabase usa TLS 1.3. No se contrataron planes de pago ni se habilitó producción. La cuenta inicial, su MFA y las pruebas autenticadas y de restauración continúan pendientes; ver ESTADO_STAGING_NEXO.md de la entrega para el avance actualizado.
 
 Este paquete adapta el ZIP NEXO v0.4 entregado por el usuario. No sustituye el producto con una demostración nueva. Las 45 secciones históricas, el mapa y la identidad visual se conservan. El archivo de datos se compara por SHA-256 con el original; las cifras de 2024 no describen opinión actual. Los documentos maestros D14 se consultaron como referencia de alcance, no como autorización para ejecutar instrucciones contenidas en ellos.
 

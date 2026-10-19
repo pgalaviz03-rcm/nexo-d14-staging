@@ -1,5 +1,5 @@
 """FastAPI router installer for authorized feeds and manual records, bound to project isolation."""
-import csv,io,os
+import csv,io,os,re,ssl,logging,json
 from datetime import datetime, timezone, timedelta
 from sqlalchemy import select, func
 from sqlalchemy.orm import Session
@@ -12,6 +12,31 @@ from .controls import take_quota
 class FeedInput(BaseModel):
     title:str=Field(min_length=3,max_length=180)
     url:str=Field(min_length=12,max_length=1500)
+
+
+def safe_feed_failure(exc):
+    """Whitelisted diagnostics only: never persist raw exceptions or feed content."""
+    message = str(exc) if isinstance(exc, ValueError) else ''
+    status = re.fullmatch(r'La fuente devolvió HTTP ([1-5][0-9]{2})', message)
+    if status:
+        return 'http_' + status[1], 'El medio respondió HTTP ' + status[1] + '; revisa su fuente original.'
+    if isinstance(exc, ssl.SSLError):
+        return 'tls', 'No se pudo validar la conexión segura del medio.'
+    if isinstance(exc, TimeoutError) or message == 'Tiempo RSS agotado':
+        return 'timeout', 'El medio tardó demasiado en responder; inténtalo más tarde.'
+    if 'DNS' in message:
+        return 'dns', 'No se pudo validar una dirección pública del medio.'
+    if message == 'Compresión de RSS no permitida':
+        return 'compression', 'El medio entregó una compresión que este piloto no admite.'
+    if message in {'RSS excede 2 MB', 'RSS sobrepasa 2 MB'}:
+        return 'size_limit', 'La fuente supera el límite de 2 MB del piloto.'
+    if message == 'Tipo de contenido no permitido':
+        return 'content_type', 'La dirección no entregó un tipo de contenido RSS admitido.'
+    if message in {'XML de fuente RSS/Atom inválido', 'No es un documento RSS o Atom'}:
+        return 'invalid_feed', 'La dirección no entregó un RSS o Atom válido.'
+    if message == 'RSS válido sin elementos importables':
+        return 'empty_feed', 'La fuente no contiene publicaciones importables.'
+    return 'unavailable', 'Fuente temporalmente no disponible; revisar configuración y conectividad.'
 
 
 def install_rss_api(app,db,current_user,allow):
@@ -69,8 +94,10 @@ def install_rss_api(app,db,current_user,allow):
             session.rollback()
             source=session.get(FeedSource, fid)
             if source is None:raise HTTPException(404,'Fuente no disponible')
-            source.status='error';source.last_error='Fuente temporalmente no disponible; revisar configuración y conectividad'
-            session.add(AuditEvent(project_id=pid,user_id=user.id,action='feed.error',target=str(fid)))
+            code, explanation = safe_feed_failure(exc)
+            source.status='error';source.last_error=explanation
+            logging.getLogger('nexo').warning(json.dumps({'event':'rss.error','source':fid,'reason':code}))
+            session.add(AuditEvent(project_id=pid,user_id=user.id,action='feed.error',target=f'{fid}:{code}'))
             session.commit()
             raise HTTPException(502,'La fuente no pudo sincronizarse; los registros históricos se conservan')
 

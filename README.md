@@ -11,6 +11,8 @@ La recomendación es Render + Supabase, con staging gratuito aislado y una propu
 
 ## Uso local
 
+En Windows, extrae todo el ZIP y abre `INICIAR_NEXO_WINDOWS.bat`. Utiliza una `.venv` existente o prepara una con Python 3.12; la instalación inicial de dependencias necesita Internet. El navegador se abre cuando el servidor responde. Mantén la ventana abierta y guarda de forma privada la cuenta local que aparece en el primer inicio. Las cuentas locales se gestionan en la base SQLite de esa computadora. `NEXO_PYTHON_EXE` permite usar un entorno Python ya preparado; `NEXO_OPEN_BROWSER=false` evita abrir el navegador durante comprobaciones. El iniciador rechaza conexiones a bases de nube.
+
 Con Python 3.12 y terminal dentro de esta carpeta:
 
 ```shell

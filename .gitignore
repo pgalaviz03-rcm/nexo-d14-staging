@@ -3,6 +3,7 @@ storage/
 *.db
 __pycache__/
 .pytest_cache/
+.venv/
 *.pyc
 .env.*
 !.env.example

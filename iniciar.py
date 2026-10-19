@@ -1,5 +1,5 @@
 """Iniciar NEXO local. No publica datos en Internet. Requiere dependencias instaladas."""
-import os,subprocess,sys,secrets
+import os,subprocess,sys,secrets,json,threading,time,urllib.request,webbrowser
 from pathlib import Path
 ROOT=Path(__file__).resolve().parent
 os.chdir(ROOT)
@@ -16,6 +16,8 @@ if not os.environ.get('NEXO_SECRET_KEY'):
         except OSError:pass
     os.environ['NEXO_SECRET_KEY']=secret_file.read_text(encoding='utf-8').strip()
 os.environ.setdefault('DATABASE_URL','sqlite:///./storage/nexo.db')
+if not os.environ['DATABASE_URL'].startswith('sqlite:'):
+    raise SystemExit('El inicio local requiere una base SQLite local. Revisa DATABASE_URL antes de continuar.')
 os.environ.setdefault('NEXO_STORAGE_DIR',str(ROOT/'storage'/'uploads'))
 from app.database import create_database
 from app.models import Base,User
@@ -32,5 +34,19 @@ else:
     print('Usuarios locales existentes. Se respetan las cuentas ya creadas.')
 print('Abre en tu navegador: http://127.0.0.1:8000')
 print('Para detener el servidor pulsa Ctrl+C.\n')
+if os.getenv('NEXO_OPEN_BROWSER','true').lower()=='true':
+    def open_local_browser():
+        opener=urllib.request.build_opener(urllib.request.ProxyHandler({}))
+        for _ in range(60):
+            try:
+                with opener.open('http://127.0.0.1:8000/api/health',timeout=0.5) as response:
+                    healthy=json.loads(response.read(1024)).get('version')=='0.5'
+                if healthy:
+                    webbrowser.open('http://127.0.0.1:8000')
+                    return
+            except (OSError,ValueError):
+                pass
+            time.sleep(0.25)
+    threading.Thread(target=open_local_browser,daemon=True).start()
 import uvicorn
 uvicorn.run('app.main:app',host='127.0.0.1',port=8000,reload=False)

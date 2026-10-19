@@ -24,6 +24,8 @@ El inicio local conserva la creación de una cuenta de prueba en la máquina. No
 
 ## Verificación
 
+La operación local incluye [respaldo cifrado y recuperación aislada en Windows](docs/RESPALDO_LOCAL_WINDOWS.md). Las dos fuentes elegidas para el primer radar RSS y sus límites se describen en [Fuentes RSS D14](docs/FUENTES_RSS_D14.md). El radar conserva las noticias documentadas y diferencia los gráficos demostrativos. Los errores de credenciales ya no se presentan como una indicación de que la API está apagada.
+
 ```shell
 python -m pip install -r requirements-dev.txt
 python -m pytest -q tests

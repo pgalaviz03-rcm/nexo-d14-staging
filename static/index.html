@@ -172,7 +172,7 @@ async function api(path,options={}){
   const headers={...(authToken?{'Authorization':'Bearer '+authToken}:{}),...(options.headers||{})};
   const response=await fetch(path,{...options,headers});
   let data;try{data=await response.json()}catch{data={detail:'Respuesta inválida del servidor'}}
-  if(!response.ok)throw Error(typeof data.detail==='string'?data.detail:'Error de consulta '+response.status);
+  if(!response.ok){const error=Error(typeof data.detail==='string'?data.detail:'Error de consulta '+response.status);error.status=response.status;throw error;}
   return data;
 }
 const htmlSafe=x=>String(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -277,6 +277,8 @@ byId('reloadRss').onclick=()=>loadRssData().catch(e=>liveFeedMessage(e.message))
 byId('rssQuery').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();refreshRssArticles().catch(err=>liveFeedMessage(err.message))}});
 
 filter();range('7d');if(location.hash==='#historical')page('historical');
+// Reuse the existing secure session after a reload; the API still validates MFA and membership.
+loadProject().catch(error=>{if(error.status!==401)byId('loginError').textContent='No fue posible recuperar tu proyecto. Intenta actualizar la página.';});
 })();
 </script>
 </body></html>

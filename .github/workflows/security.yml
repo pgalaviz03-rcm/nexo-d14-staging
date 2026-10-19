@@ -1,0 +1,39 @@
+name: NEXO checks
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  local-and-postgres:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: nexo_owner
+          POSTGRES_PASSWORD: ci-disposable-password
+          POSTGRES_DB: nexo_test
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd 'pg_isready -U nexo_owner -d nexo_test'
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements-dev.txt
+      - run: python -m pytest -q tests --ignore=tests/test_postgres.py
+      - name: Migrate disposable DB
+        env:
+          PGPASSWORD: ci-disposable-password
+          NEXO_MIGRATION_DATABASE_URL: postgresql+psycopg://nexo_owner:ci-disposable-password@127.0.0.1:5432/nexo_test
+        run: |
+          psql -h 127.0.0.1 -U nexo_owner -d nexo_test -v ON_ERROR_STOP=1 -c "CREATE ROLE nexo_app LOGIN PASSWORD 'ci-disposable-app-password' NOSUPERUSER NOCREATEDB NOCREATEROLE NOINHERIT NOBYPASSRLS"
+          python -m alembic upgrade head
+      - name: PostgreSQL RLS and pool
+        env:
+          NEXO_TEST_ISOLATED: 'true'
+          NEXO_TEST_OWNER_URL: postgresql+psycopg://nexo_owner:ci-disposable-password@127.0.0.1:5432/nexo_test
+          NEXO_TEST_APP_URL: postgresql+psycopg://nexo_app:ci-disposable-app-password@127.0.0.1:5432/nexo_test
+        run: python -m pytest -q tests/test_postgres.py
+      - run: python -m pip_audit -r requirements.txt

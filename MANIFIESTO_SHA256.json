@@ -1,7 +1,7 @@
 {
   ".dockerignore": "e803a6bbd318cb407b7b649747ee3591d93932f352c885dcc0fcda296a063fee",
   ".env.example": "8363824b9b257cc750ebd01dbc206b18f2331ecbb86c8fbd06544be776e0837a",
-  ".github/workflows/security.yml": "c8a94e967a3b3eb232cde78deca879e77254af5f51475ad651672ec5a78ee267",
+  ".github/workflows/security.yml": "369c84483a0adf98e4520b3afb703863defbaf44747cbcb2019046874d312aa8",
   ".gitignore": "f08871e0748a0913b898c72ff47c33fe4a64b1568607044846f0db26f961582c",
   "administrar.py": "07dccf60bd661bbf0b44b8a9ad89d88b77410a7f269c8500b70d089b17b81a61",
   "alembic.ini": "371c5279c67349b88b0a06866f89cf18fe73979a8af986723c91ee592794f3be",

@@ -1,0 +1,15 @@
+.env
+storage/
+*.db
+__pycache__/
+.pytest_cache/
+*.pyc
+.env.*
+!.env.example
+*.age
+*.dump*
+*.pem
+*.key
+*.log
+work/
+node_modules/

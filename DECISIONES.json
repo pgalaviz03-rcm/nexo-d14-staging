@@ -1,0 +1,18 @@
+{
+  "fecha": "2026-10-19",
+  "proyecto": "NEXO v0.5 D14 Aguascalientes",
+  "autorizacion": "solo_preparacion_gratuita",
+  "gasto_autorizado_usd": 0,
+  "desplegado": false,
+  "arquitectura_recomendada": "Render FastAPI + Supabase PostgreSQL y Auth",
+  "tipo_cambio_presupuestario_mxn_por_usd": 20,
+  "costo_futuro_estimado_usd_mes": {"min":34,"max":45},
+  "costo_futuro_estimado_mxn_mes": {"min":680,"max":900},
+  "impuestos_comisiones_dominio_ia_incluidos": false,
+  "administradores_render_incluidos": 1,
+  "staging": "Free aislado y datos de prueba",
+  "ia": "desactivada",
+  "rss": "manual, dominios vacios hasta aprobacion",
+  "pendientes_usuario": ["iniciar sesion en Render y Supabase", "confirmar repositorio privado para staging"],
+  "pendientes_salida": ["pruebas PostgreSQL TCP y Supabase real", "TLS real", "restauracion y alertas", "aceptacion y gasto antes de pago"]
+}

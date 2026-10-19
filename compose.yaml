@@ -1,0 +1,46 @@
+# Solo entorno local/de pruebas. Nunca exponer directamente el servicio DB a internet.
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: nexo
+      POSTGRES_USER: nexo_owner
+      POSTGRES_PASSWORD: ${NEXO_DB_OWNER_PASSWORD:?Define NEXO_DB_OWNER_PASSWORD}
+      NEXO_APP_DB_PASSWORD: ${NEXO_APP_DB_PASSWORD:?Define NEXO_APP_DB_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/bootstrap_role.sh:/docker-entrypoint-initdb.d/01-create-app-user.sh:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nexo_owner -d nexo"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+  migrate:
+    build: .
+    user: "0:0"
+    environment:
+      DATABASE_URL: postgresql+psycopg://nexo_owner:${NEXO_DB_OWNER_PASSWORD:?}@db:5432/nexo
+      NEXO_SECRET_KEY: ${NEXO_SECRET_KEY:?Define NEXO_SECRET_KEY}
+    volumes:
+      - nexo_storage:/app/storage
+    command: ["sh","-c","alembic upgrade head && python init_demo.py"]
+    depends_on:
+      db:
+        condition: service_healthy
+  web:
+    build: .
+    environment:
+      DATABASE_URL: postgresql+psycopg://nexo_app:${NEXO_APP_DB_PASSWORD:?}@db:5432/nexo
+      NEXO_SECRET_KEY: ${NEXO_SECRET_KEY:?Define NEXO_SECRET_KEY}
+      NEXO_RSS_ALLOWED_HOSTS: ${NEXO_RSS_ALLOWED_HOSTS:-}
+      NEXO_STORAGE_DIR: /app/storage/uploads
+    volumes:
+      - nexo_storage:/app/storage
+    ports:
+      - "127.0.0.1:8000:8000"
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+volumes:
+  postgres_data:
+  nexo_storage:

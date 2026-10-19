@@ -1,6 +1,9 @@
 # NEXO v0.5 · Distrito 14 Aguascalientes
 
-Adaptación del paquete NEXO v0.4 entregado por el usuario. **Solo preparación gratuita autorizada. No desplegado.**
+Adaptación del paquete NEXO v0.4 entregado por el usuario. **Staging gratuito desplegado; producción no habilitada.**
+
+
+Entorno de pruebas: https://nexo-d14-staging.onrender.com . El 19 de octubre de 2026 respondió `ready`; Supabase confirmó conexiones de la aplicación con TLS 1.3. El acceso a proyectos y secciones exige sesión. La cuenta inicial y su MFA, las pruebas autenticadas, la carga real y la restauración de respaldos siguen pendientes de validación. No representa una aceptación de producción.
 
 Empieza por [la guía completa](docs/GUIA_NEXO_v0_5.md), [los resultados de pruebas](docs/PRUEBAS.md) y [las decisiones editables](DECISIONES.json).
 

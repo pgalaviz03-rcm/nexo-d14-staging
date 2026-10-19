@@ -2,7 +2,7 @@ import os,re,csv,io,hashlib,json,uuid,zipfile
 from pathlib import Path
 from datetime import datetime
 from fastapi import FastAPI,Depends,HTTPException,UploadFile,File,Header,Request,Response
-from fastapi.responses import FileResponse
+from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from sqlalchemy import select,func
@@ -31,6 +31,7 @@ def create_app(db_url=None,storage_dir=None):
     if engine.dialect.name == "sqlite":
         Base.metadata.create_all(bind=engine)  # piloto local; PostgreSQL usa Alembic
     root=Path(__file__).resolve().parent.parent
+    ui_html=(root/'static'/'index.html').read_text(encoding='utf-8')
     uploads=Path(storage_dir or os.getenv('NEXO_STORAGE_DIR',str(root/'storage'/'uploads'))).resolve()
     uploads.mkdir(parents=True,exist_ok=True)
     @asynccontextmanager
@@ -192,10 +193,10 @@ def create_app(db_url=None,storage_dir=None):
     install_auth(app)
 
     @app.get('/')
-    def index():return FileResponse(root/'static'/'index.html')
+    def index():return HTMLResponse(ui_html)
     @app.get('/favicon.ico')
     def favicon():return {'ok':True}
-    script=re.search(r'<script>([\s\S]*?)</script>',(root/'static'/'index.html').read_text(encoding='utf-8')).group(1)
+    script=re.search(r'<script>([\s\S]*?)</script>',ui_html).group(1)
     import base64
     app.add_middleware(Guard,script_hash='sha256-'+base64.b64encode(hashlib.sha256(script.encode()).digest()).decode())
     return app

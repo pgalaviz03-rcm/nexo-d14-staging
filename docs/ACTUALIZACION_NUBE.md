@@ -1,6 +1,6 @@
 # NEXO · Actualización del desarrollo local al staging existente
 
-Estado: candidato separado. Esta preparación no equivale a despliegue, migración remota ni aceptación de producción. La copia local del puerto 8002 queda intacta.
+Estado: actualización publicada en el staging gratuito existente. Supabase confirmó 011_workspace_cloud y 40 tablas con RLS habilitada y forzada. Render confirmó Live para el commit d40e3c218dff7931a1b6dd084be735b70f561eeb. La copia local del puerto 8002 permanece intacta. APIs, IA y envíos están apagados; la aceptación autenticada de usuario y el traslado de datos locales se comprueban aparte. Producción no acreditada.
 
 ## Destinos existentes
 
@@ -26,7 +26,7 @@ Los archivos cargados permanecen en PostgreSQL mediante DatasetBlob. El disco ef
 3. Si pasa, pide la contraseña de BASE DE DATOS de Supabase en la consola local, exporta por TLS, cifra y ensaya la recuperación del esquema NEXO. No modifica la base de nube.
 4. Confirmar en NEXO_RESPALDO_NUBE_RESULTADO.json public_restore_verified=true y la fecha de esta ejecución. El archivo cifrado debe guardarse fuera de esta computadora, separado de su clave de recuperación. Auth/MFA y los objetos Storage requieren comprobación adicional.
 
-La herramienta de este chat no pudo completar PostgreSQL TCP: hubo bloqueo de socket y tiempos de espera. No se cuentan esos intentos como pruebas aprobadas. Las comprobaciones PostgreSQL WASM validan SQL/RLS, pero no prueban sockets, libpq, TLS, pool ni el ciclo real de Alembic. Debe pasar la ejecución nativa o la CI antes de modificar Supabase.
+La herramienta de este chat no pudo completar PostgreSQL TCP: hubo bloqueo de socket y tiempos de espera. No se cuentan esos intentos como pruebas aprobadas. Las comprobaciones PostgreSQL WASM validan SQL/RLS, pero no prueban sockets, libpq, TLS, pool ni el ciclo real de Alembic. La ejecución nativa posterior del usuario sí pasó; se conservan ambos resultados para no contar los intentos incompletos como aprobados.
 
 ## Aplicación controlada
 

@@ -51,10 +51,10 @@
 </head><body>
 
 <div id="nexoLogin" class="login-shade" aria-label="Inicio de sesión NEXO">
-  <div class="login-panel"><div class="login-emblem">✦</div><div class="eyebrow" id="loginBrand">NEXO · ENTORNO LOCAL</div><h2>Inteligencia política con rigor.</h2><p>Consulta el observatorio, los informes y las fuentes de tus proyectos.</p>
+  <div class="login-panel"><div class="login-emblem">✦</div><div class="eyebrow" id="loginBrand">NEXO · ACCESO PRIVADO</div><h2>Inteligencia política con rigor.</h2><p>Consulta el observatorio, los informes y las fuentes de tus proyectos.</p>
     <form id="loginForm"><label>Correo del analista<input id="loginEmail" type="email" placeholder="correo@ejemplo.com" required autocomplete="username"></label><label>Contraseña<input id="loginPassword" type="password" placeholder="••••••••••••" required autocomplete="current-password"></label><button type="submit" class="login-submit">Entrar al proyecto →</button></form>
     <form id="mfaForm" hidden><p id="mfaSetup" style="overflow-wrap:anywhere"></p><label>Código del autenticador<input id="mfaCode" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" autocomplete="one-time-code" required></label><button class="login-submit" type="submit">Verificar acceso</button></form>
-    <div class="login-error" id="loginError" role="alert"></div><div class="login-footer">Archivo local privado. Conexiones externas y generación con IA desactivadas.</div>
+    <div class="login-error" id="loginError" role="alert"></div><div class="login-footer">Acceso seguro a la información de tus proyectos.</div>
   </div>
 </div>
 
@@ -74,7 +74,7 @@
 <button class="nav-btn" data-page="reports"><span class="ni">▤</span> Reportes</button>
 <button class="nav-btn" data-page="accountAudit"><span class="ni">✓</span> Auditoría de cuentas</button>
 <button class="nav-btn" data-page="knowledge"><span class="ni">▧</span> Biblioteca</button>
-<button class="nav-btn" id="platformNav" data-page="platform" hidden><span class="ni">⚙</span> Configuración</button><div class="sb-bottom"><div class="status"><i></i> Archivo local privado</div><div class="sb-note">Tu proyecto, en un solo lugar.</div></div></aside>
+<button class="nav-btn" id="platformNav" data-page="platform" hidden><span class="ni">⚙</span> Configuración</button><div class="sb-bottom"><div class="status"><i></i> Archivo del proyecto</div><div class="sb-note">Tu proyecto, en un solo lugar.</div></div></aside>
 
 <main class="main">
 <header class="top"><button id="openNavigation" class="nexo-menu" type="button" aria-label="Abrir navegación" aria-expanded="false" aria-controls="navigationSidebar">☰</button>
@@ -85,7 +85,7 @@
   </div>
   <div class="top-right">
     <button type="button" id="logoutNexo" class="pill">Cerrar sesión</button>
-    <span class="pill demo-pill" id="dataStatus">● DEMOSTRACIÓN</span>
+    <span class="pill demo-pill" id="dataStatus">● DATOS DEL PROYECTO</span>
     <div class="avatar" id="projectAvatar">P</div>
   </div>
 </header>
@@ -220,7 +220,7 @@
 <div class="actions"><button id="deliveryPreview" class="outline" type="button">Ver mensaje del corte actual</button><button id="deliverySimulate" class="outline" type="button" disabled>Simular preparación del horario</button></div><p id="deliveryStatus" class="inline-status" role="status"></p><pre id="deliveryPreviewText" class="delivery-preview"></pre><div id="deliveryJobs"></div></details></div><div id="settingsPanel_data" data-settings-panel="data" role="tabpanel" aria-labelledby="settingsTab_data" hidden><div class="settings-stack"><div class="module-status operational">OPERATIVO · FUENTES LOCALES</div>
   <div class="sources-hero">
     <div>
-      <div class="eyebrow">[OPERATIVO] CENTRO DE DATOS · ENTORNO LOCAL</div>
+      <div class="eyebrow">CENTRO DE DATOS DEL PROYECTO</div>
       <h2>Tu proyecto, tus documentos.</h2>
       <p>Añade un archivo y consulta su contenido desde Biblioteca. El original se conserva dentro de su proyecto.</p>
     </div>
@@ -533,7 +533,7 @@ function page(name){
  document.querySelectorAll('[data-page]').forEach(x=>x.classList.toggle('active',x.dataset.page===name));
  byId('page-title').textContent=views[name][0];byId('page-sub').textContent=views[name][1];byId('breadcrumb').textContent=(name==='platform'?brandName:activeProjectName)+' / '+views[name][0];
  const state=byId(name).dataset.state;
- byId('dataStatus').textContent=state==='demo'?'● DEMOSTRACIÓN':state==='pending'?'● PENDIENTE DE INTEGRACIÓN':'● ARCHIVO LOCAL';
+ byId('dataStatus').textContent=state==='demo'?'● DEMOSTRACIÓN':state==='pending'?'● PENDIENTE DE INTEGRACIÓN':'● ARCHIVO DEL PROYECTO';
  byId('dataStatus').classList.toggle('real-pill',state==='operational');
  if(name==='platform'){settingsModule.reload();}
  if(name==='knowledge'){workbookModule.reload();libraryModule.reload().catch(e=>{byId('libraryStatus').textContent=e.message;});}else if(name==='accountAudit')accountAuditModule.reload();else if(name==='listening')explorerModule.reload();else if(name==='alerts')alertsModule.reload();else if(name==='continuity')continuityModule.reload();else if(name==='actors')actorsModule.reload();else if(name==='networks')networksModule.reload();else workbenchModule.reload(name);if(name==='summary'){briefingModule.reload();if(platformModule.allowed())deliveryModule.reload();}
@@ -810,7 +810,7 @@ byId('criticalDownload').onclick=()=>{
 
 byId('knowledgePrepareReport').onclick=()=>{const packet=lastContextPacket;if(!packet?.citations?.length)return;reportsModule.prepare(packet.question,packet.source_kind||(packet.document_id?'documents':'all'),packet.document_id||null);};
 const pulseModule=window.NexoPulse.install({api,byId,getProject:()=>activeProjectId});
-function applyBrand(brand){brandName=brand.name;byId('brandName').textContent=brand.name;byId('brandTagline').textContent=brand.tagline;byId('loginBrand').textContent=brand.name+' · ENTORNO LOCAL';document.title=brand.name+' · Espacio de trabajo';}
+function applyBrand(brand){brandName=brand.name;byId('brandName').textContent=brand.name;byId('brandTagline').textContent=brand.tagline;byId('loginBrand').textContent=brand.name+' · ACCESO PRIVADO';document.title=brand.name+' · Espacio de trabajo';}
 const workbenchModule=window.NexoWorkbench.install({api,byId,getProject:()=>activeProjectId});
 const libraryModule=window.NexoLibrary.install({api,byId,getProject:()=>activeProjectId,onSearchFocus:()=>page('knowledge'),onConfigureDocument:id=>settingsModule.focusWorkbook(id),onAddDocument:()=>settingsModule.open('data'),onScopeChange:()=>{
  contextSequence++;lastContextPacket=null;byId('knowledgeResults').replaceChildren();byId('knowledgeDownload').hidden=true;byId('knowledgePrepareReport').hidden=true;byId('knowledgeSearch').disabled=false;

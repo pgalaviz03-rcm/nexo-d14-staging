@@ -1,5 +1,5 @@
 {
-  "stage": "tested_candidate_not_deployed",
+  "stage": "staging_live",
   "native_postgres_passed": true,
   "native_revision": "011_workspace_cloud",
   "native_rls_tables": 40,
@@ -14,8 +14,17 @@
   "known_vulnerabilities": 0,
   "cloud_backup_public_restore_verified": true,
   "offsite_backup_private_verified": true,
-  "cloud_migration_applied": false,
-  "cloud_deployment_performed": false,
+  "cloud_migration_applied": true,
+  "cloud_deployment_performed": true,
   "external_ai_calls": 0,
-  "new_spending": false
+  "new_spending": false,
+  "initial_deployed_commit": "d40e3c218dff7931a1b6dd084be735b70f561eeb",
+  "render_deployment": "dep-dbp1l4ff3r2c73cupfk0",
+  "plan": "free",
+  "database_tls": "TLSv1.3",
+  "private_rows_hidden_without_identity": true,
+  "transaction_scope_reset_verified": true,
+  "local_data_transferred": false,
+  "authenticated_human_acceptance_pending": true,
+  "production_ready": false
 }

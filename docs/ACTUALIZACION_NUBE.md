@@ -1,60 +1,54 @@
-# NEXO · Actualización del desarrollo local al staging existente
+# NEXO · Staging de nube del D14
 
-Estado: actualización publicada en el staging gratuito existente. Supabase confirmó 011_workspace_cloud y 40 tablas con RLS habilitada y forzada. Render confirmó Live para el commit d40e3c218dff7931a1b6dd084be735b70f561eeb. La copia local del puerto 8002 permanece intacta. APIs, IA y envíos están apagados; la aceptación autenticada de usuario y el traslado de datos locales se comprueban aparte. Producción no acreditada.
+Actualizado el 9 de noviembre de 2026. NEXO está publicado en el servicio gratuito existente:
+[abrir NEXO](https://nexo-d14-staging.onrender.com/).
 
-## Destinos existentes
+Se comprobó en el navegador una sesión autenticada con MFA, el rol Superadministrador, Configuración, las cuatro fichas de actores y los tres documentos listos para buscar. La copia local del puerto 8002 se conserva. Esta entrega sigue siendo staging: APIs de redes, IA y envíos no se activaron.
 
-- Render: nexo-d14-staging, servicio srv-dbb87tu1egvs73dmckr0, plan Free.
-- Supabase: wxucnydbquvzurythrfs, organización NEXO D14 Staging, plan Free.
-- GitHub: pgalaviz03-rcm/nexo-d14-staging, privado.
-- Versión remota observada antes de actualizar: 9f67ec8585e7c88ec260e702e61a1ea66d22e164. No contiene los avances locales posteriores.
+## Acceso y administración
 
-## Cambios del candidato
+Usa la cuenta y contraseña de NEXO de nube y su autenticador. La contraseña de base de datos y las cuentas locales cumplen funciones distintas. No se copiaron contraseñas ni usuarios de SQLite.
 
-El nuevo punto de entrada app.cloud_main:app instala los módulos de trabajo sobre las mismas dependencias de autenticación y sesión de la API existente. main.py y knowledge.py conservan sus bytes locales validados. No se finge entorno local para saltar controles.
+Configuración concentra proyecto y accesos, actores y cuentas, equipo, medios/RSS, alertas y temas, integraciones, programación y documentos. El superadministrador puede gestionar todos los proyectos. Los usuarios de proyecto conservan consulta, sin configuración ni escrituras. Para dar acceso a una nueva cuenta: crear su identidad en Supabase y después vincular su correo e ID y asignar membresía desde NEXO. La aplicación no recibe una clave service_role ni administra las contraseñas de Supabase.
 
-La migración Alembic 011_workspace_cloud completa seis tablas: capturas de publicaciones, integrantes y acciones del equipo, configuración cifrada de integraciones, medios y referencias de sus publicaciones. Son 40 tablas privadas con RLS habilitada y forzada. No expone tablas a anon, authenticated o service_role ni usa funciones SECURITY DEFINER. Solo modifica políticas y permisos de las tablas conocidas de NEXO.
+## Contenido trasladado
 
-El superadministrador puede crear proyectos, vincular identidades existentes de Supabase y asignar membresías. La contraseña y el autenticador permanecen en Supabase. El servidor no recibe la clave service_role, no administra contraseñas del proveedor, no puede conceder PlatformGrant y no puede cambiar auth_subject, hashes o históricos. Las membresías del propietario se sincronizan en nuevas sesiones; un consultor sigue en lectura aunque tenga una etiqueta histórica admin/editor/analyst.
+- 3 originales de Biblioteca, sus 3 extracciones y los 6 contenidos durables en PostgreSQL. Se verificaron los bytes y SHA256 antes y después.
+- 20 noticias, fusionadas por enlace con las 10 que ya estaban en nube; 2 fuentes RSS.
+- 2 informes con 3 versiones y la habilitación previa de una versión para lectores.
+- 4 actores con sus perfiles, 2 reglas, 1 tema y 2 integrantes registrados.
+- Histórico conservado: 45 secciones, 41,984 votos territoriales y lista nominal de 65,378. No se sobrescribió.
 
-Los archivos cargados permanecen en PostgreSQL mediante DatasetBlob. El disco efímero de Render se usa solo para procesos temporales. No copiar SQLite al contenedor ni iniciar init_demo.py en nube.
+Los identificadores de documentos, fuentes y citas se remapearon. La versión 2 del informe de rezago conserva el filtro de su PDF. Los hashes de los informes se recalcularon para sus nuevas referencias, conservando el hash anterior y los identificadores de autor local en la procedencia de importación. Los registros en nube identifican al operador que importó, sin inventar identidades de autores locales.
 
-## Comprobaciones antes del cambio
+No se trasladaron muestras ficticias, capturas sociales de demostración, contraseñas, cuentas locales, colas de IA ni destinos de mensajería. Se mantuvo una instantánea local consistente del origen. La importación pasó un ensayo con reversión, se confirmó en una sola transacción y se verificó después. Repetir el mismo origen no duplica registros.
 
-1. Abrir PREPARAR_NEXO_NUBE.bat en outputs. Usa el entorno y PostgreSQL portátil ya existentes; no instala servicios ni ejecuta llamadas de IA.
-2. El primer paso crea un PostgreSQL nuevo en 127.0.0.1, con contraseña aleatoria, aplica Alembic y prueba el rol real nexo_app, los permisos y las rutas nuevas. Solo datos ficticios; detiene esa base al terminar.
-3. Si pasa, pide la contraseña de BASE DE DATOS de Supabase en la consola local, exporta por TLS, cifra y ensaya la recuperación del esquema NEXO. No modifica la base de nube.
-4. Confirmar en NEXO_RESPALDO_NUBE_RESULTADO.json public_restore_verified=true y la fecha de esta ejecución. El archivo cifrado debe guardarse fuera de esta computadora, separado de su clave de recuperación. Auth/MFA y los objetos Storage requieren comprobación adicional.
+## Infraestructura y seguridad verificadas
 
-La herramienta de este chat no pudo completar PostgreSQL TCP: hubo bloqueo de socket y tiempos de espera. No se cuentan esos intentos como pruebas aprobadas. Las comprobaciones PostgreSQL WASM validan SQL/RLS, pero no prueban sockets, libpq, TLS, pool ni el ciclo real de Alembic. La ejecución nativa posterior del usuario sí pasó; se conservan ambos resultados para no contar los intentos incompletos como aprobados.
+Render Free y Supabase Free existentes; ningún nuevo recurso de pago. Auto-deploy y previews permanecen apagados. La corrección funcional del arranque está en f646dd2f9315fec5726d2f1d2f8c4535a0c1333e y se conserva en esta entrega.
 
-## Aplicación controlada
+La entrada app.cloud_main:app reutiliza las dependencias de autenticación y autorización de la API. main.py y knowledge.py conservan sus bytes validados. La revisión de esquema es 011_workspace_cloud: 40 tablas privadas con RLS habilitada y forzada. El rol de ejecución nexo_app no es propietario, superusuario ni BYPASSRLS, no reescribe históricos, no concede superadministradores y no cambia vínculos de identidad.
 
-- Revisar el borrador de código y completar pruebas nativas. La CI del candidato es manual, con límite de 20 minutos por job: confirmar minutos incluidos y límite de gasto cero antes de ejecutarla.
-- Tener respaldo externo vigente y un procedimiento de restauración ensayado.
-- Revisar y autorizar la ampliación concreta de permisos de administración: crear proyectos, vincular identidades y gestionar membresías, exclusivamente para el PlatformGrant del propietario.
-- Con credenciales de migración temporales, aplicar Alembic hasta 011_workspace_cloud. El contenedor usa solo nexo_app; no recibe la contraseña postgres ni una clave service_role.
-- Provisionar el PlatformGrant para la cuenta ya vinculada del propietario, verificando correo y auth_subject en Supabase. No promover consultores ni copiar las claves locales.
-- Añadir NEXO_INTEGRATIONS_ENCRYPTION_KEY y NEXO_DELIVERY_ENCRYPTION_KEY independientes en secretos de Render y conservar recuperación privada. No pegarlas en GitHub ni en el chat. Preservar DATABASE_URL restringida, sslmode=verify-full y la CA existente.
-- NEXO_ENV=staging, NEXO_STORAGE_MODE=database, NEXO_AI_ENABLED=false. No marcar producción ni activar trabajos de proveedores.
-- Despliegue manual del commit exacto aprobado. Comprobar ready, login con MFA, Configuración de propietario, consulta de otra cuenta, aislamiento entre proyectos y carga durable de un archivo de prueba.
+La conexión PostgreSQL valida el nombre y la CA mediante verify-full; se observó TLS 1.3. HTTPS, CSP, HSTS y cabeceras de seguridad están presentes. Los endpoints privados devuelven 401 sin sesión. Los archivos están en DatasetBlob, no en el disco efímero de Render. Las claves de integraciones y envíos son independientes y permanecen en secretos del proveedor.
 
-## Datos de la copia local
+El arranque del navegador usa un único recurso de módulos versionado. Las consultas de la interfaz se limitan a dos simultáneas, incluyendo la lectura de la respuesta, para respetar el límite del servidor gratuito. Se conserva el límite del servidor. Los fallos iniciales de carga y concurrencia se comprobaron y corrigieron en la web.
 
-Este paquete es código: no contiene bases, documentos privados, integrantes, destinos o credenciales. El traslado de datos locales requiere comparar el contenido de nube, remapear los identificadores y conservar las referencias de informes, documentos y fuentes. No restaurar SQLite encima de Supabase ni sobrescribir históricos. La subida de código por sí sola no traslada los datos del piloto local.
+## Pruebas y evidencia
 
-## Reversión
+Pasaron 145 pruebas locales, 360 comprobaciones JS en 23 módulos, 39 comprobaciones SQL/RLS del trayecto 002→011, el ensayo nativo PostgreSQL del usuario, 26 pruebas finales de PDF y 9 comprobaciones de traslado. La regresión documental previa de 75 pruebas se solapa con PDF y no se suma. La auditoría de los 34 paquetes fijados no reportó vulnerabilidades conocidas en la comprobación realizada. pypdf del candidato de nube es 6.21.4; su proceso de extracción conserva límites de memoria, tiempo y descompresión.
 
-Las migraciones son aditivas pero cambian la revisión requerida por el preflight. Volver al contenedor antiguo sin restaurar una base compatible no basta: el arranque antiguo exige su propia revisión Alembic. No usar un downgrade destructivo ni borrar tablas en el proyecto original. La reversión se prepara con el respaldo verificado y una restauración aislada; después se cambia la conexión a la copia compatible. Mantener el staging anterior sin cambios hasta que estén listas las comprobaciones.
+/api/health y /api/ready respondieron 200; las rutas de proyectos y plataforma respondieron 401 sin sesión. El HTML y el recurso de módulos publicados coinciden con la fuente verificada. La CI de GitHub es manual y no se ejecutó como parte de esta publicación.
 
-## Límites de esta entrega
+El JSON de resultado distingue pruebas de código, comprobaciones de nube e importación. El ZIP es un paquete editable de código, no un respaldo de datos o de credenciales.
 
-No conecta Apify, IA, correo, Telegram ni WhatsApp, no programa envíos y no contrata recursos. El almacenamiento de claves solo prepara adaptadores futuros. WhatsApp sigue sin programador ni conector de envío. La revisión visual y el acceso real con MFA posteriores al despliegue siguen pendientes.
+## Respaldo y recuperación
 
-## Resultado de preparación del 9 de noviembre de 2026
+El respaldo previo cifrado pasó la recuperación del esquema público y quedó en el Drive privado elegido, con tamaño y permisos comprobados. La clave de recuperación no se subió junto al archivo. Conserva esa clave y las claves de cifrado de Render en tu gestor privado, fuera de esta computadora. La custodia externa de esas claves aún requiere comprobación del propietario.
 
-La ejecución nativa del usuario pasó: revisión 011_workspace_cloud, 40 tablas con RLS habilitada y forzada, prueba del rol de ejecución y composición de rutas aprobadas. El respaldo remoto se exportó, se cifró y pasó la restauración del esquema público; su archivo cifrado quedó en el Drive privado elegido, con tamaño y permisos comprobados. La clave de recuperación no se subió a esa carpeta.
+Auth/MFA y los objetos de Storage no se acreditaron como restaurados de extremo a extremo. Para revertir una revisión de esquema, restaurar primero en un entorno aislado compatible; cambiar solo a un contenedor antiguo puede fallar su preflight. No usar downgrade destructivo ni restaurar SQLite encima del proyecto existente.
 
-La auditoría detectó vulnerabilidades conocidas en pypdf 6.10.0. Se actualizó únicamente el candidato de nube a 6.21.4, se adoptó su API pública de límites en el proceso aislado y se verificó el rechazo de contenido comprimido excesivo. La auditoría final de los 34 paquetes fijados no reportó vulnerabilidades conocidas. Se conservaron la memoria y los tiempos máximos del proceso. Referencia: [cambios oficiales de pypdf 6.21.4](https://pypdf.readthedocs.io/en/6.21.4/meta/CHANGELOG.html).
+## Siguiente prueba del usuario
 
-Pasaron 145 pruebas locales, 353 comprobaciones JS, 39 de SQL/RLS del trayecto 002 a 011, una regresión documental de 75 pruebas y las 26 finales de PDF. Las ejecuciones de PDF se solapan y no se suman. El archivo RESULTADO_ACTUALIZACION_NUBE.json registra esta preparación; no acredita por sí solo el despliegue o la importación de datos.
+Actualiza NEXO y revisa Configuración, Actores, Biblioteca y Reportes. Busca «sección 158» en documentos: debe identificar PRIMO VERDAD INEGI y 438. Abre el informe «Prueba PDF rezago», versión 2, y comprueba sus páginas del mismo PDF. En Fidelidad deben aparecer los integrantes; los indicadores de interacciones esperan capturas reales.
+
+La prueba de una cuenta consultora real en nube sigue pendiente de crear o vincular esa identidad en Supabase. Las restricciones de consulta ya pasaron las pruebas de permisos. La aceptación final del usuario, el rendimiento con varios usuarios y la activación de proveedores se completan antes de declarar producción.

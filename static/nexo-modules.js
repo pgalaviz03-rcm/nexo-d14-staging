@@ -185,7 +185,7 @@ window.NexoReports={install({api,byId,page,getProject}){
   const provenance=el('details');provenance.append(el('summary','Integridad y procedencia'),el('p','Huella de la versión: '+report.sha256,'dataset-hash'),el('p','La copia conserva sus fragmentos. La huella detecta cambios; no certifica la veracidad de las fuentes.','note'));box.append(provenance);
   byId('reportVersionList').replaceChildren();controls();
  }
- async function loadReport(id,version){const token=++openSequence,pid=getProject(),gen=generation;message('Abriendo informe…');try{const result=await api(prefix()+'/'+id+(version?'/versions/'+version:''));if(!current(pid,gen)||token!==openSequence)return false;show(result);message('Informe recuperado del archivo local.');return true;}catch(e){if(current(pid,gen)&&token===openSequence)throw e;return false;}}
+ async function loadReport(id,version){const token=++openSequence,pid=getProject(),gen=generation;message('Abriendo informe…');try{const result=await api(prefix()+'/'+id+(version?'/versions/'+version:''));if(!current(pid,gen)||token!==openSequence)return false;show(result);message('Informe recuperado del archivo del proyecto.');return true;}catch(e){if(current(pid,gen)&&token===openSequence)throw e;return false;}}
  async function open(id,version){if(!safeToLeave())return false;return loadReport(id,version);}
  function renderList(){const q=normalize(byId('reportSearch').value),filter=byId('reportStateFilter').value,type=byId('reportTypeFilter').value;
   const list=byId('reportList');list.replaceChildren();const rows=archive.filter(r=>normalize(r.title).includes(q)&&(filter==='all'||r.state===filter)&&(type==='all'||r.origin===type));

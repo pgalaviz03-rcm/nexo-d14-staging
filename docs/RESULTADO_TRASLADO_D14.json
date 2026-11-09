@@ -1,0 +1,26 @@
+{
+  "status": "committed_and_verified",
+  "source_sha256": "da21cb828f8b95f576a7a1557cda0a68087b6aec90e0fdc7fe5ce341f549cd5c",
+  "cloud_committed": true,
+  "original_bytes_verified": true,
+  "history_unchanged": true,
+  "readers_verified": true,
+  "counts": {
+    "datasets": 6,
+    "dataset_blobs": 6,
+    "news_articles": 20,
+    "reports": 2,
+    "report_versions": 3,
+    "report_releases": 1,
+    "pulse_actors": 4,
+    "actor_profiles": 4,
+    "pulse_rules": 2,
+    "fidelity_team_members": 2,
+    "pulse_documents": 0,
+    "pulse_mentions": 0,
+    "pulse_accounts": 0
+  },
+  "credentials_copied": false,
+  "demo_rows_copied": 0,
+  "original_author_ids_in_import_audit": true
+}

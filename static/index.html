@@ -354,7 +354,7 @@
 <aside class="panel"><h3>Mi selección <span class="pill" id="explorerSelectedCount">0</span></h3><p class="note">Hasta ocho evidencias. Conserva la selección al recorrer páginas y filtros.</p><div id="explorerChosen"></div><div class="actions"><button class="solid" id="explorerPrepare" disabled>Preparar selección</button><button class="outline" id="explorerClearSelection">Vaciar selección</button><button class="outline" id="explorerSelectionDownload" disabled>Descargar selección</button></div><p id="explorerSelectionStatus" role="status"></p><div id="explorerSelectionPreview"></div>
 <form id="explorerSaveForm" hidden data-owner-only><label>Título del informe <input id="explorerReportTitle" minlength="3" maxlength="140" required placeholder="Título de tu selección"></label><label>Nota del equipo <textarea id="explorerReportNote" rows="3" maxlength="2000"></textarea></label><button class="solid" id="explorerSave" disabled>Guardar en Reportes</button></form></aside></div>
 <article class="panel" id="explorerDetail" hidden style="margin-top:16px"><div class="panel-head"><h3 id="explorerDetailTitle"></h3><button class="outline" id="explorerDetailClose">Cerrar detalle</button></div><p class="note" id="explorerDetailMeta"></p><p id="explorerDetailText" style="white-space:pre-wrap;overflow-wrap:anywhere"></p><div id="explorerDetailLinks"></div><p id="explorerDetailHash" class="note" style="overflow-wrap:anywhere"></p></article>
-<details class="panel" style="margin-top:18px"><summary>Radar RSS y administración de fuentes</summary><div class="actions explore-tools"><button class="outline" type="button" data-page="review">Revisar publicaciones</button><button class="outline" type="button" data-page="knowledge">Buscar documentos</button><button class="outline" type="button" data-page="agents">Preparar ficha rápida</button></div><div class="module-status operational">OPERATIVO · ARCHIVO LOCAL</div>
+<details class="panel" style="margin-top:18px"><summary>Radar RSS y administración de fuentes</summary><div class="actions explore-tools"><button class="outline" type="button" data-page="review">Revisar publicaciones</button><button class="outline" type="button" data-page="knowledge">Buscar documentos</button><button class="outline" type="button" data-page="agents">Preparar ficha rápida</button></div><div class="module-status operational">OPERATIVO · ARCHIVO DEL PROYECTO</div>
 <div class="live-wrap" id="liveListening">
   <div class="live-hd">
     <div>
@@ -421,11 +421,11 @@
 <section class="section" id="knowledge" data-state="operational"><div class="module-status operational">OPERATIVO · BIBLIOTECA LOCAL</div>
  <div class="sources-hero">
    <div>
-     <div class="eyebrow">[OPERATIVO] BIBLIOTECA LOCAL · NEXO + ATALAYA</div>
+     <div class="eyebrow">BIBLIOTECA · FUENTES DEL PROYECTO</div>
      <h2>Primero la evidencia.</h2>
      <p>Consulta noticias y documentos del proyecto. Las selecciones de Excel conservan archivo, hoja y celdas de origen.</p>
    </div>
-   <div class="source-count"><span>ARCHIVO LOCAL</span><strong id="knowledgeCount">—</strong><small>noticias guardadas</small></div>
+   <div class="source-count"><span>ARCHIVO DEL PROYECTO</span><strong id="knowledgeCount">—</strong><small>noticias guardadas</small></div>
  </div>
 
  <div class="grid2 sources-grid">
@@ -487,7 +487,7 @@
 <div class="modalwrap" id="modal"><div class="modal"><button class="close" id="closeModal">×</button><h2 id="modalTitle">Información</h2><p id="modalText"></p><button class="solid" id="modalDone" style="margin-top:8px">Entendido</button></div></div>
 <div class="toast" id="toast" role="status"></div>
 
-<script src="/assets/nexo-modules.js?v=badf033cde3c70fc"></script>
+<script src="/assets/nexo-modules.js?v=fde2d3ca98860802"></script>
 <script>
 (function(){
 const byId=id=>document.getElementById(id);

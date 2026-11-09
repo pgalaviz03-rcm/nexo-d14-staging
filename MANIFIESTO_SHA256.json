@@ -62,7 +62,7 @@
   "app/network_port.py": "de59cdd756506f7d59adf4cc6f4b60ea04b35bc61565498c924bbfce9e109977",
   "app/network_service.py": "3c42e11fa3090298bf2c8f123077897f5031964a6c5c0c6d5169f4cfcd3a9f5d",
   "app/news_review.py": "8327dd98c3b08582373fdff417d0ae95cc6241dd654f69f165227c568c86c3b5",
-  "app/pdf_evidence.py": "71ff63547a5fbcdb1bf3834a53adb8ff3d5a07cdb9827d528bac4fe5762e3ef2",
+  "app/pdf_evidence.py": "195b2f52f3c332ca8fc8790579659b723a8c8e198b8884306539e3135d3d05de",
   "app/platform_access.py": "3bef94d5e6368ece66255134ab463eb040c4673a6551cd9c7daa8f81f125edfc",
   "app/platform_api.py": "4d3272599f8e85be53bf403a2f0d53ee0c11826c8fa1e90646c1b05712805f6f",
   "app/preflight.py": "25f35f8e82bc56843635dd7fa311dd4591b22d1893eb9f26fb0e5f2bf569c28e",
@@ -94,7 +94,7 @@
   "docs/ACTORES.md": "5fb78516c8e98b4b77c9a2c5ebb7cf0cd1ce847c52e02372d130e4f0ea28ee40",
   "docs/ACTORES_RESULTADO.json": "c3e07a6ae1293c7ece86fb3767149a315c74de7dbfd3a72b45d5ccc9099196b6",
   "docs/ACTORES_SQL_WASM_RESULTADO.json": "545e0f77bba4c989164be9482ab37187fb6926d82b6da364e622f9786b7ada1d",
-  "docs/ACTUALIZACION_NUBE.md": "f7727bf84f1d209a958313148cac2a7c7c85424ace2dd57115877ddddd14439a",
+  "docs/ACTUALIZACION_NUBE.md": "b5ece4a6ad0e799700bfb4e89acb04ff4817ad877735322829c7a9e88f7d722f",
   "docs/ALERTAS.md": "02ad265b895be30ed51f3360aa5b763deac4d92c410de40248a95f89874936d1",
   "docs/ALERTAS_RESULTADO.json": "d6bf3b1af0878cddc9a5372f184245ca7fd8880a6ce66e4c3bb06e8b439a4b17",
   "docs/ALERTAS_SQL_WASM_RESULTADO.json": "7d12c5641e77eb4b2ff292a5b44c35751e59caa8ccb14d27b22734170ffa283a",
@@ -201,7 +201,7 @@
   "migrations/versions/010_alerts.py": "713d55e14834a903c306d3cecb4a85eb9a9fc6f02fceb3e23565100aeaba1a64",
   "migrations/versions/011_workspace_cloud.py": "704ed872918cee68e5c3ce6f15ea3cf0068cd25ff407d3bc69ba5c2721d091e5",
   "requirements-dev.txt": "8a2d8d8e62e57701136342fd4de415a4975a34dec7babec160965d7c80882536",
-  "requirements.txt": "ba9f1921ed1ef429e4a8b07519b496fe3b5a501f880d8a89a2ac090458d38140",
+  "requirements.txt": "9fc4754dc497a2164ae698669dfb76c1479d53b10a913b7b041844b37358d778",
   "scripts/backup.sh": "a7869ae2023d84656d504ca6eb702d5e14167d4a6a4b0e197fab09c1a6e1ac37",
   "scripts/backup_local.py": "79618ef9114592a7d1e055603bb1769ec4784137e3218c5abd89eed0bd60dbcd",
   "scripts/backup_workspace.py": "0567963aaa227e8e1a703027eb7aef2e31b24af5d05f01b21f66d76ef58fcfca",
@@ -293,7 +293,7 @@
   "tests/test_manual_reviews.py": "611cf60660dae38d72f1b53d17b7a6d399f5ce7ff311bdee6c428a5647264632",
   "tests/test_networks.py": "5cf7fa4413d412cec618ca361a800bcdffc466eb4683cd55d958ea640245e7c9",
   "tests/test_news_review.py": "6088a1e18f474cf4649e286fbb26e60c4d3b7d375edb026aa94763c0d149fa0e",
-  "tests/test_pdf_library.py": "9ed68f37d3c8da66cefd44885f44417c44061385fc1cf059cd669a959094188a",
+  "tests/test_pdf_library.py": "9bccca7e5fc531759e5edcf3b3c484145405ac5a2ffd7d76c93d03728a23ddd4",
   "tests/test_postgres.py": "2af8eb0a0e57d8d3b13d6b01998fb06e763c48a50a272a4b5e3371d2f2c4c2cc",
   "tests/test_project_admin.py": "c1d53afd4ada2925ba16acd66fd5f4a4b33835bfa3b4862634e4e9a2b08874c9",
   "tests/test_project_journeys.py": "e1be4f46b5496f22a4d4d8653dda2c1b82f438ea1bd8aa8d033aba03ef7cd384",
@@ -304,5 +304,6 @@
   "tests/test_rss.py": "a9fa52a31a9b8accef518713163674eee0a7905d893e4f61da6cc207e1759acc",
   "tests/test_security_v05.py": "74674f6e29e148751ec40b4443775ad2e3d60432821e4e465355a8bb674a52f3",
   "tests/test_territory.py": "639ad66d6f16e27a91717b0870354bd8b9955ff5809f0b7dba1cebc3b87a6309",
-  "tests/test_workbook_evidence.py": "9fd1e4e76e2b45f60528baf8934b4fade673725bc2dadcd3cf301b505aff2fc5"
+  "tests/test_workbook_evidence.py": "9fd1e4e76e2b45f60528baf8934b4fade673725bc2dadcd3cf301b505aff2fc5",
+  "docs/RESULTADO_ACTUALIZACION_NUBE.json": "483d713ae2a20ca23f86554dbbc3ce5729b0eb1f4a0beec61abc83317836d7d4"
 }

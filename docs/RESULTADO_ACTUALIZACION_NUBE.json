@@ -1,0 +1,21 @@
+{
+  "stage": "tested_candidate_not_deployed",
+  "native_postgres_passed": true,
+  "native_revision": "011_workspace_cloud",
+  "native_rls_tables": 40,
+  "local_unit_tests": 145,
+  "javascript_checks": 353,
+  "sql_wasm_upgrade_checks": 39,
+  "final_pdf_tests": 26,
+  "pdf_regression_prior_run": 75,
+  "test_runs_overlap": true,
+  "pypdf_version": "6.21.4",
+  "dependency_packages_audited": 34,
+  "known_vulnerabilities": 0,
+  "cloud_backup_public_restore_verified": true,
+  "offsite_backup_private_verified": true,
+  "cloud_migration_applied": false,
+  "cloud_deployment_performed": false,
+  "external_ai_calls": 0,
+  "new_spending": false
+}

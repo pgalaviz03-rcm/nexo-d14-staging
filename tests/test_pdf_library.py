@@ -175,3 +175,14 @@ def test_upload_request_body_allowance_is_limited_to_upload_route(path,size,expe
     task=Guard(downstream,'test')(dict(type='http',method='POST',path=path,headers=[]),receive,send)
     with pytest.raises(StopIteration):task.send(None)
     assert next(m['status'] for m in messages if m['type']=='http.response.start')==expected
+
+
+def test_compressed_large_content_is_rejected_in_isolated_worker(tmp_path):
+    writer=PdfWriter();page=writer.add_blank_page(width=600,height=800)
+    font=DictionaryObject({NameObject('/Type'):NameObject('/Font'),NameObject('/Subtype'):NameObject('/Type1'),NameObject('/BaseFont'):NameObject('/Helvetica')})
+    page[NameObject('/Resources')]=DictionaryObject({NameObject('/Font'):DictionaryObject({NameObject('/F1'):font})})
+    stream=DecodedStreamObject();stream.set_data(b'BT /F1 12 Tf 30 700 Td ('+b'X'*(8*1024*1024)+b') Tj ET')
+    page[NameObject('/Contents')]=writer._add_object(stream.flate_encode())
+    output=io.BytesIO();writer.write(output)
+    assert len(output.getvalue())<100000
+    with pytest.raises(PdfInvalid):extract_pdf(output.getvalue(),tmp_path)

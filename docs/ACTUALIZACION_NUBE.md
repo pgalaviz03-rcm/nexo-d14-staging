@@ -50,3 +50,11 @@ Las migraciones son aditivas pero cambian la revisión requerida por el prefligh
 ## Límites de esta entrega
 
 No conecta Apify, IA, correo, Telegram ni WhatsApp, no programa envíos y no contrata recursos. El almacenamiento de claves solo prepara adaptadores futuros. WhatsApp sigue sin programador ni conector de envío. La revisión visual y el acceso real con MFA posteriores al despliegue siguen pendientes.
+
+## Resultado de preparación del 9 de noviembre de 2026
+
+La ejecución nativa del usuario pasó: revisión 011_workspace_cloud, 40 tablas con RLS habilitada y forzada, prueba del rol de ejecución y composición de rutas aprobadas. El respaldo remoto se exportó, se cifró y pasó la restauración del esquema público; su archivo cifrado quedó en el Drive privado elegido, con tamaño y permisos comprobados. La clave de recuperación no se subió a esa carpeta.
+
+La auditoría detectó vulnerabilidades conocidas en pypdf 6.10.0. Se actualizó únicamente el candidato de nube a 6.21.4, se adoptó su API pública de límites en el proceso aislado y se verificó el rechazo de contenido comprimido excesivo. La auditoría final de los 34 paquetes fijados no reportó vulnerabilidades conocidas. Se conservaron la memoria y los tiempos máximos del proceso. Referencia: [cambios oficiales de pypdf 6.21.4](https://pypdf.readthedocs.io/en/6.21.4/meta/CHANGELOG.html).
+
+Pasaron 145 pruebas locales, 353 comprobaciones JS, 39 de SQL/RLS del trayecto 002 a 011, una regresión documental de 75 pruebas y las 26 finales de PDF. Las ejecuciones de PDF se solapan y no se suman. El archivo RESULTADO_ACTUALIZACION_NUBE.json registra esta preparación; no acredita por sí solo el despliegue o la importación de datos.

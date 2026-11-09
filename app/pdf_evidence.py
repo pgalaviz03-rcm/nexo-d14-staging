@@ -85,11 +85,15 @@ def _worker(source,output):
         import resource
         resource.setrlimit(resource.RLIMIT_AS,(512*1024*1024,512*1024*1024))
         resource.setrlimit(resource.RLIMIT_CPU,(20,20))
-    from pypdf import PdfReader,filters
-    # Bound individual decoded streams as well as process memory and wall time.
-    for name in ('MAX_DECLARED_STREAM_LENGTH','MAX_ARRAY_BASED_STREAM_OUTPUT_LENGTH',
-                 'LZW_MAX_OUTPUT_LENGTH','RUN_LENGTH_MAX_OUTPUT_LENGTH','ZLIB_MAX_OUTPUT_LENGTH'):
-        setattr(filters,name,8*1024*1024)
+    from pypdf import PdfReader,overwrite_configuration,__version__
+    # Public pypdf configuration API, scoped to this isolated worker.
+    limit=8*1024*1024
+    overwrite_configuration(maximum_declared_stream_length=limit,
+        array_based_stream_maximum_output_length=limit,lzw_maximum_output_length=limit,
+        run_length_maximum_output_length=limit,zlib_maximum_output_length=limit,
+        jbig2_maximum_output_length=limit,brotli_maximum_output_length=limit,
+        image_maximum_buffer_size=limit,stream_decoding_work_maximum_length=3*limit,
+        disable_legacy_handling=True)
     raw=Path(source).read_bytes()
     reader=PdfReader(io.BytesIO(raw),strict=True)
     if reader.is_encrypted:raise PdfInvalid('El PDF está protegido con contraseña. Sube una copia autorizada sin protección.')
@@ -104,7 +108,7 @@ def _worker(source,output):
         if not text:empty.append(index)
         pages.append(dict(number=index,text=text))
     packet=dict(contract=CONTRACT,page_count=count,pages=pages,empty_pages=empty,
-                text_chars=total,extractor='pypdf-6.10.0',ocr_used=False)
+                text_chars=total,extractor='pypdf-'+__version__,ocr_used=False)
     encoded=json.dumps(packet,ensure_ascii=False,sort_keys=True).encode('utf-8')
     if len(encoded)>MAX_PACKET:raise PdfInvalid('El texto del PDF supera el límite local. Divide el documento.')
     Path(output).write_bytes(encoded)

@@ -231,7 +231,7 @@
   "static/fidelity.css": "5327b1def334039eb39ed85cb6cf71c21675128756fd21aa806666aa62a1ac66",
   "static/fidelity.js": "e24f961ecfb77add4aed431d1513e7e616269249e567ff54eaa4ec595932eba0",
   "static/fidelity_team.js": "5de468504f7a6cbc475aa91c046ed7b7233e93f3fa68f43839be533f90025359",
-  "static/index.html": "80d6266776e529d55a3a29bb578266273a1f538462c27d95cd7d8528e94e8f26",
+  "static/index.html": "19570d329904dbc5cfa7f50ec8c340c7651f2b032c51c4d4a28e69ff7032a11b",
   "static/library.js": "125f3f10f399a0b7416a0d8bf847193c26523909e06aaf2929b0f07dea4c2b71",
   "static/networks.js": "fcc7212bc05ef63de3fc8193e556ccd6434c020e72ad2bd3bbd47574fb775e85",
   "static/platform.js": "c7d7881e50afa5d40c57330aaa6b07e9a40897cd33f45dd92923a2ef357699f9",
@@ -305,5 +305,8 @@
   "tests/test_security_v05.py": "74674f6e29e148751ec40b4443775ad2e3d60432821e4e465355a8bb674a52f3",
   "tests/test_territory.py": "639ad66d6f16e27a91717b0870354bd8b9955ff5809f0b7dba1cebc3b87a6309",
   "tests/test_workbook_evidence.py": "9fd1e4e76e2b45f60528baf8934b4fade673725bc2dadcd3cf301b505aff2fc5",
-  "docs/RESULTADO_ACTUALIZACION_NUBE.json": "831a54b8b0b307cf7d9cfd0132c401db95050e93d7ae3291d8492db63501fe89"
+  "docs/RESULTADO_ACTUALIZACION_NUBE.json": "831a54b8b0b307cf7d9cfd0132c401db95050e93d7ae3291d8492db63501fe89",
+  "tests/check_bootstrap.mjs": "18c738da4367b5a5888573bc16b40e3d00318d2aab2093b1f0cc656f0562cabb",
+  "scripts/build_browser_bundle.py": "4252e39cb086c7ae45a394d041f9f03b28f48c812bd7aba8a9812e662745da0d",
+  "static/nexo-modules.js": "badf033cde3c70fcf0085b3d303cfdfbaea4851d4d112b187f900bf2e42695ca"
 }

@@ -1,3 +1,5 @@
+> Estado actual: integrado en main y desplegado en staging gratuito. PR #1 fusionada; commit 9f67ec8585e7c88ec260e702e61a1ea66d22e164. Filtros y resumen verificados en nube. El texto candidato inferior conserva el diseño de la prueba previa.
+
 # NEXO + Atalaya · Comparación y primera integración
 
 19 de octubre de 2026. Piloto D14. Presupuesto autorizado: **USD 0 / MXN 0**. Producción deshabilitada.

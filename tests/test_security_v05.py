@@ -145,6 +145,8 @@ def test_dns_mixed_private_addresses_rejected(monkeypatch):
 
 
 def test_fetch_connects_to_pinned_address_and_no_redirects(monkeypatch):
+    # The connection and DNS are fully replaced below; no live request is made.
+    monkeypatch.setenv('NEXO_OFFLINE','false')
     monkeypatch.setenv('NEXO_RSS_ALLOWED_HOSTS','feed.example')
     looked=[];connected=[]
     monkeypatch.setattr(listening,'resolve_public',lambda host:looked.append(host) or ['8.8.8.8'])

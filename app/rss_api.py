@@ -66,6 +66,8 @@ def install_rss_api(app,db,current_user,allow):
     @app.post('/api/projects/{pid}/feeds/{fid}/sync')
     def refresh_feed(pid:int,fid:int,user=Depends(current_user),session:Session=Depends(db)):
         allow(pid,user,session,roles={'admin','editor','analyst'})
+        if os.getenv('NEXO_OFFLINE')=='true':
+            raise HTTPException(409,'Modo local sin conexiones externas. Puedes revisar lo guardado o importar CSV.')
         take_quota(session,pid,'rss.sync',96)
         source=session.scalar(select(FeedSource).where(FeedSource.id==fid,FeedSource.project_id==pid).with_for_update())
         if not source:raise HTTPException(404,'Fuente no disponible')

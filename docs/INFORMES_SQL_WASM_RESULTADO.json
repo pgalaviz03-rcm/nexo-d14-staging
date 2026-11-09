@@ -1,0 +1,200 @@
+{
+  "engine": "PGlite PostgreSQL WASM",
+  "version": {
+    "version": "PostgreSQL 18.6 (PGlite 0.5.10) on wasm32-unknown-emscripten, compiled by emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 6.0.5 (1db513782be24469589d7cb8a1f1834e9a33f271), 32-bit"
+  },
+  "tests": [
+    {
+      "test": "No actor sees zero private rows",
+      "status": "passed"
+    },
+    {
+      "test": "Alice sees only project A",
+      "status": "passed"
+    },
+    {
+      "test": "Cannot add membership",
+      "status": "passed"
+    },
+    {
+      "test": "Cannot escalate membership",
+      "status": "passed"
+    },
+    {
+      "test": "Cannot alter historical data",
+      "status": "passed"
+    },
+    {
+      "test": "Cannot read another user password row",
+      "status": "passed"
+    },
+    {
+      "test": "Cannot insert another project article",
+      "status": "passed"
+    },
+    {
+      "test": "Can add own project dataset and blob",
+      "status": "passed"
+    },
+    {
+      "test": "Cannot alter feed URLs through DB role",
+      "status": "passed"
+    },
+    {
+      "test": "Viewer reads historical data",
+      "status": "passed"
+    },
+    {
+      "test": "Viewer cannot insert article",
+      "status": "passed"
+    },
+    {
+      "test": "Viewer cannot insert dataset",
+      "status": "passed"
+    },
+    {
+      "test": "Bob cannot see project A blob",
+      "status": "passed"
+    },
+    {
+      "test": "Bob sees only project B",
+      "status": "passed"
+    },
+    {
+      "test": "Transaction-local actor is cleared on commit",
+      "status": "passed"
+    },
+    {
+      "test": "No identity sees no manual-review data",
+      "status": "passed"
+    },
+    {
+      "test": "Own project manual-review data only",
+      "status": "passed"
+    },
+    {
+      "test": "Cannot create foreign project topic",
+      "status": "passed"
+    },
+    {
+      "test": "Composite review FK rejects foreign article",
+      "status": "passed"
+    },
+    {
+      "test": "Composite label FK rejects foreign topic",
+      "status": "passed"
+    },
+    {
+      "test": "Runtime cannot move topic to another project",
+      "status": "passed"
+    },
+    {
+      "test": "Runtime cannot update revision history",
+      "status": "passed"
+    },
+    {
+      "test": "Runtime cannot delete revision history",
+      "status": "passed"
+    },
+    {
+      "test": "Viewer can read own review history",
+      "status": "passed"
+    },
+    {
+      "test": "Viewer cannot create topic",
+      "status": "passed"
+    },
+    {
+      "test": "Viewer cannot change review",
+      "status": "passed"
+    },
+    {
+      "test": "Viewer cannot remove labels",
+      "status": "passed"
+    },
+    {
+      "test": "Analyst cannot manage topics",
+      "status": "passed"
+    },
+    {
+      "test": "Analyst can review and append own revision",
+      "status": "passed"
+    },
+    {
+      "test": "Analyst cannot forge another reviewer identity",
+      "status": "passed"
+    },
+    {
+      "test": "Foreign admin cannot see own-project history",
+      "status": "passed"
+    },
+    {
+      "test": "No identity sees no reports",
+      "status": "passed"
+    },
+    {
+      "test": "Viewer reads only released report snapshots",
+      "status": "passed"
+    },
+    {
+      "test": "Viewer cannot see an unreleased report",
+      "status": "passed"
+    },
+    {
+      "test": "Viewer cannot add a report",
+      "status": "passed"
+    },
+    {
+      "test": "Viewer cannot publish a report",
+      "status": "passed"
+    },
+    {
+      "test": "Analyst sees own-project drafts",
+      "status": "passed"
+    },
+    {
+      "test": "Analyst can append a report version",
+      "status": "passed"
+    },
+    {
+      "test": "Analyst cannot publish",
+      "status": "passed"
+    },
+    {
+      "test": "Runtime cannot alter saved snapshots",
+      "status": "passed"
+    },
+    {
+      "test": "Runtime cannot delete reports or snapshots",
+      "status": "passed"
+    },
+    {
+      "test": "Cannot forge snapshot author",
+      "status": "passed"
+    },
+    {
+      "test": "Composite version FK rejects a foreign report",
+      "status": "passed"
+    },
+    {
+      "test": "Composite release FK rejects a foreign version",
+      "status": "passed"
+    },
+    {
+      "test": "Admin releases current own-project snapshot",
+      "status": "passed"
+    },
+    {
+      "test": "Release history cannot be rewritten",
+      "status": "passed"
+    },
+    {
+      "test": "Foreign admin cannot read report snapshots",
+      "status": "passed"
+    },
+    {
+      "test": "All tenant and identity tables have forced RLS",
+      "status": "passed"
+    }
+  ]
+}

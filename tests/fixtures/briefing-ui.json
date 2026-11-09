@@ -1,0 +1,161 @@
+{
+  "mode": "local_documentary_briefing_v1",
+  "project_id": 1,
+  "project_name": "Proyecto de ejemplo",
+  "filters": {
+    "start": "2026-10-13T18:31:17.407196+00:00",
+    "end": "2026-10-20T18:31:17.407196+00:00",
+    "end_exclusive": true
+  },
+  "news_count": 1,
+  "news_without_publication_date": 0,
+  "review_status": {
+    "unreviewed": 1,
+    "reviewed": 0,
+    "needs_check": 0
+  },
+  "news": [
+    {
+      "citation": "N1",
+      "title": "Fuente <script>literal</script>",
+      "source": "Medio ficticio",
+      "url": "https://example.org/brief-fixture",
+      "excerpt": "Extracto ficticio con <b>texto literal</b>.",
+      "at": "2026-10-20T17:31:17.407196+00:00",
+      "date_basis": "publication",
+      "review_status": "unreviewed"
+    }
+  ],
+  "sources": [
+    {
+      "name": "Medio ficticio",
+      "count": 1
+    }
+  ],
+  "topics": [],
+  "documents_in_archive": 0,
+  "pulse": {
+    "metrics": {
+      "mentions": 0,
+      "classified": 0,
+      "classification_coverage": null,
+      "score": null,
+      "positive": 0,
+      "neutral": 0,
+      "negative": 0,
+      "negative_share": null,
+      "share": null,
+      "baseline_score": null,
+      "baseline_classified": 0,
+      "score_delta": null
+    },
+    "minimum_classified": 20,
+    "alerts": [],
+    "active_alerts": null,
+    "rules_configured": 0,
+    "alerts_evaluated": 0,
+    "latest_collection": null,
+    "sources": [],
+    "methods": {
+      "score": "(favorables + 0.5 × neutrales) / menciones clasificadas × 100",
+      "share": "Menciones del actor / menciones de actores monitoreados, mismo proyecto, periodo y canal.",
+      "baseline": "Tono de los 90 días previos al inicio; diferencia en puntos del índice.",
+      "volume_baseline": "Periodo inmediatamente anterior de igual duración.",
+      "interpretation": "Tono del contenido observado; no encuesta ni estimación del ánimo de la población.",
+      "reach": "Vistas declaradas por la fuente; no audiencia única. Sin vistas, el orden usa fecha."
+    },
+    "actor_count": 0
+  },
+  "citations": [
+    {
+      "citation": "N1",
+      "project_id": 1,
+      "kind": "news",
+      "title": "Fuente <script>literal</script>",
+      "source": "Medio ficticio",
+      "url": "https://example.org/brief-fixture",
+      "excerpt": "Fuente <script>literal</script>\nExtracto ficticio con <b>texto literal</b>.",
+      "published_at": "2026-10-20T17:31:17.407196+00:00",
+      "content_sha256": "35b84286a87126b2f8e9afcf09185274de8352f682735e94a40229037f98f9c0"
+    }
+  ],
+  "content_analytics": {
+    "unit": "URL guardada única del corpus del proyecto; coincidencias de URL exactas se agrupan.",
+    "pieces": 1,
+    "ai_analyzed_pieces": 0,
+    "ai_provenance": [],
+    "ai_provenance_bounded": false,
+    "tone_classified": 0,
+    "tone_coverage": 0.0,
+    "tone": [
+      {
+        "label": "positive",
+        "count": 0,
+        "percentage": null
+      },
+      {
+        "label": "neutral",
+        "count": 0,
+        "percentage": null
+      },
+      {
+        "label": "negative",
+        "count": 0,
+        "percentage": null
+      }
+    ],
+    "mood_index": null,
+    "mood": "Sin cobertura suficiente",
+    "emotion_classified": 0,
+    "emotions": [
+      {
+        "emotion": "joy",
+        "count": 0,
+        "percentage": null
+      },
+      {
+        "emotion": "anger",
+        "count": 0,
+        "percentage": null
+      },
+      {
+        "emotion": "surprise",
+        "count": 0,
+        "percentage": null
+      },
+      {
+        "emotion": "fear",
+        "count": 0,
+        "percentage": null
+      },
+      {
+        "emotion": "sadness",
+        "count": 0,
+        "percentage": null
+      }
+    ],
+    "mockery_classified": 0,
+    "mockery_count": 0,
+    "mockery_percentage": null,
+    "minimum_classified": 20,
+    "methodology": "Porcentajes entre piezas clasificadas en cada dimensión; burla puede coexistir con tono o emoción. URL diferentes pueden corresponder al mismo contenido. Etiquetas contradictorias en una URL quedan sin clasificación en esa dimensión."
+  },
+  "coverage": {
+    "news_limit": 8,
+    "news_truncated": false,
+    "source_list_bounded": false,
+    "topic_list_bounded": false,
+    "pulse_source_limit": 6,
+    "alert_list_limit": 5,
+    "alert_list_bounded": false,
+    "not_indexed": [],
+    "bounded": false
+  },
+  "interpretation": "Lectura del archivo del proyecto. Tono del contenido clasificado, no encuesta. Revisado no significa verificado. No hay análisis generativo ni recomendaciones automáticas.",
+  "ai_used": false,
+  "external_calls": 0,
+  "is_demo": false,
+  "preview_sha256": "19d9315176eaca4d9352d22fd66ffdd00fb0dba8d6726c980a86116d2d33f3df",
+  "prepared_at": "2026-10-20T18:31:17.532562+00:00",
+  "can_save": true
+}

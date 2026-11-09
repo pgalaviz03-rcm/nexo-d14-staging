@@ -26,6 +26,10 @@ services:
         sync: false
       - key: NEXO_SUPABASE_PUBLISHABLE_KEY
         sync: false
+      - key: NEXO_INTEGRATIONS_ENCRYPTION_KEY
+        sync: false
+      - key: NEXO_DELIVERY_ENCRYPTION_KEY
+        sync: false
       - key: NEXO_RSS_ALLOWED_HOSTS
         value: ''
 # CA del proyecto como Secret File: /etc/secrets/supabase-ca.crt.

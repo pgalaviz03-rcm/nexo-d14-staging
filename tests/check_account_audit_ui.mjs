@@ -1,0 +1,54 @@
+import fs from 'node:fs';
+import vm from 'node:vm';
+import assert from 'node:assert/strict';
+const script=fs.readFileSync(new URL('../static/account_audit.js',import.meta.url),'utf8');
+const html=fs.readFileSync(new URL('../static/index.html',import.meta.url),'utf8');
+class Element{constructor(tag='div'){this.tagName=tag;this.children=[];this.value='';this.disabled=false;this.textContent='';this.attrs={};}append(...nodes){this.children.push(...nodes);}replaceChildren(...nodes){this.children=nodes;}setAttribute(k,v){this.attrs[k]=v;}set innerHTML(x){throw Error('No HTML injection');}click(){downloads.push(this.download);}}
+const nodes=Object.fromEntries([...html.matchAll(/\bid="([^"]+)"/g)].map(m=>[m[1],new Element()]));
+const byId=id=>{assert(nodes[id],id);return nodes[id];};
+let project=1,next=null,error=null,visited,resetInBlob=false;const requests=[],downloads=[];
+const fixture=pid=>({project_id:pid,window:{start:'2026-10-01T00:00:00Z',end:'2026-10-08T00:00:00Z'},actors:[{id:4,name:'Actor <script>',active:true}],selected_actor_id:0,
+ counts:{registered:2,with_captures:1,comparable:0,pending:2},coverage_bounded:false,limits:{actors:50,captures_per_actor:1000,accounts_per_actor:32},items:[
+ {actor_id:4,actor_name:'Actor <script>',network:'facebook',url:'https://www.facebook.com/example',state:'no_captures',captures_checked:0,latest_capture_at:null,latest_origin:null,fields:{followers:'missing',views:'missing'},comparable_fields:[],issues:['reference_unreviewed']},
+ {actor_id:5,actor_name:'Other',network:'x',url:'https://x.com/example',state:'needs_review',captures_checked:1,latest_capture_at:'2026-10-08T00:00:00Z',latest_origin:'manual',fields:{followers:'available',views:'invalid'},comparable_fields:['interactions'],issues:['invalid_counter']}]});
+const api=async path=>{requests.push(path);if(error)throw Error(error);if(next){const promise=next;next=null;return promise;}return fixture(project);};
+const window={};vm.runInNewContext(script,{window,document:{createElement:tag=>new Element(tag)},URL:Object.assign(class extends URL{},{createObjectURL:()=> 'blob:fixture',revokeObjectURL(){}}),URLSearchParams,Blob:class extends Blob{constructor(...args){super(...args);if(resetInBlob)module.resetProject();}},setTimeout:fn=>fn(),Date,console});
+const module=window.NexoAccountAudit.install({api,byId,getProject:()=>project,onNavigate:name=>visited=name});
+const cases=[],check=(name,fn)=>{fn();cases.push(name);};
+const text=n=>[n.textContent,...n.children.map(text)].join(' ');
+module.resetProject();await module.reload();
+check('registered_accounts_visible_without_captures',()=>assert.equal(nodes.accountAuditContent.children.length,2));
+check('pending_state_is_visible_outside_diagnostic',()=>{const card=nodes.accountAuditContent.children[0];assert(card.children.some(n=>n.textContent.startsWith('Primera captura pendiente.')));assert(nodes.auditSummary.textContent.includes('1 con primera captura pendiente'));});
+const firstCard=nodes.accountAuditContent.children[0],toggle=firstCard.children.find(n=>n.tagName==='button'&&n.textContent==='Ver diagnóstico'),detail=firstCard.children.find(n=>n.id===toggle.attrs['aria-controls']);
+check('explicit_diagnostic_button_is_visible_and_accessible',()=>{assert(toggle);assert(detail.hidden);assert.equal(toggle.attrs['aria-expanded'],'false');});
+toggle.onclick();check('diagnostic_button_opens_content_without_download',()=>{assert.equal(detail.hidden,false);assert.equal(toggle.attrs['aria-expanded'],'true');assert.equal(downloads.length,0);});
+toggle.onclick();check('diagnostic_button_can_close_content',()=>{assert(detail.hidden);assert.equal(toggle.textContent,'Ver diagnóstico');});
+nodes.auditView.onclick();check('top_diagnostic_button_opens_account_details',()=>assert.equal(detail.hidden,false));
+check('unknown_values_are_not_zero',()=>assert(text(nodes.accountAuditContent).includes('Sin dato')));
+check('invalid_fields_have_review_state',()=>assert(text(nodes.accountAuditContent).includes('Revisar')));
+check('untrusted_actor_names_are_literal',()=>assert(text(nodes.accountAuditContent).includes('Actor <script>')));
+check('indicators_match_server_scope',()=>{assert.equal(nodes.auditRegistered.textContent,2);assert.equal(nodes.auditCaptured.textContent,1);});
+nodes.auditState.value='no_captures';nodes.auditState.onchange();
+check('state_filter_restricts_cards_only',()=>{assert.equal(nodes.accountAuditContent.children.length,1);assert.equal(nodes.auditRegistered.textContent,2);});
+check('diagnostic_has_period_and_origin_context',()=>{assert(text(nodes.accountAuditContent).includes('Sin identificar'));assert(text(nodes.accountAuditContent).includes('corte anterior'));});
+const buttons=nodes.accountAuditContent.children[0].children.at(-1).children;buttons[1].onclick();
+check('navigation_uses_existing_network_module',()=>assert.equal(visited,'networks'));
+nodes.auditConfigure.onclick();check('configuration_uses_actor_directory',()=>assert.equal(visited,'actors'));
+nodes.auditActor.value='4';await nodes.auditActor.onchange();
+check('actor_filter_is_sent_to_project_route',()=>assert(requests.at(-1).includes('/projects/1/account-audit?actor_id=4')));
+nodes.auditNetwork.value='facebook';await nodes.auditNetwork.onchange();
+check('network_filter_is_sent_to_server',()=>assert(requests.at(-1).includes('network=facebook')));
+nodes.auditExport.onclick();check('diagnostic_download_is_local_json',()=>assert.equal(downloads.at(-1),'Auditoria_cuentas_proyecto_1.json'));
+let resolve;next=new Promise(r=>resolve=r);const pending=module.reload();project=2;module.resetProject();resolve(fixture(1));await pending;
+check('late_response_is_discarded_after_project_change',()=>assert.equal(nodes.accountAuditContent.children.length,0));
+project=1;module.resetProject();let resolve2;next=new Promise(r=>resolve2=r);const pending2=module.reload();module.resetProject();resolve2(fixture(1));await pending2;
+check('same_project_reset_invalidates_pending_response',()=>assert.equal(nodes.accountAuditContent.children.length,0));
+let firstResolve;next=new Promise(r=>firstResolve=r);const first=module.reload();await module.reload();firstResolve({...fixture(1),counts:{registered:999}});await first;
+check('out_of_order_responses_do_not_replace_newer_cut',()=>assert.equal(nodes.auditRegistered.textContent,2));
+resetInBlob=true;const before=downloads.length;nodes.auditExport.onclick();resetInBlob=false;
+check('reset_during_export_prevents_download',()=>assert.equal(downloads.length,before));
+error='Consulta no disponible';await module.reload();
+check('failed_reload_clears_prior_data_and_export',()=>{assert.equal(nodes.accountAuditContent.children.length,0);assert(nodes.auditExport.disabled);assert.equal(nodes.auditStatus.textContent,error);});
+error=null;project=null;module.resetProject();const calls=requests.length;await module.reload();
+check('no_project_does_not_query_or_export',()=>{nodes.auditExport.onclick();assert.equal(requests.length,calls);assert.equal(downloads.length,before);});
+console.log(JSON.stringify({passed:true,cases,browser_rendering:false}));

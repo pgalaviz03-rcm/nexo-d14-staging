@@ -1,0 +1,604 @@
+{
+  "date_utc": "2026-10-21T16:50:05.288759+00:00",
+  "ready_for_general_local_test": true,
+  "human_general_acceptance": false,
+  "scope": "Offline functional review and lexical retrieval evaluation; not production, external APIs, OCR or AI validation",
+  "python_wide": {
+    "exit_code": 0,
+    "counts": {
+      "passed": 585
+    },
+    "by_module": {
+      "test_retrieval_evaluation.py": {
+        "passed": 23
+      },
+      "test_local_readiness.py": {
+        "passed": 4
+      },
+      "test_pdf_library.py": {
+        "passed": 25
+      },
+      "test_evidence_rows.py": {
+        "passed": 19
+      },
+      "test_workbook_evidence.py": {
+        "passed": 31
+      },
+      "test_project_journeys.py": {
+        "passed": 29
+      },
+      "test_account_audit.py": {
+        "passed": 37
+      },
+      "test_report_workbench.py": {
+        "passed": 15
+      },
+      "test_explorer.py": {
+        "passed": 27
+      },
+      "test_alerts.py": {
+        "passed": 30
+      },
+      "test_continuity.py": {
+        "passed": 40
+      },
+      "test_networks.py": {
+        "passed": 34
+      },
+      "test_territory.py": {
+        "passed": 6
+      },
+      "test_actors.py": {
+        "passed": 25
+      },
+      "test_content_analysis.py": {
+        "passed": 26
+      },
+      "test_delivery.py": {
+        "passed": 24
+      },
+      "test_briefing.py": {
+        "passed": 22
+      },
+      "test_pulse.py": {
+        "passed": 44
+      },
+      "test_reports.py": {
+        "passed": 25
+      },
+      "test_documentary_digest.py": {
+        "passed": 11
+      },
+      "test_manual_reviews.py": {
+        "passed": 15
+      },
+      "test_local_knowledge.py": {
+        "passed": 16
+      },
+      "test_news_review.py": {
+        "passed": 14
+      },
+      "test_backup_local.py": {
+        "passed": 9
+      },
+      "test_feed_diagnostics.py": {
+        "passed": 8
+      },
+      "test_security_v05.py": {
+        "passed": 25
+      },
+      "test_rss.py": {
+        "passed": 1
+      }
+    },
+    "seconds": 340.72,
+    "network_blocked": true,
+    "modules": [
+      "test_retrieval_evaluation.py",
+      "test_local_readiness.py",
+      "test_pdf_library.py",
+      "test_evidence_rows.py",
+      "test_workbook_evidence.py",
+      "test_project_journeys.py",
+      "test_account_audit.py",
+      "test_report_workbench.py",
+      "test_explorer.py",
+      "test_alerts.py",
+      "test_continuity.py",
+      "test_networks.py",
+      "test_territory.py",
+      "test_actors.py",
+      "test_content_analysis.py",
+      "test_delivery.py",
+      "test_briefing.py",
+      "test_pulse.py",
+      "test_reports.py",
+      "test_documentary_digest.py",
+      "test_manual_reviews.py",
+      "test_local_knowledge.py",
+      "test_news_review.py",
+      "test_backup_local.py",
+      "test_feed_diagnostics.py"
+    ],
+    "additional_unit_tests": [
+      "test_security_v05.py::test_bounded_memory_limiter",
+      "test_security_v05.py::test_cloud_fails_closed",
+      "test_security_v05.py::test_jwt_valid",
+      "test_security_v05.py::test_jwt_wrong_claims",
+      "test_security_v05.py::test_jwt_signature_and_alg_rejected",
+      "test_security_v05.py::test_ssrf_urls_blocked",
+      "test_security_v05.py::test_dns_mixed_private_addresses_rejected",
+      "test_security_v05.py::test_fetch_connects_to_pinned_address_and_no_redirects",
+      "test_security_v05.py::test_xml_entities_and_bombs_rejected",
+      "test_security_v05.py::test_historical_totals_preserved",
+      "test_security_v05.py::test_pinned_socket_uses_numeric_ip_and_original_tls_host",
+      "test_rss.py::test_parse_and_url_rules"
+    ],
+    "excluded": {
+      "http_tests": "Event-loop/socket tests unavailable in this executor; human localhost review required",
+      "native_postgres": "No isolated native PostgreSQL test database configured"
+    }
+  },
+  "python_focused_final": {
+    "exit_code": 0,
+    "counts": {
+      "passed": 29
+    },
+    "modules": [
+      "test_retrieval_evaluation.py",
+      "test_local_readiness.py"
+    ],
+    "seconds": 16.56
+  },
+  "python_runs_overlap": true,
+  "python_runs_not_summed": true,
+  "javascript": {
+    "modules": 16,
+    "checks_passed": 239,
+    "dom_simulated": true,
+    "actual_browser_qa": false
+  },
+  "retrieval": {
+    "contract": "retrieval-evaluation-v1",
+    "passed": true,
+    "cases": 23,
+    "cases_passed": 23,
+    "results": [
+      {
+        "id": "excel_seccion_exacta",
+        "passed": true,
+        "checks_failed": [],
+        "citations": 1,
+        "bounded": false
+      },
+      {
+        "id": "excel_pregunta_nominal",
+        "passed": true,
+        "checks_failed": [],
+        "citations": 1,
+        "bounded": false
+      },
+      {
+        "id": "excel_mayusculas",
+        "passed": true,
+        "checks_failed": [],
+        "citations": 1,
+        "bounded": false
+      },
+      {
+        "id": "excel_numero_solo",
+        "passed": true,
+        "checks_failed": [],
+        "citations": 1,
+        "bounded": false
+      },
+      {
+        "id": "excel_otra_fila",
+        "passed": true,
+        "checks_failed": [],
+        "citations": 1,
+        "bounded": false
+      },
+      {
+        "id": "excel_colonia",
+        "passed": true,
+        "checks_failed": [],
+        "citations": 1,
+        "bounded": false
+      },
+      {
+        "id": "excel_encabezado_no_es_registro",
+        "passed": true,
+        "checks_failed": [],
+        "citations": 0,
+        "bounded": false
+      },
+      {
+        "id": "excel_no_subcadena",
+        "passed": true,
+        "checks_failed": [],
+        "citations": 0,
+        "bounded": false
+      },
+      {
+        "id": "excel_sin_evidencia",
+        "passed": true,
+        "checks_failed": [],
+        "citations": 0,
+        "bounded": false
+      },
+      {
+        "id": "pdf_texto_y_pagina",
+        "passed": true,
+        "checks_failed": [],
+        "citations": 5,
+        "bounded": true
+      },
+      {
+        "id": "pdf_pagina_tabla",
+        "passed": true,
+        "checks_failed": [],
+        "citations": 3,
+        "bounded": false
+      },
+      {
+        "id": "pdf_consulta_ausente",
+        "passed": true,
+        "checks_failed": [],
+        "citations": 0,
+        "bounded": false
+      },
+      {
+        "id": "pdf_pregunta_sin_datos",
+        "passed": true,
+        "checks_failed": [],
+        "citations": 0,
+        "bounded": false
+      },
+      {
+        "id": "pdf_corpus_equivocado",
+        "passed": true,
+        "checks_failed": [],
+        "citations": 0,
+        "bounded": false
+      },
+      {
+        "id": "pdf_segundo_documento",
+        "passed": true,
+        "checks_failed": [],
+        "citations": 5,
+        "bounded": true
+      },
+      {
+        "id": "pdf_segundo_ausencia",
+        "passed": true,
+        "checks_failed": [],
+        "citations": 0,
+        "bounded": false
+      },
+      {
+        "id": "pdf_segundo_pregunta_sin_datos",
+        "passed": true,
+        "checks_failed": [],
+        "citations": 0,
+        "bounded": false
+      },
+      {
+        "id": "libro_ajeno",
+        "passed": true,
+        "checks_failed": [],
+        "citations": 0,
+        "bounded": false
+      },
+      {
+        "id": "pdf_ajeno",
+        "passed": true,
+        "checks_failed": [],
+        "citations": 0,
+        "bounded": false
+      },
+      {
+        "id": "segundo_pdf_ajeno",
+        "passed": true,
+        "checks_failed": [],
+        "citations": 0,
+        "bounded": false
+      },
+      {
+        "id": "documento_inexistente",
+        "passed": true,
+        "checks_failed": [],
+        "citations": 0,
+        "bounded": false
+      },
+      {
+        "id": "otro_proyecto_vacio",
+        "passed": true,
+        "checks_failed": [],
+        "citations": 0,
+        "bounded": false
+      },
+      {
+        "id": "titulo_prensa",
+        "passed": true,
+        "checks_failed": [],
+        "citations": 1,
+        "bounded": false
+      }
+    ],
+    "ai_used": false,
+    "external_calls": 0,
+    "generation_evaluated": false,
+    "semantic_retrieval_evaluated": false
+  },
+  "health": {
+    "contract": "local-readiness-v1",
+    "date_utc": "2026-10-21T16:48:28.246471+00:00",
+    "ready_for_human_local_test": true,
+    "checks": [
+      {
+        "check": "runtime_dependencies",
+        "passed": true,
+        "missing": []
+      },
+      {
+        "check": "application_syntax",
+        "passed": true,
+        "invalid": []
+      },
+      {
+        "check": "sqlite_integrity",
+        "passed": true
+      },
+      {
+        "check": "foreign_keys",
+        "passed": true
+      },
+      {
+        "check": "membership_roles",
+        "passed": true
+      },
+      {
+        "check": "offline_loopback_launcher",
+        "passed": true
+      },
+      {
+        "check": "retrieval_evaluation",
+        "passed": true,
+        "cases": 23,
+        "cases_passed": 23
+      }
+    ],
+    "counts": {
+      "projects": 2,
+      "users": 3,
+      "memberships": 4,
+      "datasets": 6,
+      "news_articles": 20,
+      "section_metrics": 45,
+      "reports": 2,
+      "report_versions": 3
+    },
+    "retrieval": {
+      "contract": "retrieval-evaluation-v1",
+      "passed": true,
+      "cases": 23,
+      "cases_passed": 23,
+      "results": [
+        {
+          "id": "excel_seccion_exacta",
+          "passed": true,
+          "checks_failed": [],
+          "citations": 1,
+          "bounded": false
+        },
+        {
+          "id": "excel_pregunta_nominal",
+          "passed": true,
+          "checks_failed": [],
+          "citations": 1,
+          "bounded": false
+        },
+        {
+          "id": "excel_mayusculas",
+          "passed": true,
+          "checks_failed": [],
+          "citations": 1,
+          "bounded": false
+        },
+        {
+          "id": "excel_numero_solo",
+          "passed": true,
+          "checks_failed": [],
+          "citations": 1,
+          "bounded": false
+        },
+        {
+          "id": "excel_otra_fila",
+          "passed": true,
+          "checks_failed": [],
+          "citations": 1,
+          "bounded": false
+        },
+        {
+          "id": "excel_colonia",
+          "passed": true,
+          "checks_failed": [],
+          "citations": 1,
+          "bounded": false
+        },
+        {
+          "id": "excel_encabezado_no_es_registro",
+          "passed": true,
+          "checks_failed": [],
+          "citations": 0,
+          "bounded": false
+        },
+        {
+          "id": "excel_no_subcadena",
+          "passed": true,
+          "checks_failed": [],
+          "citations": 0,
+          "bounded": false
+        },
+        {
+          "id": "excel_sin_evidencia",
+          "passed": true,
+          "checks_failed": [],
+          "citations": 0,
+          "bounded": false
+        },
+        {
+          "id": "pdf_texto_y_pagina",
+          "passed": true,
+          "checks_failed": [],
+          "citations": 5,
+          "bounded": true
+        },
+        {
+          "id": "pdf_pagina_tabla",
+          "passed": true,
+          "checks_failed": [],
+          "citations": 3,
+          "bounded": false
+        },
+        {
+          "id": "pdf_consulta_ausente",
+          "passed": true,
+          "checks_failed": [],
+          "citations": 0,
+          "bounded": false
+        },
+        {
+          "id": "pdf_pregunta_sin_datos",
+          "passed": true,
+          "checks_failed": [],
+          "citations": 0,
+          "bounded": false
+        },
+        {
+          "id": "pdf_corpus_equivocado",
+          "passed": true,
+          "checks_failed": [],
+          "citations": 0,
+          "bounded": false
+        },
+        {
+          "id": "pdf_segundo_documento",
+          "passed": true,
+          "checks_failed": [],
+          "citations": 5,
+          "bounded": true
+        },
+        {
+          "id": "pdf_segundo_ausencia",
+          "passed": true,
+          "checks_failed": [],
+          "citations": 0,
+          "bounded": false
+        },
+        {
+          "id": "pdf_segundo_pregunta_sin_datos",
+          "passed": true,
+          "checks_failed": [],
+          "citations": 0,
+          "bounded": false
+        },
+        {
+          "id": "libro_ajeno",
+          "passed": true,
+          "checks_failed": [],
+          "citations": 0,
+          "bounded": false
+        },
+        {
+          "id": "pdf_ajeno",
+          "passed": true,
+          "checks_failed": [],
+          "citations": 0,
+          "bounded": false
+        },
+        {
+          "id": "segundo_pdf_ajeno",
+          "passed": true,
+          "checks_failed": [],
+          "citations": 0,
+          "bounded": false
+        },
+        {
+          "id": "documento_inexistente",
+          "passed": true,
+          "checks_failed": [],
+          "citations": 0,
+          "bounded": false
+        },
+        {
+          "id": "otro_proyecto_vacio",
+          "passed": true,
+          "checks_failed": [],
+          "citations": 0,
+          "bounded": false
+        },
+        {
+          "id": "titulo_prensa",
+          "passed": true,
+          "checks_failed": [],
+          "citations": 1,
+          "bounded": false
+        }
+      ],
+      "ai_used": false,
+      "external_calls": 0,
+      "generation_evaluated": false,
+      "semantic_retrieval_evaluated": false
+    },
+    "database_read_only": true,
+    "external_calls": 0,
+    "ai_used": false,
+    "running_server_verified": false,
+    "production_ready": false,
+    "provider_connections_verified": false,
+    "pending": [
+      "Human general local acceptance",
+      "AI and API adapters/workers and real data validation",
+      "OCR for image-only files",
+      "Native PostgreSQL/RLS, cloud route activation and MFA",
+      "Independent offsite recovery and production operations"
+    ]
+  },
+  "restored": {
+    "restored_retrieval_cases": 23,
+    "restored_cases_passed": 23,
+    "scoped_report_v2_preserved": true,
+    "isolated_restore": true,
+    "active_database_not_overwritten": true,
+    "external_calls": 0,
+    "ai_used": false
+  },
+  "protected_files": {
+    "app/main.py": "3021b70f4aca828708c92fb7624e0cff76bcf2a0e23a523ea41efc88f1c3858e",
+    "app/knowledge.py": "466b2227eddcce317694ea185faf3bb339909c3c29541917cbd0208396113883"
+  },
+  "territory_map_unchanged": true,
+  "database_schema_changed": false,
+  "real_project_data_seeded": false,
+  "source_documents_modified": false,
+  "cloud_modified": false,
+  "external_calls": 0,
+  "ai_used": false,
+  "new_spending": false,
+  "fixes": [
+    "Whole-word rather than substring matches",
+    "All useful query terms required; common question wording ignored",
+    "Selected original cannot be displaced by later uploads",
+    "Derived extraction files are not original document selectors"
+  ],
+  "not_verified": [
+    "Human whole-application pass on the updated build",
+    "HTTP/ASGI event-loop integration in this executor",
+    "Native PostgreSQL and cloud RLS/MFA/routes",
+    "Semantic retrieval and generated-answer quality",
+    "Real provider fields and workers",
+    "Offsite recovery on another machine/profile"
+  ]
+}

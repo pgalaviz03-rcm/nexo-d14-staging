@@ -1,0 +1,209 @@
+{
+  "date": "2026-10-20T21:27:01.744025+00:00",
+  "scope": "Local project alert evidence and operational review",
+  "behavior": {
+    "shared_pulse_rule_evaluator": true,
+    "rule_metrics": [
+      "mentions",
+      "negative_share",
+      "mention_spike"
+    ],
+    "get_requests_readonly": true,
+    "explicit_evaluation": true,
+    "same_rule_channel_cut_deduplicated": true,
+    "first_cut_evidence_immutable": true,
+    "source_sample_max": 20,
+    "denominator_not_sample_size": true,
+    "snapshot_sha256": true,
+    "states": [
+      "open",
+      "acknowledged",
+      "resolved",
+      "dismissed"
+    ],
+    "append_only_versioned_review": true,
+    "close_and_reopen_require_reason": true,
+    "stale_review_rejected": true,
+    "unsaved_notes_preserved_on_refresh_and_conflict": true,
+    "reader_can_export_authorized_evidence": true,
+    "project_filters": [
+      "actor",
+      "network",
+      "period",
+      "state"
+    ],
+    "incident_counts": "Only listed incidents; cut closes in selected period; not all historical incidents",
+    "real_d14_rules_added_by_agent": 0,
+    "real_d14_incidents_added_by_agent": 0,
+    "ai_calls": 0,
+    "external_calls": 0,
+    "notifier": "DisabledAlertNotifier",
+    "messages_sent": 0,
+    "scheduled_worker_connected": false
+  },
+  "security": {
+    "project_membership_required": true,
+    "evaluate_review_roles": [
+      "admin",
+      "editor",
+      "analyst"
+    ],
+    "rule_roles": [
+      "admin",
+      "editor"
+    ],
+    "composite_rule_project_actor_scope": true,
+    "demo_excluded": true,
+    "strict_review_contract": true,
+    "actor_identity_from_session": true,
+    "expected_version": true,
+    "postgres_guard": "Invoker trigger with transaction advisory lock; no elevated identity",
+    "postgres_forced_rls": true,
+    "runtime_no_update_or_delete": true,
+    "audit_excludes_notes_and_sources": true,
+    "late_project_dashboard_and_detail_responses_discarded": true,
+    "project_reset_clears_private_fields": true
+  },
+  "limits": {
+    "evaluations_project_day_utc": 48,
+    "reviews_project_day_utc": 100,
+    "project_incidents": 10000,
+    "query_incidents": 200,
+    "rules_existing_project_limit": 100,
+    "actor_selector": 100,
+    "evidence_sources": 20,
+    "detail_history_events": 100,
+    "versions_per_incident": 1000,
+    "note_characters": 1000,
+    "window_days_max": 90
+  },
+  "verification": {
+    "python": {
+      "exit_code": 0,
+      "counts": {
+        "passed": 341
+      },
+      "seconds": 202.5,
+      "modules": [
+        "test_alerts.py",
+        "test_continuity.py",
+        "test_networks.py",
+        "test_territory.py",
+        "test_actors.py",
+        "test_content_analysis.py",
+        "test_delivery.py",
+        "test_briefing.py",
+        "test_pulse.py",
+        "test_reports.py",
+        "test_documentary_digest.py",
+        "test_manual_reviews.py",
+        "test_local_knowledge.py",
+        "test_news_review.py",
+        "test_backup_local.py"
+      ]
+    },
+    "python_cases_passed": 341,
+    "new_alert_cases_passed": 30,
+    "javascript_controller_checks_passed": 124,
+    "new_alert_controller_checks": 17,
+    "sql_policy_checks_passed": 159,
+    "new_alert_sql_checks": 25,
+    "sql_engine": {
+      "version": "PostgreSQL 18.6 (PGlite 0.5.10) on wasm32-unknown-emscripten, compiled by emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 6.0.5 (1db513782be24469589d7cb8a1f1834e9a33f271), 32-bit"
+    },
+    "actual_d14": {
+      "read_only": true,
+      "existing_rows_unchanged": true,
+      "registered_d14_actors": 4,
+      "new_incidents_added_by_agent": 0,
+      "real_rules_seen": 0,
+      "other_project_separate": true,
+      "protected_files_unchanged": true,
+      "map_unchanged": true,
+      "external_calls": 0,
+      "browser_visual_acceptance": false
+    },
+    "protected_file_hashes": {
+      "app/main.py": "3021b70f4aca828708c92fb7624e0cff76bcf2a0e23a523ea41efc88f1c3858e",
+      "app/knowledge.py": "466b2227eddcce317694ea185faf3bb339909c3c29541917cbd0208396113883"
+    },
+    "populated_incident_and_review_restore": true,
+    "csp_hash_matches": true,
+    "javascript_syntax": true,
+    "full_http_suite_rerun": false,
+    "native_postgres_acceptance": false,
+    "browser_visual_acceptance": true,
+    "agent_browser_qa_performed": false,
+    "browser_visual_acceptance_by": "user"
+  },
+  "schema": {
+    "head": "010_alerts",
+    "tables": 34,
+    "sqlite_additive_upgrade_applied": true,
+    "previous_rows_sha256_preserved": true,
+    "isolated_upgrade_and_repeat_passed": true,
+    "postgres_migration_applied": false
+  },
+  "backup": {
+    "date_utc": "2026-10-20T21:24:28.788045+00:00",
+    "encrypted": true,
+    "dpapi_current_user": true,
+    "isolated_restore_verified": true,
+    "table_counts": {
+      "actor_profiles": 4,
+      "alert_events": 0,
+      "alert_incidents": 0,
+      "article_reviews": 0,
+      "audience_snapshots": 0,
+      "audit_events": 39,
+      "briefing_schedules": 0,
+      "content_analyses": 16,
+      "content_assessments": 0,
+      "dataset_blobs": 0,
+      "datasets": 0,
+      "delivery_jobs": 0,
+      "feed_sources": 2,
+      "memberships": 3,
+      "news_articles": 20,
+      "platform_brand": 1,
+      "platform_grants": 1,
+      "projects": 2,
+      "pulse_accounts": 2,
+      "pulse_actors": 7,
+      "pulse_batches": 1,
+      "pulse_configs": 1,
+      "pulse_documents": 170,
+      "pulse_mentions": 170,
+      "pulse_rules": 2,
+      "report_releases": 1,
+      "report_versions": 1,
+      "reports": 1,
+      "review_changes": 0,
+      "review_topics": 0,
+      "section_metrics": 45,
+      "topics": 1,
+      "usage_counters": 1,
+      "users": 2
+    },
+    "backup_file": "20261020T212428Z-682a4aa8.nexobak",
+    "sha256": "d33ece2e3c82d287c2e9425b9e0f1308123c8b5ea7a18bb029f3f860918eced9",
+    "cloud_backup": false,
+    "offsite_backup": false
+  },
+  "cloud_modified": false,
+  "new_spending": false,
+  "pending": [
+    "Real source coverage and approved thresholds",
+    "Authorized source analysis pipeline; no new keyword classifier or model invocation here",
+    "Periodic evaluator, cut/coalescing policy and monitoring before external activation",
+    "Authorized delivery adapters, private destinations/preferences, deduplication, retry policy and budget",
+    "Native PostgreSQL acceptance and separate environment before cloud migration"
+  ],
+  "acceptance": {
+    "accepted": true,
+    "date": "2026-10-20T21:45:05.017231+00:00",
+    "by": "user",
+    "confirmation": "Sí, aparece todo y se entiende",
+    "scope": "Visual structure and local navigation; not real provider data"
+  }
+}

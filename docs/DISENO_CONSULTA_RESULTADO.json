@@ -1,0 +1,86 @@
+{
+  "updated_utc": "2026-10-21T20:28:56.190458+00:00",
+  "scope": "Local client read-only policy, compact responsive UI and isolated synthetic Pulso preview",
+  "role_policy": {
+    "superadmin": "Manage all authorized platform resources",
+    "project_user": "Read, filter, search, download released/authorized resources",
+    "server_enforced": true,
+    "legacy_project_roles_do_not_grant_write": true,
+    "drafts_hidden_from_readers": true
+  },
+  "interface": {
+    "compact_panels": true,
+    "custom_selects": true,
+    "mobile_drawer": true,
+    "mobile_bottom_navigation": true,
+    "mobile_comparison_rows": true,
+    "simplified_view_removed": true,
+    "pulse_other_removed": true,
+    "pulse_demo_button_removed": true
+  },
+  "python": {
+    "passed": 625,
+    "failed": 0,
+    "network_blocked": true,
+    "asgi_policy_transport_cases": true,
+    "native_postgres_verified": false
+  },
+  "javascript": {
+    "modules": 17,
+    "checks_passed": 255,
+    "dom_simulated": true,
+    "actual_browser_visual_qa": false
+  },
+  "actual_data_checks": {
+    "real_pilot_rows_unchanged": true,
+    "real_reader_write_denied": true,
+    "real_owner_write_allowed": true,
+    "reader_drafts_hidden": true,
+    "preview": {
+      "mentions": 360,
+      "actors": 4,
+      "emotions": 5,
+      "headlines": 6,
+      "account_cards": 2,
+      "active_alerts": 2,
+      "all_content_marked_synthetic": true
+    },
+    "agent_browser_visual_qa": false,
+    "external_calls": 0,
+    "cloud_modified": false,
+    "protected_files": {
+      "app/main.py": "3021b70f4aca828708c92fb7624e0cff76bcf2a0e23a523ea41efc88f1c3858e",
+      "app/knowledge.py": "466b2227eddcce317694ea185faf3bb339909c3c29541917cbd0208396113883"
+    }
+  },
+  "protected_files": {
+    "app/main.py": "3021b70f4aca828708c92fb7624e0cff76bcf2a0e23a523ea41efc88f1c3858e",
+    "app/knowledge.py": "466b2227eddcce317694ea185faf3bb339909c3c29541917cbd0208396113883"
+  },
+  "territory_map_unchanged": true,
+  "database_schema_changed": false,
+  "preview": {
+    "project": "Ciudad de ejemplo",
+    "private_database": true,
+    "pilot_data_copied": false,
+    "local_credentials_reused_privately": true,
+    "owner_grants": 0,
+    "mentions_current_cut": 360,
+    "actors": 4,
+    "emotions": 5,
+    "headlines": 6,
+    "account_cards": 2,
+    "active_alerts": 2,
+    "all_content_marked_synthetic": true,
+    "public_or_external_access": false
+  },
+  "pending": [
+    "Human desktop/mobile visual acceptance",
+    "Carry and validate policy in cloud identity and native PostgreSQL/RLS",
+    "External data adapters, analysis workers, AI quality and authorized delivery"
+  ],
+  "cloud_modified": false,
+  "external_calls": 0,
+  "ai_used": false,
+  "new_spending": false
+}

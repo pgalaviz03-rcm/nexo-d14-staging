@@ -1,5 +1,5 @@
 from datetime import datetime, timezone
-from sqlalchemy import String, Integer, Float, ForeignKey, DateTime, UniqueConstraint, Index, Text, LargeBinary, func
+from sqlalchemy import String, Integer, Float, ForeignKey, ForeignKeyConstraint, CheckConstraint, DateTime, UniqueConstraint, Index, Text, LargeBinary, func
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
 
@@ -117,3 +117,113 @@ class UsageCounter(Base):
     action: Mapped[str] = mapped_column(String(80), nullable=False)
     bucket: Mapped[str] = mapped_column(String(32), nullable=False)
     used: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+
+
+# Composite references keep reviews and labels inside the article's project.
+article_scope_index=Index('uq_article_id_project_review',NewsArticle.id,NewsArticle.project_id,unique=True)
+
+
+class Topic(Base):
+    __tablename__='topics'
+    __table_args__=(UniqueConstraint('project_id','name_key',name='uq_topic_project_name'),
+                   UniqueConstraint('id','project_id',name='uq_topic_id_project'),
+                   CheckConstraint('version >= 1',name='ck_topic_version'))
+    id: Mapped[int]=mapped_column(primary_key=True)
+    project_id: Mapped[int]=mapped_column(ForeignKey('projects.id'),nullable=False,index=True)
+    name: Mapped[str]=mapped_column(String(80),nullable=False)
+    name_key: Mapped[str]=mapped_column(String(100),nullable=False)
+    active: Mapped[bool]=mapped_column(default=True,nullable=False)
+    version: Mapped[int]=mapped_column(default=1,nullable=False)
+    created_by: Mapped[int]=mapped_column(ForeignKey('users.id'),nullable=False)
+    created_at: Mapped[datetime]=mapped_column(DateTime(timezone=True),default=utcnow,server_default=func.now())
+
+
+class ArticleReview(Base):
+    __tablename__='article_reviews'
+    __table_args__=(UniqueConstraint('project_id','article_id',name='uq_review_project_article'),
+                   UniqueConstraint('id','project_id',name='uq_review_id_project'),
+                   ForeignKeyConstraint(['article_id','project_id'],['news_articles.id','news_articles.project_id'],name='fk_review_article_scope'),
+                   CheckConstraint("status IN ('unreviewed','reviewed','needs_check')",name='ck_review_status'),
+                   CheckConstraint('version >= 1',name='ck_review_version'))
+    id: Mapped[int]=mapped_column(primary_key=True)
+    project_id: Mapped[int]=mapped_column(ForeignKey('projects.id'),nullable=False,index=True)
+    article_id: Mapped[int]=mapped_column(Integer,nullable=False,index=True)
+    status: Mapped[str]=mapped_column(String(24),nullable=False)
+    note: Mapped[str]=mapped_column(Text,nullable=False,default='')
+    version: Mapped[int]=mapped_column(Integer,nullable=False,default=1)
+    reviewed_by: Mapped[int]=mapped_column(ForeignKey('users.id'),nullable=False)
+    updated_at: Mapped[datetime]=mapped_column(DateTime(timezone=True),default=utcnow,server_default=func.now())
+
+
+class ReviewTopic(Base):
+    __tablename__='review_topics'
+    __table_args__=(ForeignKeyConstraint(['review_id','project_id'],['article_reviews.id','article_reviews.project_id'],name='fk_review_topic_review_scope'),
+                   ForeignKeyConstraint(['topic_id','project_id'],['topics.id','topics.project_id'],name='fk_review_topic_label_scope'),
+                   Index('ix_review_topic_label','project_id','topic_id'))
+    review_id: Mapped[int]=mapped_column(Integer,primary_key=True)
+    topic_id: Mapped[int]=mapped_column(Integer,primary_key=True)
+    project_id: Mapped[int]=mapped_column(ForeignKey('projects.id'),nullable=False,index=True)
+
+
+class ReviewChange(Base):
+    __tablename__='review_changes'
+    __table_args__=(ForeignKeyConstraint(['review_id','project_id'],['article_reviews.id','article_reviews.project_id'],name='fk_change_review_scope'),
+                   UniqueConstraint('review_id','version',name='uq_change_review_version'),
+                   Index('ix_change_project_review','project_id','review_id'))
+    id: Mapped[int]=mapped_column(primary_key=True)
+    project_id: Mapped[int]=mapped_column(ForeignKey('projects.id'),nullable=False,index=True)
+    review_id: Mapped[int]=mapped_column(Integer,nullable=False)
+    version: Mapped[int]=mapped_column(Integer,nullable=False)
+    actor_id: Mapped[int]=mapped_column(ForeignKey('users.id'),nullable=False)
+    snapshot: Mapped[str]=mapped_column(Text,nullable=False)
+    created_at: Mapped[datetime]=mapped_column(DateTime(timezone=True),default=utcnow,server_default=func.now())
+
+
+class Report(Base):
+    __tablename__='reports'
+    __table_args__=(UniqueConstraint('id','project_id',name='uq_report_id_project'),
+                   CheckConstraint('current_version >= 1 AND current_version <= 50',name='ck_report_version'))
+    id: Mapped[int]=mapped_column(primary_key=True)
+    project_id: Mapped[int]=mapped_column(ForeignKey('projects.id'),nullable=False,index=True)
+    current_version: Mapped[int]=mapped_column(Integer,nullable=False,default=1)
+    created_by: Mapped[int]=mapped_column(ForeignKey('users.id'),nullable=False)
+    created_at: Mapped[datetime]=mapped_column(DateTime(timezone=True),default=utcnow,server_default=func.now())
+
+
+class ReportVersion(Base):
+    __tablename__='report_versions'
+    __table_args__=(ForeignKeyConstraint(['report_id','project_id'],['reports.id','reports.project_id'],name='fk_report_version_scope'),
+                   UniqueConstraint('report_id','project_id','version',name='uq_report_project_version'),
+                   CheckConstraint('version >= 1 AND version <= 50',name='ck_report_snapshot_version'),
+                   Index('ix_report_version_project_report','project_id','report_id'))
+    id: Mapped[int]=mapped_column(primary_key=True)
+    project_id: Mapped[int]=mapped_column(ForeignKey('projects.id'),nullable=False,index=True)
+    report_id: Mapped[int]=mapped_column(Integer,nullable=False)
+    version: Mapped[int]=mapped_column(Integer,nullable=False)
+    payload: Mapped[str]=mapped_column(Text,nullable=False)
+    sha256: Mapped[str]=mapped_column(String(64),nullable=False)
+    created_by: Mapped[int]=mapped_column(ForeignKey('users.id'),nullable=False)
+    created_at: Mapped[datetime]=mapped_column(DateTime(timezone=True),default=utcnow,server_default=func.now())
+
+
+class ReportRelease(Base):
+    __tablename__='report_releases'
+    __table_args__=(ForeignKeyConstraint(['report_id','project_id','version'],
+                    ['report_versions.report_id','report_versions.project_id','report_versions.version'],name='fk_report_release_version_scope'),
+                   UniqueConstraint('report_id','project_id','version',name='uq_report_release_version'),
+                   Index('ix_report_release_project_report','project_id','report_id'))
+    id: Mapped[int]=mapped_column(primary_key=True)
+    project_id: Mapped[int]=mapped_column(ForeignKey('projects.id'),nullable=False,index=True)
+    report_id: Mapped[int]=mapped_column(Integer,nullable=False)
+    version: Mapped[int]=mapped_column(Integer,nullable=False)
+    published_by: Mapped[int]=mapped_column(ForeignKey('users.id'),nullable=False)
+    created_at: Mapped[datetime]=mapped_column(DateTime(timezone=True),default=utcnow,server_default=func.now())
+
+
+# Register local observatory tables before Base.metadata.create_all in main.
+from . import pulse_models as _pulse_models
+from . import delivery_models as _delivery_models
+from . import analysis_models as _analysis_models
+from . import actor_models as _actor_models
+from . import continuity_models as _continuity_models
+from . import alert_models as _alert_models

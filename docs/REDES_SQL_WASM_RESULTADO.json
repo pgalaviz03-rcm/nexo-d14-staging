@@ -1,0 +1,484 @@
+{
+  "engine": "PGlite PostgreSQL WASM",
+  "version": {
+    "version": "PostgreSQL 18.6 (PGlite 0.5.10) on wasm32-unknown-emscripten, compiled by emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 6.0.5 (1db513782be24469589d7cb8a1f1834e9a33f271), 32-bit"
+  },
+  "tests": [
+    {
+      "test": "No actor sees zero private rows",
+      "status": "passed"
+    },
+    {
+      "test": "Alice sees only project A",
+      "status": "passed"
+    },
+    {
+      "test": "Cannot add membership",
+      "status": "passed"
+    },
+    {
+      "test": "Cannot escalate membership",
+      "status": "passed"
+    },
+    {
+      "test": "Cannot alter historical data",
+      "status": "passed"
+    },
+    {
+      "test": "Cannot read another user password row",
+      "status": "passed"
+    },
+    {
+      "test": "Cannot insert another project article",
+      "status": "passed"
+    },
+    {
+      "test": "Can add own project dataset and blob",
+      "status": "passed"
+    },
+    {
+      "test": "Cannot alter feed URLs through DB role",
+      "status": "passed"
+    },
+    {
+      "test": "Viewer reads historical data",
+      "status": "passed"
+    },
+    {
+      "test": "Viewer cannot insert article",
+      "status": "passed"
+    },
+    {
+      "test": "Viewer cannot insert dataset",
+      "status": "passed"
+    },
+    {
+      "test": "Bob cannot see project A blob",
+      "status": "passed"
+    },
+    {
+      "test": "Bob sees only project B",
+      "status": "passed"
+    },
+    {
+      "test": "Transaction-local actor is cleared on commit",
+      "status": "passed"
+    },
+    {
+      "test": "No identity sees no manual-review data",
+      "status": "passed"
+    },
+    {
+      "test": "Own project manual-review data only",
+      "status": "passed"
+    },
+    {
+      "test": "Cannot create foreign project topic",
+      "status": "passed"
+    },
+    {
+      "test": "Composite review FK rejects foreign article",
+      "status": "passed"
+    },
+    {
+      "test": "Composite label FK rejects foreign topic",
+      "status": "passed"
+    },
+    {
+      "test": "Runtime cannot move topic to another project",
+      "status": "passed"
+    },
+    {
+      "test": "Runtime cannot update revision history",
+      "status": "passed"
+    },
+    {
+      "test": "Runtime cannot delete revision history",
+      "status": "passed"
+    },
+    {
+      "test": "Viewer can read own review history",
+      "status": "passed"
+    },
+    {
+      "test": "Viewer cannot create topic",
+      "status": "passed"
+    },
+    {
+      "test": "Viewer cannot change review",
+      "status": "passed"
+    },
+    {
+      "test": "Viewer cannot remove labels",
+      "status": "passed"
+    },
+    {
+      "test": "Analyst cannot manage topics",
+      "status": "passed"
+    },
+    {
+      "test": "Analyst can review and append own revision",
+      "status": "passed"
+    },
+    {
+      "test": "Analyst cannot forge another reviewer identity",
+      "status": "passed"
+    },
+    {
+      "test": "Foreign admin cannot see own-project history",
+      "status": "passed"
+    },
+    {
+      "test": "No identity sees no reports",
+      "status": "passed"
+    },
+    {
+      "test": "Viewer reads only released report snapshots",
+      "status": "passed"
+    },
+    {
+      "test": "Viewer cannot see an unreleased report",
+      "status": "passed"
+    },
+    {
+      "test": "Viewer cannot add a report",
+      "status": "passed"
+    },
+    {
+      "test": "Viewer cannot publish a report",
+      "status": "passed"
+    },
+    {
+      "test": "Analyst sees own-project drafts",
+      "status": "passed"
+    },
+    {
+      "test": "Analyst can append a report version",
+      "status": "passed"
+    },
+    {
+      "test": "Analyst cannot publish",
+      "status": "passed"
+    },
+    {
+      "test": "Runtime cannot alter saved snapshots",
+      "status": "passed"
+    },
+    {
+      "test": "Runtime cannot delete reports or snapshots",
+      "status": "passed"
+    },
+    {
+      "test": "Cannot forge snapshot author",
+      "status": "passed"
+    },
+    {
+      "test": "Composite version FK rejects a foreign report",
+      "status": "passed"
+    },
+    {
+      "test": "Composite release FK rejects a foreign version",
+      "status": "passed"
+    },
+    {
+      "test": "Admin releases current own-project snapshot",
+      "status": "passed"
+    },
+    {
+      "test": "Release history cannot be rewritten",
+      "status": "passed"
+    },
+    {
+      "test": "Foreign admin cannot read report snapshots",
+      "status": "passed"
+    },
+    {
+      "test": "All tenant and identity tables have forced RLS",
+      "status": "passed"
+    },
+    {
+      "test": "Pulse unauthenticated scope is empty",
+      "status": "passed"
+    },
+    {
+      "test": "Only public branding is readable without identity",
+      "status": "passed"
+    },
+    {
+      "test": "Pulse all tables filter foreign project rows",
+      "status": "passed"
+    },
+    {
+      "test": "Platform grant does not bypass RLS memberships",
+      "status": "passed"
+    },
+    {
+      "test": "Runtime cannot grant platform access",
+      "status": "passed"
+    },
+    {
+      "test": "Runtime cannot alter platform access",
+      "status": "passed"
+    },
+    {
+      "test": "Runtime cannot alter public brand",
+      "status": "passed"
+    },
+    {
+      "test": "Runtime cannot move pulse data to another client",
+      "status": "passed"
+    },
+    {
+      "test": "Runtime cannot rewrite source content",
+      "status": "passed"
+    },
+    {
+      "test": "Runtime can update observed counters only",
+      "status": "passed"
+    },
+    {
+      "test": "Runtime cannot rewrite account history",
+      "status": "passed"
+    },
+    {
+      "test": "Runtime cannot delete import batch evidence",
+      "status": "passed"
+    },
+    {
+      "test": "Pulse composite actor FK rejects foreign client reference",
+      "status": "passed"
+    },
+    {
+      "test": "Pulse composite mode FK rejects demo to real reference",
+      "status": "passed"
+    },
+    {
+      "test": "Pulse composite document FK rejects demo mixing",
+      "status": "passed"
+    },
+    {
+      "test": "Cannot forge pulse batch creator",
+      "status": "passed"
+    },
+    {
+      "test": "Viewer can read project pulse data",
+      "status": "passed"
+    },
+    {
+      "test": "Viewer cannot see owner platform grant",
+      "status": "passed"
+    },
+    {
+      "test": "Viewer cannot import source batch",
+      "status": "passed"
+    },
+    {
+      "test": "Viewer cannot change classification",
+      "status": "passed"
+    },
+    {
+      "test": "Viewer cannot configure actors",
+      "status": "passed"
+    },
+    {
+      "test": "Analyst may classify content as themselves",
+      "status": "passed"
+    },
+    {
+      "test": "Analyst cannot forge reviewer identity",
+      "status": "passed"
+    },
+    {
+      "test": "Analyst cannot configure rules",
+      "status": "passed"
+    },
+    {
+      "test": "Foreign client sees their own pulse data only",
+      "status": "passed"
+    },
+    {
+      "test": "No identity sees no assessment or private delivery rows",
+      "status": "passed"
+    },
+    {
+      "test": "Admin sees project assessments but only own preferences",
+      "status": "passed"
+    },
+    {
+      "test": "Cannot configure another user in same project",
+      "status": "passed"
+    },
+    {
+      "test": "Cannot write another user schedule",
+      "status": "passed"
+    },
+    {
+      "test": "Cannot reference foreign article in assessment",
+      "status": "passed"
+    },
+    {
+      "test": "Runtime cannot move assessment to another client",
+      "status": "passed"
+    },
+    {
+      "test": "Runtime cannot rewrite queued message",
+      "status": "passed"
+    },
+    {
+      "test": "Runtime cannot create a real outbound job",
+      "status": "passed"
+    },
+    {
+      "test": "Outbox cannot bind an unreleased report",
+      "status": "passed"
+    },
+    {
+      "test": "Cannot delete private scheduling history",
+      "status": "passed"
+    },
+    {
+      "test": "Owner can cancel a simulated job only",
+      "status": "passed"
+    },
+    {
+      "test": "Cancelled job cannot be reactivated through runtime",
+      "status": "passed"
+    },
+    {
+      "test": "Viewer sees only own delivery preference",
+      "status": "passed"
+    },
+    {
+      "test": "Viewer can configure own preference",
+      "status": "passed"
+    },
+    {
+      "test": "Viewer cannot classify content",
+      "status": "passed"
+    },
+    {
+      "test": "WhatsApp cannot be stored as enabled channel",
+      "status": "passed"
+    },
+    {
+      "test": "Analyst can manually classify own project piece",
+      "status": "passed"
+    },
+    {
+      "test": "Analyst cannot forge assessment reviewer",
+      "status": "passed"
+    },
+    {
+      "test": "Revoked project membership hides all private delivery rows",
+      "status": "passed"
+    },
+    {
+      "test": "No identity sees no AI analysis jobs",
+      "status": "passed"
+    },
+    {
+      "test": "Analyst sees only own project analysis",
+      "status": "passed"
+    },
+    {
+      "test": "Analyst may queue unclassified work only",
+      "status": "passed"
+    },
+    {
+      "test": "Runtime cannot insert completed AI output",
+      "status": "passed"
+    },
+    {
+      "test": "Runtime cannot prefill labels in queued task",
+      "status": "passed"
+    },
+    {
+      "test": "Cannot queue foreign client article",
+      "status": "passed"
+    },
+    {
+      "test": "Cannot queue work in foreign project",
+      "status": "passed"
+    },
+    {
+      "test": "Cannot queue demonstration as real AI work",
+      "status": "passed"
+    },
+    {
+      "test": "Runtime cannot forge AI labels by update",
+      "status": "passed"
+    },
+    {
+      "test": "Runtime cannot delete AI history",
+      "status": "passed"
+    },
+    {
+      "test": "Viewer can read own project analysis progress",
+      "status": "passed"
+    },
+    {
+      "test": "Viewer cannot queue analysis",
+      "status": "passed"
+    },
+    {
+      "test": "Another client sees only their analysis jobs",
+      "status": "passed"
+    },
+    {
+      "test": "Revoked membership cannot read analysis jobs",
+      "status": "passed"
+    },
+    {
+      "test": "No identity sees no actor dossiers",
+      "status": "passed"
+    },
+    {
+      "test": "Reader sees dossiers only in assigned project",
+      "status": "passed"
+    },
+    {
+      "test": "Reader cannot edit dossier",
+      "status": "passed"
+    },
+    {
+      "test": "Consultor cannot change directory configuration",
+      "status": "passed"
+    },
+    {
+      "test": "Other client sees own dossier only",
+      "status": "passed"
+    },
+    {
+      "test": "Foreign manager cannot edit another project dossier",
+      "status": "passed"
+    },
+    {
+      "test": "Manager may edit own public dossier",
+      "status": "passed"
+    },
+    {
+      "test": "Cannot forge dossier updater",
+      "status": "passed"
+    },
+    {
+      "test": "Cannot move dossier to another project",
+      "status": "passed"
+    },
+    {
+      "test": "Cannot replace actor linkage",
+      "status": "passed"
+    },
+    {
+      "test": "Cannot delete actor dossier history",
+      "status": "passed"
+    },
+    {
+      "test": "Dossier cannot reference foreign actor",
+      "status": "passed"
+    },
+    {
+      "test": "Dossier cannot use demo actor as real record",
+      "status": "passed"
+    }
+  ]
+}

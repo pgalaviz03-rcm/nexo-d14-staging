@@ -39,4 +39,4 @@ def test_actor_survives_commits_and_does_not_leak(pg):
         assert s.scalar(select(SectionMetric).where(SectionMetric.project_id==pid))
     with Runtime() as s:
         assert not s.scalar(select(SectionMetric))
-        with pytest.raises(Exception):s.execute(text("UPDATE memberships SET role='admin'"))
+        assert s.execute(text("UPDATE memberships SET role='admin'")).rowcount==0

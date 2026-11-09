@@ -1,0 +1,62 @@
+/* Local findings and review workflow; same-origin calls only. */
+window.NexoAlerts={install({api,byId,getProject}){
+ let sequence=0,detailSequence=0,packet=null,selected=0,detail=null,dirty=false,ruleDirty=false,busy=false,cut=null;
+ const states={open:'Abierta',acknowledged:'En revisión',resolved:'Resuelta',dismissed:'Descartada'},metrics={mentions:'Volumen de menciones',negative_share:'Porcentaje negativo',mention_spike:'Aumento de menciones'};
+ const reasons={insufficient_mentions:'Faltan menciones para el mínimo elegido',classification_pending:'Falta clasificación suficiente',baseline_pending:'Falta un periodo anterior con menciones',paused:'Regla pausada'};
+ const transitions={open:['acknowledged','resolved','dismissed'],acknowledged:['resolved','dismissed'],resolved:['open'],dismissed:['open']};
+ const el=(tag,text,cls)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n;};
+ const number=n=>n===null||n===undefined?'—':Number(n).toLocaleString('es-MX',{maximumFractionDigits:2});
+ const date=x=>new Date(x).toLocaleString('es-MX',{dateStyle:'medium',timeStyle:'short'});
+ const setStatus=t=>{byId('alertsStatus').textContent=t;byId('settingsRulesStatus').textContent=t;};
+ const path=()=>'/api/projects/'+getProject()+'/alerts';
+ function range(){if(cut)return cut;let end=new Date(),start;const days=byId('alertsPeriod').value;
+  if(days==='custom'){if(!byId('alertsFrom').value||!byId('alertsTo').value)throw Error('Completa las fechas del corte.');start=new Date(byId('alertsFrom').value+'T00:00:00');end=new Date(byId('alertsTo').value+'T00:00:00');end.setDate(end.getDate()+1);end=new Date(Math.min(end.getTime(),Date.now()));}
+  else{end.setMinutes(0,0,0);start=new Date(end.getTime()-Number(days)*86400000);}return {start:start.toISOString(),end:end.toISOString()};}
+ function clearDetail(){detail=null;selected=0;dirty=false;byId('alertsDetail').hidden=true;byId('alertsDetailSources').replaceChildren();byId('alertsHistory').replaceChildren();byId('alertsNextState').replaceChildren();byId('alertsNote').value='';byId('alertsExport').disabled=true;for(const id of ['alertsDetailStatus','alertsDetailTitle','alertsDetailSummary','alertsEvidenceCut'])byId(id).textContent='';}
+ function clear(){packet=null;for(const id of ['alertsContent','alertsRules'])byId(id).replaceChildren();for(const id of ['alertsOpen','alertsReviewing','alertsClosed','alertsWaiting'])byId(id).textContent='—';byId('alertsEvaluate').disabled=true;byId('alertsEvaluate').hidden=true;byId('alertsRulePanel').hidden=true;byId('settingsRules').replaceChildren();}
+ function render(p){packet=p;cut=p.window;for(const id of ['alertsActor','alertsRuleActor']){const node=byId(id),old=node.value;node.replaceChildren();if(id==='alertsActor'){const o=el('option','Todos los actores');o.value='0';node.append(o);}for(const a of p.actors){if(id==='alertsRuleActor'&&!a.active)continue;const o=el('option',a.name+(a.active?'':' · archivado'));o.value=a.id;node.append(o);}node.value=old|| (id==='alertsActor'?'0':String(p.actors.find(a=>a.active)?.id||''));}
+  byId('alertsOpen').textContent=number(p.counts.open);byId('alertsReviewing').textContent=number(p.counts.acknowledged);byId('alertsClosed').textContent=number(p.counts.resolved+p.counts.dismissed);byId('alertsWaiting').textContent=number(p.readings.filter(r=>r.status==='waiting').length);
+  byId('alertsCutLabel').textContent=date(p.window.start)+' a '+date(p.window.end)+' · contadores de los incidentes listados en esta vista'+(p.incidents_bounded?' · últimos '+p.incident_limit:'');
+  byId('alertsEvaluate').disabled=!p.can_review;byId('alertsEvaluate').hidden=!p.can_review;byId('alertsRulePanel').hidden=!p.can_manage_rules;
+  for(const row of p.incidents){const r=row.snapshot.reading,button=el('button',undefined,'alert-card');button.type='button';button.append(el('span',states[row.status],'alert-state '+row.status),el('strong',r.name),el('span',r.actor_name,'note'),el('span',metrics[r.metric]+' · '+number(r.value)+(r.metric==='mentions'?'':' %')+' / umbral '+number(r.threshold)),el('small','Cierre del corte: '+date(row.window.end)));button.onclick=()=>open(row.id);byId('alertsContent').append(button);}
+  if(!p.incidents.length)byId('alertsContent').append(el('p','No hay incidentes registrados en esta vista.','live-empty'));
+  for(const r of p.readings){const card=el('div',undefined,'alert-rule'),text=el('div');text.append(el('b',r.name+' · '+r.actor_name),el('p',metrics[r.metric]+' ≥ '+number(r.threshold)+(r.metric==='mentions'?'':' %')+' · mínimo '+r.min_mentions+' menciones','note'),el('span',r.status==='triggered'?'Umbral alcanzado · '+number(r.value):r.status==='clear'?'Por debajo del umbral · '+number(r.value):reasons[r.reason]||'Pendiente'));
+   card.append(text);byId('alertsRules').append(card);}
+  const settings=byId('settingsRules');settings.replaceChildren();
+  if(p.can_manage_rules)for(const r of p.readings){const line=el('div',undefined,'settings-record');line.append(el('strong',r.name+' · '+r.actor_name),el('span',metrics[r.metric]+' ≥ '+number(r.threshold)));
+   const button=el('button',r.active?'Pausar':'Activar','outline');button.type='button';button.onclick=()=>toggle(r);line.append(button);settings.append(line);}
+  if(!p.readings.length)byId('alertsRules').append(el('p','Las reglas del proyecto aparecerán aquí.','note'));
+ }
+ async function reload(){if(!getProject())return;const stamp=++sequence,pid=getProject();clear();setStatus('Preparando los incidentes del proyecto…');
+  try{const r=range(),p=await api(path()+'?'+new URLSearchParams({...r,actor_id:byId('alertsActor').value||0,network:byId('alertsNetwork').value,state:byId('alertsState').value}));if(stamp!==sequence||pid!==getProject())return;setStatus('');render(p);if(selected&&!dirty)await open(selected,true);}
+  catch(e){if(stamp===sequence&&pid===getProject())setStatus(e.message);}}
+ async function open(id,force=false){if(dirty&&!force&&!confirm('Hay una nota sin guardar. ¿Descartarla al abrir otro incidente?'))return;const stamp=++detailSequence,pid=getProject();
+  try{const d=await api(path()+'/'+id);if(stamp!==detailSequence||pid!==getProject())return;clearDetail();selected=id;detail=d;byId('alertsDetail').hidden=false;
+   byId('alertsExport').disabled=false;const r=d.snapshot.reading;byId('alertsDetailTitle').textContent=r.name+' · '+r.actor_name;byId('alertsDetailSummary').textContent=states[d.status]+' · versión '+d.version+' · '+metrics[r.metric]+': '+number(r.value)+(r.metric==='mentions'?'':' %')+' frente a '+r.threshold+' · '+r.mentions+' menciones, '+r.classified+' clasificadas · cobertura '+number(r.classification_coverage)+' %';
+   byId('alertsEvidenceCut').textContent='Corte: '+date(d.window.start)+' a '+date(d.window.end)+' · huella '+d.snapshot_sha256;
+   for(const source of d.snapshot.sources){const row=el('div',undefined,'feed-item'),link=el('a',source.title);if(/^https:\/\//i.test(source.url)){link.href=source.url;link.target='_blank';link.rel='noopener noreferrer';}row.append(link,el('small',source.network+' · '+date(source.published_at)));byId('alertsDetailSources').append(row);}
+   if(!d.snapshot.sources.length)byId('alertsDetailSources').append(el('p','Sin piezas de muestra en este registro.','note'));
+   if(d.snapshot.sources_bounded)byId('alertsDetailSources').append(el('p','Se conservan hasta veinte piezas de muestra; el cálculo utiliza el total indicado.','note'));
+   for(const e of d.history){const row=el('div',undefined,'alert-history-row');row.append(el('b',states[e.previous_status]+' → '+states[e.status]),el('small',date(e.at)+' · versión '+e.version),el('p',e.note));byId('alertsHistory').append(row);}
+   if(!d.history.length)byId('alertsHistory').append(el('p','Incidente registrado; sin cambios de atención.','note'));
+   if(d.history_bounded)byId('alertsHistory').append(el('p','Se muestran los últimos cien cambios.','note'));
+   const select=byId('alertsNextState');select.replaceChildren();for(const state of transitions[d.status]){const o=el('option',state==='open'?'Reabrir':states[state]);o.value=state;select.append(o);}byId('alertsReviewForm').hidden=!d.can_review;byId('alertsDetailStatus').textContent='';
+  }catch(e){if(stamp===detailSequence&&pid===getProject())byId('alertsDetailStatus').textContent=e.message;}}
+ async function mutate(url,body){if(busy)return;const pid=getProject();busy=true;try{return await api(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});}finally{busy=false;}}
+ byId('alertsEvaluate').onclick=async()=>{if(!packet?.can_review||busy)return;const pid=getProject();byId('alertsEvaluate').disabled=true;
+  try{const r=await mutate(path()+'/evaluate',{...packet.window,actor_id:Number(byId('alertsActor').value||0),network:byId('alertsNetwork').value});if(pid!==getProject()||!r)return;await reload();setStatus(r.inserted+' incidentes registrados · '+r.duplicates+' ya existentes · '+r.evaluable+' reglas evaluables.');}catch(e){if(pid===getProject())setStatus(e.message);}finally{if(pid===getProject())byId('alertsEvaluate').disabled=!packet?.can_review;}};
+ byId('alertsReviewForm').onsubmit=async e=>{e.preventDefault();if(!detail?.can_review||busy)return;const pid=getProject(),id=selected;
+  try{const r=await mutate(path()+'/'+id+'/reviews',{expected_version:detail.version,status:byId('alertsNextState').value,note:byId('alertsNote').value});if(pid!==getProject()||!r)return;dirty=false;await reload();byId('alertsDetailStatus').textContent='Cambio guardado.';}catch(e){if(pid===getProject())byId('alertsDetailStatus').textContent=e.message;}};
+ async function toggle(r){if(!packet?.can_manage_rules||busy)return;const pid=getProject();busy=true;try{await api('/api/projects/'+pid+'/pulse/rules/'+r.id,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({active:!r.active})});if(pid===getProject())await reload();}catch(e){if(pid===getProject())setStatus(e.message);}finally{busy=false;}}
+ byId('alertsRuleForm').onsubmit=async e=>{e.preventDefault();if(!packet?.can_manage_rules||busy)return;const pid=getProject();
+  try{const r=await mutate('/api/projects/'+pid+'/pulse/rules',{actor_id:Number(byId('alertsRuleActor').value),name:byId('alertsRuleName').value,metric:byId('alertsRuleMetric').value,threshold:Number(byId('alertsRuleThreshold').value),min_mentions:Number(byId('alertsRuleMin').value)});if(pid!==getProject()||!r)return;ruleDirty=false;byId('alertsRuleName').value='';await reload();setStatus('Regla guardada.');}catch(e){if(pid===getProject())setStatus(e.message);}};
+ byId('alertsNote').oninput=()=>dirty=true;byId('alertsNextState').onchange=()=>dirty=true;for(const id of ['alertsRuleActor','alertsRuleName','alertsRuleMetric','alertsRuleThreshold','alertsRuleMin'])byId(id).oninput=()=>ruleDirty=true;
+ byId('alertsReloadDetail').onclick=()=>{if(!selected)return;if(dirty&&!confirm('¿Descartar la nota sin guardar y recargar el estado?'))return;dirty=false;open(selected,true);};
+ byId('alertsExport').onclick=()=>{if(!detail)return;const url=URL.createObjectURL(new Blob([JSON.stringify(detail,null,2)],{type:'application/json'})),a=el('a');a.href=url;a.download='NEXO_Incidente_'+selected+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
+ byId('alertsRefresh').onclick=()=>{cut=null;reload();};for(const id of ['alertsActor','alertsNetwork','alertsState'])byId(id).onchange=()=>reload();
+ byId('alertsPeriod').onchange=()=>{cut=null;byId('alertsDates').hidden=byId('alertsPeriod').value!=='custom';if(byId('alertsPeriod').value!=='custom')reload();else{sequence++;clear();}};
+ for(const id of ['alertsFrom','alertsTo'])byId(id).onchange=()=>{sequence++;cut=null;clear();};
+ function resetProject(){sequence++;detailSequence++;clear();clearDetail();cut=null;ruleDirty=false;byId('alertsActor').replaceChildren();byId('alertsRuleActor').replaceChildren();byId('alertsNetwork').value='all';byId('alertsState').value='all';byId('alertsPeriod').value='1';byId('alertsDates').hidden=true;
+  for(const id of ['alertsFrom','alertsTo','alertsRuleName'])byId(id).value='';byId('alertsRuleMetric').value='mentions';byId('alertsRuleThreshold').value='100';byId('alertsRuleMin').value='20';byId('alertsRulePanel').open=false;setStatus('');byId('alertsCutLabel').textContent='';}
+ return {reload,resetProject,canLeaveProject:()=>!busy&&(!(dirty||ruleDirty)||confirm('Hay una nota o regla sin guardar. ¿Descartarla al cambiar de proyecto?'))};
+}};

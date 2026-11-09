@@ -133,6 +133,8 @@ def parse_feed(raw:bytes):
 
 
 def fetch_rss(url: str) -> bytes:
+    if os.getenv('NEXO_OFFLINE')=='true':
+        raise ValueError('Conexiones externas desactivadas en modo local')
     safe=validate_feed_url(url)
     p=urlparse(safe)
     addresses=resolve_public(p.hostname)

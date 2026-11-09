@@ -230,5 +230,7 @@
     "static/index.html": "67b54256ee46315eb6c30dc504e567bb6aa234e6bdfe4b913672b35158e04c41",
     "tests/test_news_review.py": "6088a1e18f474cf4649e286fbb26e60c4d3b7d375edb026aa94763c0d149fa0e",
     "scripts/preview_local.py": "caadb744d757080ab0e38fa5b5d4044f6fa6d2f3dd2a51bc3516dc9fab70572b"
-  }
+  },
+  "current_status": "Integrated and deployed in staging",
+  "merge_commit": "9f67ec8585e7c88ec260e702e61a1ea66d22e164"
 }

@@ -1,0 +1,85 @@
+{
+  "updated_utc": "2026-10-21T20:53:53.095668+00:00",
+  "scope": "Local Pulso home composition and supported metrics",
+  "python_integration": {
+    "exit_code": 0,
+    "counts": {
+      "passed": 131
+    },
+    "modules": [
+      "test_pulse.py",
+      "test_briefing.py",
+      "test_delivery.py",
+      "test_client_access.py"
+    ],
+    "seconds": 90.88
+  },
+  "python_final": {
+    "exit_code": 0,
+    "counts": {
+      "passed": 2
+    },
+    "modules": [
+      "test_pulse.py::test_pulse_headlines_are_recent_not_ranked_by_unavailable_audiences",
+      "test_pulse.py::test_pulse_rss_fallback_orders_publication_date_not_insertion_id"
+    ],
+    "seconds": 4.67
+  },
+  "runs_overlap": true,
+  "counts_not_summed": true,
+  "javascript": {
+    "checks_passed": 262,
+    "modules": 17,
+    "dom_simulated": true,
+    "actual_browser_visual_qa": false
+  },
+  "supported_account_counters": [
+    "followers",
+    "posts",
+    "interactions"
+  ],
+  "headlines_rank_basis": "publication_date",
+  "headlines_audience_estimated": false,
+  "historical_comparison": {
+    "main_kpi_replaced_by": "favorable_content_percentage",
+    "secondary_only_if_calculable": true,
+    "dates_explicit": true
+  },
+  "actor_index_labelled": true,
+  "overview_largest_share_labelled": true,
+  "method_explanation_owner_only": true,
+  "protected_files": {
+    "app/main.py": "3021b70f4aca828708c92fb7624e0cff76bcf2a0e23a523ea41efc88f1c3858e",
+    "app/knowledge.py": "466b2227eddcce317694ea185faf3bb339909c3c29541917cbd0208396113883"
+  },
+  "territory_map_unchanged": true,
+  "database_schema_changed": false,
+  "real_d14_seeded": false,
+  "real_pilot_checks": {
+    "real_pilot_rows_unchanged": true,
+    "real_reader_write_denied": true,
+    "real_owner_write_allowed": true,
+    "reader_drafts_hidden": true,
+    "preview": {
+      "mentions": 360,
+      "actors": 4,
+      "emotions": 5,
+      "headlines": 6,
+      "account_cards": 2,
+      "active_alerts": 2,
+      "all_content_marked_synthetic": true
+    },
+    "agent_browser_visual_qa": false,
+    "external_calls": 0,
+    "cloud_modified": false,
+    "protected_files": {
+      "app/main.py": "3021b70f4aca828708c92fb7624e0cff76bcf2a0e23a523ea41efc88f1c3858e",
+      "app/knowledge.py": "466b2227eddcce317694ea185faf3bb339909c3c29541917cbd0208396113883"
+    }
+  },
+  "visual_acceptance_pending": true,
+  "external_calls": 0,
+  "cloud_modified": false,
+  "ai_used": false,
+  "new_spending": false
+}

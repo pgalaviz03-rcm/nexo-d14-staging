@@ -56,9 +56,13 @@ def inventory(connection):
     return counts
 
 
-def make_archive(root):
+def make_archive(root, *, db_file=None, uploads_directory=None, secret_file=None):
     root = Path(root).resolve()
-    db = root / 'storage/nexo.db'
+    db = Path(db_file).resolve() if db_file else root / 'storage/nexo.db'
+    uploads_root = Path(uploads_directory).resolve() if uploads_directory else (root / 'storage/uploads').resolve()
+    secret = Path(secret_file).resolve() if secret_file else root / 'storage/.session_secret'
+    if not all(path.is_relative_to(root) for path in (db,uploads_root,secret)):
+        raise ValueError('Los archivos del respaldo deben permanecer dentro de su área privada.')
     if not db.is_file():
         raise ValueError('No existe una base local para respaldar.')
     with sqlite3.connect(db.as_uri() + '?mode=ro', uri=True, timeout=5) as source:
@@ -73,14 +77,13 @@ def make_archive(root):
             references = []
             for row in snapshot.execute("SELECT id,path,sha256 FROM datasets WHERE path<>'database'"):
                 path = Path(row[1]).resolve()
-                relative = path.relative_to((root / 'storage/uploads').resolve())
+                relative = path.relative_to(uploads_root)
                 name = 'storage/uploads/' + relative.as_posix()
                 raw = path.read_bytes()
                 if hashlib.sha256(raw).hexdigest() != row[2]:
                     raise ValueError('Un archivo cargado no coincide con su hash registrado.')
                 files[name] = raw
                 references.append({'id': row[0], 'file': name})
-    secret = root / 'storage/.session_secret'
     if not secret.is_file():
         raise ValueError('Falta la clave de sesion local; no se creara una copia incompleta.')
     files['storage/.session_secret'] = secret.read_bytes()

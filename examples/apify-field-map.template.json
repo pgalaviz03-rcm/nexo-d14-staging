@@ -1,0 +1,9 @@
+{
+  "external_id": "postId",
+  "url": "url",
+  "title": "title",
+  "text": "text",
+  "published_at": "publishedAt",
+  "views": "views",
+  "interactions": "interactions"
+}

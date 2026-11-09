@@ -1,0 +1,77 @@
+{
+  "updated_utc": "2026-10-27T18:17:15.536743+00:00",
+  "source_zip": {
+    "file": "atalaya-codigo-completo.zip",
+    "sha256": "148dc723f256e125bdbd277bb13216a47a8cb650c984cd16b36b650050c0c111",
+    "source_code_executed": false
+  },
+  "scope": "Local Fidelidad account-publication activity and existing aggregate continuity",
+  "copied_source_login": false,
+  "original_scheduler_executed": false,
+  "participant_rankings_imported": false,
+  "individual_political_stance_imported": false,
+  "changed_existing_code": [
+    "app/continuity_api.py",
+    "static/continuity.js",
+    "static/index.html",
+    "tests/test_documentary_digest.py"
+  ],
+  "added_files": [
+    "app/fidelity.py",
+    "app/fidelity_api.py",
+    "static/fidelity.js",
+    "static/fidelity.css",
+    "tests/test_fidelity.py",
+    "tests/check_fidelity_ui.mjs",
+    "scripts/fidelity_preview.py",
+    "docs/ATALAYA_FIDELIDAD_CONTRATO.md"
+  ],
+  "protected_files": {
+    "app/main.py": "3021b70f4aca828708c92fb7624e0cff76bcf2a0e23a523ea41efc88f1c3858e",
+    "app/knowledge.py": "466b2227eddcce317694ea185faf3bb339909c3c29541917cbd0208396113883"
+  },
+  "territory_map_unchanged": true,
+  "database": {
+    "new_local_table": "fidelity_captures",
+    "pilot_rows_unchanged_during_preparation": true,
+    "source_tables_changed": false,
+    "cloud_migration_and_rls_pending": true
+  },
+  "python": {
+    "wide_passed": 667,
+    "wide_test_helper_failure": 1,
+    "helper_corrected": true,
+    "final_passed": 166,
+    "final_failed": 0,
+    "runs_overlap": true,
+    "runs_not_summed": true,
+    "consolidated_distinct_cases": 668,
+    "network_blocked": true
+  },
+  "javascript": {
+    "modules": 18,
+    "checks_passed": 277,
+    "dom_simulated": true,
+    "browser_rendering_verified": false
+  },
+  "preview": {
+    "synthetic_only": true,
+    "accounts": 2,
+    "publications": 30,
+    "interactions": 2115,
+    "return_rate": 60.0,
+    "continuity_participants": 1200,
+    "owner_grants": 0,
+    "pilot_database_unchanged": true,
+    "external_calls": 0,
+    "browser_visual_qa": false
+  },
+  "scope_of_mentions": "Existing project actor-mention archive; not per-account attributed",
+  "apify_connected": false,
+  "ai_used": false,
+  "external_calls": 0,
+  "cloud_modified": false,
+  "new_spending": false,
+  "human_visual_acceptance": false,
+  "production_ready": false
+}

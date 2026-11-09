@@ -1,0 +1,152 @@
+{
+  "updated_utc": "2026-10-27T21:55:37.709973+00:00",
+  "scope": "Unified local project configuration and registered team activity profiles",
+  "changed_existing_code": [
+    ".env.example",
+    ".env.local.example",
+    "app/controls.py",
+    "app/fidelity_team_api.py",
+    "app/workspace_api.py",
+    "static/actors.js",
+    "static/alerts.js",
+    "static/continuity.js",
+    "static/fidelity_team.js",
+    "static/index.html",
+    "static/library.js",
+    "static/networks.js",
+    "static/platform.js",
+    "static/pulse.js",
+    "static/reviews.js",
+    "static/workbooks.js",
+    "tests/check_actors_ui.mjs",
+    "tests/check_fidelity_team_ui.mjs",
+    "tests/check_library_ui.mjs",
+    "tests/check_project_admin_ui.mjs",
+    "tests/check_pulse_ui.mjs",
+    "tests/test_documentary_digest.py"
+  ],
+  "added_files": [
+    "app/configuration.py",
+    "app/configuration_api.py",
+    "static/settings.js",
+    "static/settings.css",
+    "tests/test_configuration.py",
+    "tests/check_settings_ui.mjs",
+    "docs/CONFIGURACION_UNIFICADA.md"
+  ],
+  "protected_files_unchanged": {
+    "app/main.py": "3021b70f4aca828708c92fb7624e0cff76bcf2a0e23a523ea41efc88f1c3858e",
+    "app/knowledge.py": "466b2227eddcce317694ea185faf3bb339909c3c29541917cbd0208396113883"
+  },
+  "territory_map_unchanged": true,
+  "configuration": {
+    "superadmin_only": true,
+    "project_scoped": true,
+    "tabs": 8,
+    "canonical_actor_editor": true,
+    "canonical_rule_editor": true,
+    "brand_editor_removed": true,
+    "empty_projects_supported": true,
+    "consultants_read_only": true
+  },
+  "registered_team_profiles": {
+    "accounts": true,
+    "observed_publications": true,
+    "source_links": true,
+    "pagination": true,
+    "unknown_comment_counts_not_invented": true,
+    "unregistered_community_aggregate_only": true
+  },
+  "integrations": {
+    "kinds": [
+      "apify",
+      "generation",
+      "embeddings",
+      "email",
+      "telegram",
+      "whatsapp",
+      "database",
+      "storage"
+    ],
+    "credentials_encrypted": true,
+    "secrets_not_returned": true,
+    "validation_error_input_redacted": true,
+    "blank_preserves_saved_key": true,
+    "version_conflicts_checked": true,
+    "provider_connections_verified": false,
+    "runtime_enabled": false,
+    "external_calls": 0,
+    "budget_usd": 0
+  },
+  "media": {
+    "project_scoped_registry": true,
+    "official_social_accounts": true,
+    "rss_preserved": true,
+    "manual_normalized_post_ingress": true,
+    "posts_searchable": true,
+    "idempotent": true,
+    "original_editorial_records_preserved": true,
+    "remote_collection_active": false
+  },
+  "local_tables": [
+    "integration_settings",
+    "media_outlets",
+    "media_article_links"
+  ],
+  "cloud_migrations_rls_pending": true,
+  "scheduler": {
+    "existing_schema_preserved": true,
+    "channels": [
+      "email",
+      "telegram"
+    ],
+    "whatsapp_credentials_only": true,
+    "whatsapp_schedule_and_sender_pending": true,
+    "messages_sent": 0
+  },
+  "python": {
+    "wide_passed": 778,
+    "wide_failed": 0,
+    "focused_passed": 254,
+    "focused_failed": 0,
+    "last_configuration_passed": 40,
+    "last_configuration_failed": 0,
+    "runs_overlap": true,
+    "runs_not_summed": true,
+    "network_blocked": true,
+    "native_postgres_verified": false,
+    "http_socket_tests_executed": false
+  },
+  "javascript": {
+    "modules": 21,
+    "checks_passed": 335,
+    "syntax_passed": true,
+    "dom_simulated": true,
+    "browser_visual_qa": false,
+    "physical_mobile_qa": false
+  },
+  "synthetic_preview": {
+    "registered_member_profile_verified": true,
+    "configuration_private_to_owner": true,
+    "team_members": 3,
+    "team_records_present": true,
+    "synthetic_only": true,
+    "accounts": 2,
+    "publications": 30,
+    "interactions": 2115,
+    "return_rate": 60.0,
+    "continuity_participants": 1200,
+    "owner_grants": 0,
+    "pilot_database_unchanged": true,
+    "external_calls": 0,
+    "browser_visual_qa": false
+  },
+  "pilot_database_written": false,
+  "membership_roles_changed": false,
+  "cloud_modified": false,
+  "new_spending": false,
+  "apify_connected": false,
+  "ai_connected": false,
+  "production_ready": false,
+  "human_visual_acceptance": false
+}

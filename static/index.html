@@ -575,14 +575,22 @@ drawSectionTable();
 
 // v0.3: conexión real con API autenticada y datos por proyecto.
 let authToken=null,activeProjectId=null,mfaFactor=null;
+// Bound each page's API fan-out; keep the server's concurrency ceiling intact.
+let requestSlots=2;const requestWaiters=[];
+async function acquireRequest(){if(requestSlots>0){requestSlots--;return;}await new Promise(resolve=>requestWaiters.push(resolve));}
+function releaseRequest(){const next=requestWaiters.shift();if(next)next();else requestSlots++;}
 async function api(path,options={}){
+ await acquireRequest();
+ try{return await apiRequest(path,options);}finally{releaseRequest();}
+}
+async function apiRequest(path,options={}){
  const requestProject=path.match(/^\/api\/projects\/(\d+)(?:\/|\?|$)/);const mutation=requestProject&&(options.method||'GET')!=='GET';
  if(mutation&&projectLoading)throw Error('Espera a que termine el cambio de proyecto antes de guardar.');
  if(mutation)projectWrites++;
  try{
   const headers={...(authToken?{'Authorization':'Bearer '+authToken}:{}),...(options.headers||{})};
   const response=await fetch(path,{...options,headers});let data;
-  try{data=await response.json();}catch{data={detail:'Respuesta inválida del servidor'};}
+  try{data=await response.json();}catch{data={detail:response.status===503?'El servidor está ocupado. Espera un momento y vuelve a intentar.':'No se pudo leer la respuesta del servidor (HTTP '+response.status+').'};}
   if(requestProject&&Number(requestProject[1])!==activeProjectId)throw Error('Consulta descartada: cambió el proyecto activo.');
   if(!response.ok){const error=Error(typeof data.detail==='string'?data.detail:'Error de consulta '+response.status);error.status=response.status;throw error;}
   return data;

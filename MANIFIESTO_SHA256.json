@@ -231,7 +231,7 @@
   "static/fidelity.css": "5327b1def334039eb39ed85cb6cf71c21675128756fd21aa806666aa62a1ac66",
   "static/fidelity.js": "e24f961ecfb77add4aed431d1513e7e616269249e567ff54eaa4ec595932eba0",
   "static/fidelity_team.js": "5de468504f7a6cbc475aa91c046ed7b7233e93f3fa68f43839be533f90025359",
-  "static/index.html": "19570d329904dbc5cfa7f50ec8c340c7651f2b032c51c4d4a28e69ff7032a11b",
+  "static/index.html": "7cef1e68fe5fce537b66a62ca424fdf211df4b4cd1aabc1ee6440c6ad1711f2e",
   "static/library.js": "125f3f10f399a0b7416a0d8bf847193c26523909e06aaf2929b0f07dea4c2b71",
   "static/networks.js": "fcc7212bc05ef63de3fc8193e556ccd6434c020e72ad2bd3bbd47574fb775e85",
   "static/platform.js": "c7d7881e50afa5d40c57330aaa6b07e9a40897cd33f45dd92923a2ef357699f9",
@@ -260,7 +260,7 @@
   "tests/check_networks_ui.mjs": "1c00bfa801411a4a28def106c0efdba8ef4ad87f24abaf7a3cdeb96ea1b8b9f7",
   "tests/check_platform_cloud_ui.mjs": "ad13e7aaf0f0e8b7e7b1290936c9187f1cd8fa7017c6b3ac0b48fc975c712e67",
   "tests/check_project_admin_ui.mjs": "3c6aa25fb0bd45210bf572bd844358ae10018da7096365ed9ffa94b28c681f8f",
-  "tests/check_pulse_ui.mjs": "b8b0cc910fa64922ff87d1ee06e03f1544f393395684cfa6dca67f369dca6296",
+  "tests/check_pulse_ui.mjs": "adbe287877b4aa3c9884b019679b2c8073e66069ce1ed114592ccea9ea7ca72e",
   "tests/check_report_safety_ui.mjs": "9c53f30610aa93262004dd54fff796522fa95c5f67be457e7572d61fe0b54424",
   "tests/check_reports_ui.mjs": "f684d7978ba08e0822552c006118ad724917748834a9264c03b3307b57a498e5",
   "tests/check_settings_ui.mjs": "747c795c379ab9f85880cdb7e80f259587ac66e1305e9cecb5515fc58b5f6b2a",
@@ -306,7 +306,7 @@
   "tests/test_territory.py": "639ad66d6f16e27a91717b0870354bd8b9955ff5809f0b7dba1cebc3b87a6309",
   "tests/test_workbook_evidence.py": "9fd1e4e76e2b45f60528baf8934b4fade673725bc2dadcd3cf301b505aff2fc5",
   "docs/RESULTADO_ACTUALIZACION_NUBE.json": "831a54b8b0b307cf7d9cfd0132c401db95050e93d7ae3291d8492db63501fe89",
-  "tests/check_bootstrap.mjs": "18c738da4367b5a5888573bc16b40e3d00318d2aab2093b1f0cc656f0562cabb",
+  "tests/check_bootstrap.mjs": "a3da5cf927d0d3948bf1afbe0d9e9e3f8b5bea1b597dd0039782fd1a70afb3c5",
   "scripts/build_browser_bundle.py": "4252e39cb086c7ae45a394d041f9f03b28f48c812bd7aba8a9812e662745da0d",
   "static/nexo-modules.js": "badf033cde3c70fcf0085b3d303cfdfbaea4851d4d112b187f900bf2e42695ca"
 }

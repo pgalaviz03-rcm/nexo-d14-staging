@@ -12,6 +12,8 @@ const fetch=async(path)=>{calls.push(path);return{ok:path==='/api/branding',stat
 const ctx={window:{},document,fetch,console,location:{hash:'',search:'',pathname:'/'},history:{replaceState(){}},URL,URLSearchParams,FormData,Blob,Number,String,Date,JSON,Intl,setTimeout,clearTimeout,confirm:()=>false};vm.createContext(ctx);
 vm.runInContext(bundle,ctx,{filename:'nexo-modules.js'});
 for(const name of [...scripts[1][2].matchAll(/window\.(Nexo\w+)\.install/g)].map(m=>m[1]))assert.equal(typeof ctx.window[name]?.install,'function',name);
-vm.runInContext(scripts[1][2],ctx,{filename:'bootstrap.js'});await new Promise(r=>setTimeout(r,0));
+vm.runInContext(scripts[1][2].replace('})();','window.__testApi=api;})();'),ctx,{filename:'bootstrap.js'});await new Promise(r=>setTimeout(r,0));
 assert.equal(ids.loginError.textContent,'');assert(calls.includes('/api/projects'));assert(calls.includes('/api/branding'));assert.equal(typeof ids.mfaForm.listeners.submit,'function');assert.equal(typeof ids.loginForm.listeners.submit,'function');
-console.log(JSON.stringify({passed:true,cases:['single_versioned_asset','bundle_hash_matches_HTML','all_install_contracts_present','full_bootstrap_reaches_session_restore','login_and_mfa_handlers_installed','unauthenticated_boot_has_no_JS_error'],browser_rendering:false}));
+let active=0,maxActive=0;ctx.fetch=async()=>{active++;maxActive=Math.max(active,maxActive);await new Promise(r=>setTimeout(r,5));return{ok:true,status:200,json:async()=>{await new Promise(r=>setTimeout(r,2));active--;return{};}};};
+await Promise.all(Array.from({length:16},(_,i)=>ctx.window.__testApi('/test/'+i)));assert.equal(maxActive,2);assert.equal(active,0);
+console.log(JSON.stringify({passed:true,cases:['single_versioned_asset','bundle_hash_matches_HTML','all_install_contracts_present','full_bootstrap_reaches_session_restore','login_and_mfa_handlers_installed','unauthenticated_boot_has_no_JS_error','API_fanout_bounded_to_two_until_body_consumed'],browser_rendering:false}));

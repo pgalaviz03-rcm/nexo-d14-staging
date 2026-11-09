@@ -1,0 +1,194 @@
+{
+  "date": "2026-10-20T20:19:21.334006+00:00",
+  "scope": "Local aggregate audience continuity, user-approved definition",
+  "behavior": {
+    "project_actor_account_period_filters": true,
+    "provider_and_measurement_separation": true,
+    "unit": "Unique participating accounts reported by source; not people or voters",
+    "returning": "Source-supplied aggregate overlap with contiguous preceding equal-duration window",
+    "new": "Participants minus returning; new relative to reference only",
+    "return_rate": "Returning / current participants * 100",
+    "retention_rate": "Returning / source reference participants * 100; null when unknown",
+    "change": "Percentage-point difference; same provider, measurement, account and equal duration; consistent reference population",
+    "series": "Up to twelve observed windows; same duration and measurement, no interpolation or cross-account sum",
+    "missing_values_not_zero": true,
+    "small_sample_values_suppressed_in_api_ui_export": true,
+    "immutable_capture_history": true,
+    "idempotent_import": true,
+    "conflicts_rejected": true,
+    "atomic_batch": true,
+    "revision": "New later capture; latest per window and measurement selected",
+    "real_provider": "DisabledAudienceReader",
+    "external_calls": 0,
+    "real_provider_connected": false,
+    "fabricated_d14_values_added": false,
+    "individual_audience_profiles": false,
+    "political_loyalty_inference": false
+  },
+  "security": {
+    "membership_required": true,
+    "writer_roles": [
+      "admin",
+      "editor",
+      "analyst"
+    ],
+    "readers_cannot_import": true,
+    "own_real_active_registered_account_required": true,
+    "https_reference_validation": true,
+    "strict_no_additional_fields": true,
+    "no_participant_identifiers": true,
+    "no_payload_secrets": true,
+    "utc_dates": true,
+    "future_captures_rejected": true,
+    "audit_counts_only": true,
+    "late_project_responses_and_file_reads_discarded": true,
+    "postgres_forced_rls": true,
+    "postgres_runtime_no_update_or_delete": true,
+    "small_sample_reserve_is_api_layer_not_formal_anonymity": true
+  },
+  "limits": {
+    "minimum_current_and_known_reference_audience": 20,
+    "minimum_positive_cell": 5,
+    "batch_captures": 100,
+    "batch_bytes": 1000000,
+    "import_attempts_project_day_utc": 20,
+    "max_query_captures": 1000,
+    "max_actors": 50,
+    "max_account_references": 20,
+    "max_series_windows": 12,
+    "window_days_max": 90
+  },
+  "verification": {
+    "python_regression": {
+      "exit_code": 0,
+      "counts": {
+        "passed": 310
+      },
+      "seconds": 189.83,
+      "modules": [
+        "test_continuity.py",
+        "test_networks.py",
+        "test_territory.py",
+        "test_actors.py",
+        "test_content_analysis.py",
+        "test_delivery.py",
+        "test_briefing.py",
+        "test_pulse.py",
+        "test_reports.py",
+        "test_documentary_digest.py",
+        "test_manual_reviews.py",
+        "test_local_knowledge.py",
+        "test_news_review.py",
+        "test_backup_local.py"
+      ]
+    },
+    "additional_populated_backup_test": {
+      "exit_code": 0,
+      "counts": {
+        "passed": 1
+      },
+      "seconds": 6.95,
+      "modules": [
+        "test_continuity.py"
+      ]
+    },
+    "distinct_python_cases_passed": 311,
+    "new_continuity_cases_passed": 40,
+    "javascript_controller_checks_passed": 107,
+    "new_continuity_controller_cases": 15,
+    "sql_policy_checks_passed": 134,
+    "new_audience_policy_checks": 15,
+    "sql_engine": {
+      "version": "PostgreSQL 18.6 (PGlite 0.5.10) on wasm32-unknown-emscripten, compiled by emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 6.0.5 (1db513782be24469589d7cb8a1f1834e9a33f271), 32-bit"
+    },
+    "csp_hash_matches": true,
+    "javascript_syntax": true,
+    "actual_d14": {
+      "read_only": true,
+      "existing_rows_unchanged": true,
+      "registered_d14_actors": 4,
+      "primary_reference_found": true,
+      "fabricated_captures_added": false,
+      "other_project_separate": true,
+      "protected_files_unchanged": true,
+      "map_unchanged": true,
+      "external_calls": 0,
+      "browser_visual_acceptance": false
+    },
+    "protected_file_hashes": {
+      "app/main.py": "3021b70f4aca828708c92fb7624e0cff76bcf2a0e23a523ea41efc88f1c3858e",
+      "app/knowledge.py": "466b2227eddcce317694ea185faf3bb339909c3c29541917cbd0208396113883"
+    },
+    "native_postgres_acceptance": false,
+    "browser_visual_acceptance": true,
+    "full_http_suite_rerun": false,
+    "browser_visual_acceptance_by": "user",
+    "agent_browser_qa_performed": false
+  },
+  "schema": {
+    "head": "009_audience",
+    "tables": 32,
+    "sqlite_additive_upgrade_applied": true,
+    "isolated_upgrade_and_repeat_passed": true,
+    "previous_rows_sha256_preserved": true,
+    "postgres_migration_applied": false
+  },
+  "backup": {
+    "date_utc": "2026-10-20T20:15:19.315335+00:00",
+    "encrypted": true,
+    "dpapi_current_user": true,
+    "isolated_restore_verified": true,
+    "table_counts": {
+      "actor_profiles": 4,
+      "article_reviews": 0,
+      "audience_snapshots": 0,
+      "audit_events": 39,
+      "briefing_schedules": 0,
+      "content_analyses": 16,
+      "content_assessments": 0,
+      "dataset_blobs": 0,
+      "datasets": 0,
+      "delivery_jobs": 0,
+      "feed_sources": 2,
+      "memberships": 3,
+      "news_articles": 20,
+      "platform_brand": 1,
+      "platform_grants": 1,
+      "projects": 2,
+      "pulse_accounts": 2,
+      "pulse_actors": 7,
+      "pulse_batches": 1,
+      "pulse_configs": 1,
+      "pulse_documents": 170,
+      "pulse_mentions": 170,
+      "pulse_rules": 2,
+      "report_releases": 1,
+      "report_versions": 1,
+      "reports": 1,
+      "review_changes": 0,
+      "review_topics": 0,
+      "section_metrics": 45,
+      "topics": 1,
+      "usage_counters": 1,
+      "users": 2
+    },
+    "backup_file": "20261020T201519Z-9fc77192.nexobak",
+    "sha256": "236e2ed93c6aee6263567ab1b404ababc52d4cf57d684f9b4d98647855f06c7e",
+    "cloud_backup": false,
+    "offsite_backup": false
+  },
+  "cloud_modified": false,
+  "new_spending": false,
+  "pending": [
+    "Authorized provider aggregate unique participation and overlap capabilities/sample",
+    "Source adapter, permissions, budget, bounded worker and monitoring before external activation",
+    "Native PostgreSQL acceptance before cloud migration"
+  ],
+  "acceptance": {
+    "accepted": true,
+    "date": "2026-10-20T21:13:45.064964+00:00",
+    "by": "user",
+    "confirmation": "Sí, aparece todo y se entiende",
+    "scope": "Visual structure and local navigation; not real provider data"
+  }
+}

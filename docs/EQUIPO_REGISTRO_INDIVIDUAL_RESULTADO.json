@@ -1,0 +1,41 @@
+{
+  "updated_utc": "2026-10-27T19:24:02.097813+00:00",
+  "scope": "Single-member owner form, in addition to the existing XLSX/CSV roster",
+  "changed_existing_files": [
+    "app/fidelity_team_api.py",
+    "docs/FIDELIDAD_EQUIPO.md",
+    "static/fidelity.css",
+    "static/fidelity_team.js",
+    "static/index.html",
+    "tests/check_fidelity_team_ui.mjs",
+    "tests/test_fidelity_team.py"
+  ],
+  "python": {
+    "passed": 204,
+    "failed": 0,
+    "network_blocked": true
+  },
+  "javascript": {
+    "modules": 19,
+    "checks_passed": 298,
+    "dom_simulated": true,
+    "browser_rendering_verified": false
+  },
+  "owner_only_management": true,
+  "consultant_read_only": true,
+  "project_scoped": true,
+  "manual_and_excel_validation_shared": true,
+  "duplicate_accounts_rejected": true,
+  "manual_daily_limit": 100,
+  "registered_members_are_login_accounts": false,
+  "protected_files_unchanged": true,
+  "territory_map_unchanged": true,
+  "pilot_database_written": false,
+  "new_tables": false,
+  "apify_adapter_implemented": false,
+  "apify_connected": false,
+  "cloud_modified": false,
+  "external_calls": 0,
+  "new_spending": false,
+  "production_ready": false
+}

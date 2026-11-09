@@ -1,0 +1,58 @@
+{
+  "date": "2026-10-20T19:13:27.542703+00:00",
+  "scope": "reuse existing validated territory, local only",
+  "map": {
+    "sha256": "3c560019572c275ea68f75392bd68ee6eceda6f2af5c35eda8de0eb1a3d5fc96",
+    "sections": 45,
+    "block_polygons": 721,
+    "identical_to": {
+      "NEXO_Integrado_D14": true,
+      "NEXO_Atalaya_Candidato_D14": true,
+      "NEXO_v0_5_D14": true
+    },
+    "layout_preserved": true
+  },
+  "history": {
+    "year": 2024,
+    "nominal_list": 65378,
+    "territorial_votes": 41984,
+    "official_votes": 41992,
+    "advance_votes_not_georeferenced": 8,
+    "rows_unchanged": true
+  },
+  "changes": [
+    "Clear search, active section, highlight and block layer on project change",
+    "Display D14 map only with complete reconciled D14 history",
+    "Disable this export outside validated territory; discard stale responses and stale blobs",
+    "Remove production-server notice from source note"
+  ],
+  "verification": {
+    "targeted_python_passed": 17,
+    "new_territory_python_cases": 6,
+    "python_seconds": 11.62,
+    "js_controller_cases_passed": 75,
+    "territory_js_cases": 14,
+    "csp_hash_matches": true,
+    "javascript_syntax_passed": true,
+    "full_backend_regression_rerun": false,
+    "previous_full_backend_regression_passed": 231,
+    "sql_policies_changed": false,
+    "sql_policy_suite_rerun": false,
+    "previous_sql_wasm_cases_passed": 119,
+    "full_http_suite_rerun": false,
+    "browser_visual_acceptance_by_agent": false,
+    "protected_file_hashes": {
+      "main.py": "3021b70f4aca828708c92fb7624e0cff76bcf2a0e23a523ea41efc88f1c3858e",
+      "knowledge.py": "466b2227eddcce317694ea185faf3bb339909c3c29541917cbd0208396113883"
+    },
+    "actor_rows_unchanged": true,
+    "source_map_byte_equal_after_newline_normalization": true
+  },
+  "migrations_changed": false,
+  "migration_head": "008_actor_profiles",
+  "cloud_modified": false,
+  "new_api_calls": 0,
+  "new_spending": false,
+  "acceptance": "User instructed reuse of the previously working territory view; transition fixes checked locally",
+  "next_module": "Redes"
+}

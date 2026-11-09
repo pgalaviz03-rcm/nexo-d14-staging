@@ -47,6 +47,13 @@ class WindowLimiter:
             return used < cap
 
 
+def request_body_limit(path):
+    import re
+    if re.fullmatch(r'/api/projects/[0-9]+/continuity/team/roster/import',path):return 2*1024*1024+16384
+    if re.fullmatch(r'/api/projects/[0-9]+/continuity/(?:atalaya/import|team/events)',path):return 1_000_000
+    if re.fullmatch(r'/api/projects/[0-9]+/settings/media/[0-9]+/publications/import',path):return 1_000_000
+    return 13*1024*1024 if '/datasets' in path or path.endswith('/library/upload') else 600_000 if path.endswith('/articles/import') else 32_000
+
 class Guard:
     """ASGI body bounds apply before multipart parsing; secure headers include errors."""
     def __init__(self, app, script_hash):
@@ -97,7 +104,7 @@ class Guard:
             # Platform rate-limits supplement this global ceiling; no password/email in logs.
             if not self.limiter.accept('auth', 20):
                 return await reply(429, 'Espera antes de volver a intentar')
-        max_bytes = 13*1024*1024 if '/datasets' in path else 600_000 if path.endswith('/articles/import') else 32_000
+        max_bytes = request_body_limit(path)
         try:
             if int(headers.get(b'content-length', b'0')) > max_bytes:
                 return await reply(413, 'Solicitud demasiado grande')

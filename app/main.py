@@ -19,7 +19,7 @@ from contextlib import asynccontextmanager
 from sqlalchemy import text
 
 MAX_UPLOAD=12*1024*1024
-ACCEPTED={'.csv','.kml','.geojson','.json','.xlsx','.pdf'}
+ACCEPTED={'.csv','.kml','.geojson','.json','.xlsx','.pdf','.txt','.md'}
 
 class Login(BaseModel):
     email:str
@@ -30,6 +30,8 @@ def create_app(db_url=None,storage_dir=None):
     engine,SessionLocal=create_database(db_url)
     if engine.dialect.name == "sqlite":
         Base.metadata.create_all(bind=engine)  # piloto local; PostgreSQL usa Alembic
+        from .models import article_scope_index
+        article_scope_index.create(bind=engine,checkfirst=True)
     root=Path(__file__).resolve().parent.parent
     ui_html=(root/'static'/'index.html').read_text(encoding='utf-8')
     uploads=Path(storage_dir or os.getenv('NEXO_STORAGE_DIR',str(root/'storage'/'uploads'))).resolve()
@@ -147,7 +149,12 @@ def create_app(db_url=None,storage_dir=None):
         if used+len(raw)>250*1024*1024:raise HTTPException(429,'Almacenamiento del proyecto: máximo 250 MB')
         status='staged';count=0;detail='Guardado para revisión y vinculación de esquema.'
         try:
-            if ext=='.csv':
+            if ext in ('.txt','.md'):
+                if len(raw)>512*1024:raise ValueError('Texto máximo 512 KB en la biblioteca local')
+                decoded=raw.decode('utf-8-sig')
+                if '\x00' in decoded:raise ValueError('Texto contiene bytes nulos')
+                status='validated';count=len(decoded.splitlines());detail='Texto UTF-8 registrado; disponible para búsqueda local de evidencia.'
+            elif ext=='.csv':
                 decoded=raw.decode('utf-8-sig')
                 records=list(csv.reader(io.StringIO(decoded)))
                 if not records or len(records[0])>200:raise ValueError('CSV sin encabezados válidos')
@@ -191,6 +198,12 @@ def create_app(db_url=None,storage_dir=None):
 
     install_rss_api(app,db,current_user,allow)
     install_auth(app)
+    app.mount('/assets',StaticFiles(directory=root/'static'),name='assets')
+    if not cloud() and os.getenv('NEXO_LOCAL_WORKSPACE')=='true':
+        from .workspace_api import install_workspace_api
+        install_workspace_api(app,db,current_user,allow,uploads)
+        from .review_api import install_review_api
+        install_review_api(app,db,current_user,allow)
 
     @app.get('/')
     def index():return HTMLResponse(ui_html)

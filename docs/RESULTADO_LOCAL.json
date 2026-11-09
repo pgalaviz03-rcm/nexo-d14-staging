@@ -1,0 +1,218 @@
+{
+  "date": "2026-10-19",
+  "strategy": "local development first; integrations and cloud release later",
+  "source_zip": {
+    "file": "Atalaya_proyecto_web.zip",
+    "bytes": 66362,
+    "sha256": "3c700b932d3def745b9d07e1a6db8155fb0c1fed0a8b6266751c585482d3aa95",
+    "type": "HTML/CSS/JS mockup plus documentation",
+    "backend_included": false,
+    "prototype_data_imported": false,
+    "embedded_instructions_treated_as_authorization": false
+  },
+  "architecture": {
+    "framework": "Existing FastAPI + SQLAlchemy",
+    "database": "Private SQLite snapshot",
+    "historical_sections": 45,
+    "territorial_votes": 41984,
+    "nominal_list": 65378,
+    "news": 20,
+    "documents_at_initial_preparation": 0,
+    "source_database_overwritten": false
+  },
+  "functionality": {
+    "local_lexical_context": true,
+    "citations": true,
+    "txt_md_utf8_upload": true,
+    "csv_retrieval": true,
+    "pdf_xlsx_extraction": false,
+    "semantic_vector_index": false,
+    "generative_rag": false,
+    "provider_interface": true,
+    "outbound_api_connections": false,
+    "rss_network_blocked_before_dns": true,
+    "api_keys_requested": false
+  },
+  "tests": {
+    "knowledge_and_existing_news": 28,
+    "text_upload": 2,
+    "existing_backup_regression": 9,
+    "total_distinct_specific_cases": 39,
+    "failed": 0,
+    "javascript_syntax": "passed",
+    "full_http_suite_rerun": false,
+    "prepared_private_workspace_direct_routes": "passed; one real stored article retrieved",
+    "http_login_browser_acceptance": "passed for real local login, knowledge search, empty state and downloaded context",
+    "current_specific_cases_passed": 54,
+    "sql_wasm_policy_cases_passed": 32
+  },
+  "cloud": {
+    "new_deployment": false,
+    "provider_changes": false,
+    "new_spending_authorized": {
+      "USD": 0,
+      "MXN": 0
+    },
+    "cloud_export": false,
+    "cloud_restore": false,
+    "native_synthetic_restore": "passed"
+  },
+  "local_backup": {
+    "date_utc": "2026-10-20T00:59:17.572833+00:00",
+    "encrypted": true,
+    "dpapi_current_user": true,
+    "isolated_restore_verified": true,
+    "table_counts": {
+      "article_reviews": 0,
+      "audit_events": 14,
+      "dataset_blobs": 0,
+      "datasets": 0,
+      "feed_sources": 2,
+      "memberships": 1,
+      "news_articles": 20,
+      "projects": 1,
+      "review_changes": 0,
+      "review_topics": 0,
+      "section_metrics": 45,
+      "topics": 1,
+      "usage_counters": 1,
+      "users": 1
+    },
+    "backup_file": "20261020T005917Z-58361f75.nexobak",
+    "sha256": "9eb36546c2b96e8f9560c3825e91a151910025512ef2a7e9ec8c10d2cb902b5c",
+    "cloud_backup": false,
+    "offsite_backup": false
+  },
+  "pending": [
+    "Complete human UI acceptance of review save/history; PostgreSQL 17.11 acceptance before deployment",
+    "PDF/XLSX extraction",
+    "Reports and retrieval evaluation",
+    "Authorized external connectors and final cloud acceptance"
+  ],
+  "human_acceptance": {
+    "local_server_started": true,
+    "local_login": true,
+    "library_visible": true
+  },
+  "browser_acceptance": {
+    "local_authenticated_login": true,
+    "source_archive_news": 20,
+    "registered_documents": 0,
+    "historical_sections": 45,
+    "keyword": "FONACOT",
+    "citations": 1,
+    "original_link_present": true,
+    "no_match_query_verified": true,
+    "no_answer_invented": true,
+    "exported_context_verified": true,
+    "ai_used": false,
+    "external_provider_calls": 0,
+    "screenshot": "NEXO_Biblioteca_Local_Verificada.png"
+  },
+  "manual_review": {
+    "date_local": "2026-10-19",
+    "recorded_at_utc": "2026-10-20T01:00:11.796280+00:00",
+    "module": "Persistent manual content topics and reviews",
+    "source_of_product_flow": "Atalaya web mockup configuration and correction workflow; implemented on NEXO backend",
+    "mock_personal_profiles_or_data_imported": false,
+    "implementation": {
+      "tables": [
+        "topics",
+        "article_reviews",
+        "review_topics",
+        "review_changes"
+      ],
+      "maximum_labels_per_article": 10,
+      "topic_catalog_limit": 50,
+      "role_topic_managers": [
+        "admin",
+        "editor"
+      ],
+      "role_reviewers": [
+        "admin",
+        "editor",
+        "analyst"
+      ],
+      "history_readable_by_members": true,
+      "archived_topics_preserve_prior_assignments": true,
+      "review_updates_use_expected_version": true,
+      "history_has_no_update_delete_endpoint": true,
+      "project_composite_foreign_keys": true,
+      "provider_calls_enabled": false
+    },
+    "verification": {
+      "local_python_specific_cases_passed": 54,
+      "manual_review_cases": 15,
+      "knowledge_news_backup_regression_cases": 39,
+      "failed": 0,
+      "javascript_syntax": "passed (inline application and external review script)",
+      "sqlite_existing_schema_upgrade": "passed",
+      "sqlite_migration_idempotency": "passed",
+      "postgres_sql_policy_checks_passed": 32,
+      "postgres_test_engine": "PostgreSQL 18.6 in PGlite 0.5.10 WASM",
+      "postgres_native_17_11_acceptance": false,
+      "postgres_tcp_tls_or_pool_retested": false,
+      "human_new_section_visible": true,
+      "new_section_browser_workflow_verified_by_agent": false,
+      "browser_verification_limitation": "Reload reached a connection-refused error and browser URL policy blocked the error-page navigation; no alternate route or workaround attempted"
+    },
+    "current_private_workspace": {
+      "table_counts": {
+        "topics": 1,
+        "article_reviews": 0,
+        "review_topics": 0,
+        "review_changes": 0,
+        "news_articles": 20,
+        "section_metrics": 45
+      },
+      "historical": [
+        45,
+        41984,
+        65378
+      ],
+      "integrity_check": "ok",
+      "foreign_key_violations": 0
+    },
+    "latest_encrypted_local_backup": {
+      "date_utc": "2026-10-20T00:59:17.572833+00:00",
+      "encrypted": true,
+      "dpapi_current_user": true,
+      "isolated_restore_verified": true,
+      "table_counts": {
+        "article_reviews": 0,
+        "audit_events": 14,
+        "dataset_blobs": 0,
+        "datasets": 0,
+        "feed_sources": 2,
+        "memberships": 1,
+        "news_articles": 20,
+        "projects": 1,
+        "review_changes": 0,
+        "review_topics": 0,
+        "section_metrics": 45,
+        "topics": 1,
+        "usage_counters": 1,
+        "users": 1
+      },
+      "backup_file": "20261020T005917Z-58361f75.nexobak",
+      "sha256": "9eb36546c2b96e8f9560c3825e91a151910025512ef2a7e9ec8c10d2cb902b5c",
+      "cloud_backup": false,
+      "offsite_backup": false
+    },
+    "cloud": {
+      "deployed": false,
+      "migration_executed": false,
+      "new_provider_or_spend": false
+    },
+    "pending": [
+      "Human end-to-end UI acceptance of saving a review and viewing its history",
+      "Native PostgreSQL 17.11 migration/permissions acceptance before deployment",
+      "Reports with saved versions and citations",
+      "PDF/XLSX extraction",
+      "Retrieval evaluation",
+      "Authorized provider/API connections"
+    ]
+  },
+  "schema_changes_since_initial_local_package": true,
+  "postgres_migration_required": "003_manual_reviews"
+}

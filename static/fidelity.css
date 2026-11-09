@@ -1,0 +1,109 @@
+/* Atalaya's account activity presentation, scoped to NEXO Fidelidad. */
+#continuity .sources-hero{margin-bottom:18px}#continuity .sources-hero h2{font-size:29px;letter-spacing:-.8px}
+#continuity>.filter-row{background:#fff;border:1px solid #e1e6ee;border-radius:11px;padding:12px 14px;margin-bottom:12px}
+#continuity .fid-origin{display:flex;align-items:center;gap:9px;padding:13px 16px;background:white;border:1px solid #e1e6ee;border-radius:11px;font-size:11px;color:#8290a5;margin:18px 0}
+#continuity .fid-status-dot{width:7px;height:7px;background:#6da98e;border-radius:50%;flex-shrink:0}
+#continuity .fid-read-tag{margin-left:auto;white-space:nowrap;background:#f1f4f8;color:#8c99ac;padding:4px 9px;border-radius:20px;font-size:9px}
+#continuity .fid-monitor{margin-bottom:18px;background:#fff;padding:17px 20px!important}
+#continuity .fid-monitor .eyebrow,#continuity .fid-heading .eyebrow{font-size:9px;color:#8e9bb0;letter-spacing:.12em}
+#continuity .fid-accounts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+#continuity .fid-account{background:#eef0fc;color:#7e8fc5;text-decoration:none;border-radius:20px;padding:6px 10px;font-size:11px;line-height:1.4}
+#continuity .fid-activity{padding:21px!important;margin-bottom:18px}
+#continuity .fid-heading{display:flex;justify-content:space-between;align-items:center;gap:15px}
+#continuity .fid-heading h3{font-size:19px;margin:5px 0 0;letter-spacing:-.3px}
+#continuity .fid-heading .outline{font-size:10px}
+#continuity .fid-kpis{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin:21px 0 17px}
+#continuity .fid-kpis>div{border:1px solid #e4e8f0;border-radius:10px;padding:14px 12px;background:#fff;min-width:0}
+#continuity .fid-kpis>div:nth-child(2){background:#f7f5fd;border-color:#e7e0f4}
+#continuity .fid-kpis>div:nth-child(3){background:#f6fbf8;border-color:#deeee6}
+#continuity .fid-kpis span{font-size:9px;display:block;line-height:1.6;color:#7a879b}
+#continuity .fid-kpis strong{font-size:25px;letter-spacing:-.6px;color:#273852;display:block;margin:7px 0 0;overflow-wrap:anywhere;line-height:1.2}
+#continuity .fid-kpis small{font-size:9px;line-height:1.5;color:#a0a9b8;display:block;margin-top:7px}
+#continuity .fid-toolbar{display:flex;justify-content:space-between;gap:16px;align-items:center;margin:18px 0}
+#continuity .fid-toolbar>label{display:flex;align-items:center;gap:9px;font-size:10px;color:#8d99ae}
+#continuity .fid-toolbar .nexo-select{max-width:250px}
+#continuity .fid-tabs{display:flex;gap:5px}
+#continuity .fid-tabs>button{border:1px solid #dfe5ee;border-radius:24px;background:white;color:#8c98aa;padding:9px 14px;font-size:11px;min-height:36px}
+#continuity .fid-tabs>button[aria-pressed=true]{background:#18263b;color:white;border-color:#18263b}
+#continuity .fid-table-scroll{overflow:auto;overscroll-behavior:contain;border-top:1px solid #eef1f5}
+#continuity .fid-table{width:100%;min-width:850px;border-collapse:collapse;table-layout:fixed}
+#continuity .fid-table th{font-size:10px;color:#96a0b0;font-weight:500;padding:13px 9px}
+#continuity .fid-table th:nth-child(1){width:100px}#continuity .fid-table th:nth-child(2){width:85px}
+#continuity .fid-table th:nth-child(3){width:31%}
+#continuity .fid-table td{font-size:11px;color:#66768e;line-height:1.6;padding:15px 9px;vertical-align:top;border-bottom:1px solid #edf0f5}
+#continuity .fid-table a{color:#738ac5;text-decoration:none;overflow-wrap:anywhere;line-height:1.65}
+#continuity .fid-table a:hover{text-decoration:underline}
+#continuity .fid-partial{display:block;margin-top:6px;font-size:9px;color:#b19b76}
+#continuity .fid-pager{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:15px 0 0;font-size:10px;color:#97a3b4}
+#continuity .fid-pager>div{display:flex;gap:7px}
+#continuity .fid-pager button{font-size:10px}
+#continuity .fid-import{margin-bottom:22px}
+#continuity .fid-import .filter-row{margin-top:15px;flex-wrap:wrap}
+#continuity .fid-continuity-heading{margin:30px 0 18px}
+#continuity .fid-continuity-heading .eyebrow{font-size:9px;color:#9583b3}
+#continuity .fid-continuity-heading h3{font-size:23px;letter-spacing:-.6px;margin:7px 0}
+#continuity .fid-continuity-heading p{max-width:650px}
+#continuity #fidelityStatus:empty,#continuity #fidelityQuality:empty{display:none}
+@media(max-width:1280px){#continuity .fid-kpis{grid-template-columns:repeat(3,minmax(0,1fr))}#continuity .fid-kpis>div{padding:14px 16px}}
+@media(max-width:640px){
+ #continuity .sources-hero h2{font-size:26px}#continuity .fid-origin{font-size:10px;align-items:flex-start;padding:12px;line-height:1.6}
+ #continuity .fid-status-dot{margin-top:5px}#continuity .fid-read-tag{display:none}
+ #continuity .fid-monitor{padding:15px!important}#continuity .fid-accounts{flex-wrap:nowrap;overflow:auto;padding-bottom:4px}
+ #continuity .fid-account{white-space:nowrap;min-height:40px;display:flex;align-items:center}
+ #continuity .fid-activity{padding:16px!important}#continuity .fid-heading{align-items:flex-start}
+ #continuity .fid-heading h3{font-size:18px}#continuity .fid-heading .outline{padding:8px;min-height:44px;max-width:90px;font-size:10px}
+ #continuity .fid-kpis{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:17px 0}
+ #continuity .fid-kpis>div{padding:12px}#continuity .fid-kpis strong{font-size:27px}
+ #continuity .fid-kpis span{font-size:10px}#continuity .fid-kpis small{font-size:9px}
+ #continuity .fid-toolbar{display:block}#continuity .fid-tabs>button{min-height:44px}
+ #continuity .fid-toolbar>label{margin-top:14px;display:block}
+ #continuity .fid-toolbar .nexo-select{display:flex;margin-top:6px;width:100%;max-width:none}
+ #continuity .fid-table{display:block;min-width:0;table-layout:auto}
+ #continuity .fid-table thead{position:absolute;width:1px;height:1px;clip-path:inset(50%);overflow:hidden}
+ #continuity .fid-table tbody{display:grid;gap:14px}
+ #continuity .fid-table tr{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 12px;border:1px solid #e4e9f1;padding:15px;border-radius:11px}
+ #continuity .fid-table td{border:0;padding:0;font-size:12px;display:flex;flex-direction:column;gap:2px;min-width:0}
+ #continuity .fid-table td:before{content:attr(data-label);font-size:9px;color:#a1abba}
+ #continuity .fid-table td:nth-child(3){grid-column:1/-1;grid-row:1;padding-bottom:4px;font-size:13px}
+ #continuity .fid-table td:nth-child(3):before{display:none}
+ #continuity .fid-table td[colspan]{grid-column:1/-1}
+ #continuity .fid-table-scroll{border:0}
+ #continuity .fid-pager{flex-direction:column;align-items:stretch}
+ #continuity .fid-pager>div{justify-content:space-between}#continuity .fid-pager button{min-height:44px}
+ #continuity>.filter-row{padding:12px}#continuity .fid-import .filter-row{display:flex;align-items:stretch;flex-direction:column}
+ #continuity .fid-import .nexo-select{width:100%}#continuity .fid-import button{min-height:44px}
+}
+
+#continuity .team-panel{margin:20px 0;padding:21px!important}
+#continuity .team-tabs{margin-top:19px}
+#continuity .team-sort{display:flex;justify-content:flex-end;margin:15px 0}
+#continuity .team-sort label{display:flex;gap:10px;align-items:center;color:#8793a7;font-size:11px}
+#continuity .team-sort .nexo-select{min-width:225px}
+#continuity .team-table{table-layout:auto;min-width:900px}
+#continuity .team-table th:nth-child(1){width:35px}
+#continuity .team-table th:nth-child(2){width:160px}
+#continuity .team-table th:nth-child(3){width:auto}
+#continuity .team-manage{border-top:1px solid #e4e9f0;margin-top:22px;padding-top:16px}
+#continuity .team-manage>summary{font-size:12px;font-weight:600;cursor:pointer;margin-bottom:17px}
+#continuity .team-manage .filter-row{margin:18px 0}
+#continuity .team-roster-row{display:flex;justify-content:space-between;gap:15px;border-bottom:1px solid #edf0f5;padding:11px 0;font-size:11px;align-items:center}
+#continuity .team-community-kpis{grid-template-columns:repeat(3,minmax(0,1fr))}
+#continuity [hidden]{display:none!important}
+@media(max-width:640px){
+ #continuity .team-panel{padding:16px!important}
+ #continuity .team-sort{display:block}#continuity .team-sort label{display:block}
+ #continuity .team-sort .nexo-select{width:100%;display:flex;margin-top:6px;min-width:0}
+ #continuity .team-table{min-width:0}
+ #continuity .team-table td:nth-child(3){grid-column:auto;grid-row:auto;font-size:11px}
+ #continuity .team-table td:nth-child(3):before{display:block}
+ #continuity .team-table td:nth-child(2){grid-column:1/-1;grid-row:1;font-size:14px;font-weight:600}
+ #continuity .team-table td:nth-child(2):before{display:none}
+ #continuity .team-manage .filter-row{display:flex;flex-direction:column;align-items:stretch}
+ #continuity .team-roster-row button{min-height:44px}
+ #continuity .team-community-kpis{grid-template-columns:minmax(0,1fr)}
+}
+
+#continuity .team-single{border:1px solid #e4e8f0;border-radius:10px;padding:12px 14px;margin:14px 0}
+#continuity .team-single summary{cursor:pointer;font-size:12px;font-weight:600}
+#continuity .team-single .filter-row{flex-wrap:wrap;margin-top:14px;gap:12px}
+#continuity .team-single input{max-width:100%}

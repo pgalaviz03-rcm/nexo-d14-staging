@@ -1,0 +1,106 @@
+{
+  "date_local": "2026-10-19",
+  "recorded_at_utc": "2026-10-20T01:25:34.407691+00:00",
+  "module": "Adapted incoming HTML and local documentary dossier",
+  "inputs": [
+    {
+      "file": "html-code-1792458460398.html",
+      "sha256": "0c68a223e28398ad08fe45635bef76cb2987450cf8c8d93b268d23c3ce82401b"
+    },
+    {
+      "file": "integration_ports-code-1792458912494.py",
+      "sha256": "984f7f2590427ac177cee21ff622e115955237978efd1e81690fa1fbbc6c0cab"
+    },
+    {
+      "file": "models.py-code-1792458889933.py",
+      "sha256": "ccd5b39f1a78afd3a67128f7e9fee27a5292285ed6921c499be822ff3efb346c"
+    }
+  ],
+  "workspace_api_received": "Inline user reply in current conversation",
+  "replaced_with_adaptations": [
+    "static/index.html",
+    "app/integration_ports.py",
+    "app/workspace_api.py"
+  ],
+  "unchanged_by_sha256": {
+    "app/main.py": true,
+    "app/knowledge.py": true,
+    "app/models.py": true
+  },
+  "preserved_sections": {
+    "historical": true,
+    "review": true,
+    "knowledge": true,
+    "sources": true,
+    "listening": true,
+    "projects": true,
+    "executive": true
+  },
+  "implementation": {
+    "extractive_dossier": true,
+    "generative_answer": false,
+    "query_cache": false,
+    "network_calls": false,
+    "new_models": false,
+    "demographic_political_simulation": false,
+    "invented_token_savings": false,
+    "model_provider_sdk": false,
+    "authorization": "Existing identity and project-membership dependencies",
+    "audit": "Action and citation count only; question and excerpts not persisted",
+    "endpoint": "/api/projects/{pid}/knowledge/critical-audit"
+  },
+  "verification": {
+    "python_cases_passed": 64,
+    "new_integration_cases": 10,
+    "existing_regression_cases": 54,
+    "failed": 0,
+    "python_elapsed_seconds": 26.5,
+    "javascript_syntax": "passed: inline app and reviews.js",
+    "unique_html_ids_and_controller_bindings": true,
+    "full_http_suite_rerun": false,
+    "browser_new_ui_acceptance": false,
+    "browser_limitation": "Prior browser URL-policy block; no bypass attempted",
+    "postgres_policy_retested": false,
+    "postgres_native_acceptance": false
+  },
+  "private_data": {
+    "before_counts": {
+      "news_articles": 20,
+      "section_metrics": 45,
+      "topics": 1,
+      "article_reviews": 0,
+      "review_changes": 0,
+      "review_topics": 0,
+      "datasets": 0
+    },
+    "after_counts": {
+      "news_articles": 20,
+      "section_metrics": 45,
+      "topics": 1,
+      "article_reviews": 0,
+      "review_changes": 0,
+      "review_topics": 0,
+      "datasets": 0
+    },
+    "historical": {
+      "sections": 45,
+      "territorial_votes": 41984,
+      "nominal_list": 65378
+    },
+    "quick_check": "ok",
+    "foreign_key_violations": 0,
+    "active_database_written_by_task": false
+  },
+  "cloud": {
+    "deployed": false,
+    "provider_changed": false,
+    "spending_activated": false
+  },
+  "pending": [
+    "Human restart and visual acceptance on existing port 8002",
+    "Saved versioned reports",
+    "PDF/XLSX extraction",
+    "Retrieval quality evaluation",
+    "Native PostgreSQL acceptance and authorized API connections at final stage"
+  ]
+}

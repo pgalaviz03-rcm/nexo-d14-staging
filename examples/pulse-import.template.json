@@ -1,0 +1,20 @@
+{
+  "provider": "manual",
+  "dataset_ref": "",
+  "items": [
+    {
+      "network": "facebook",
+      "external_id": "SUSTITUIR_ID_PUBLICACION",
+      "url": "https://example.org/plantilla-ficticia",
+      "title": "PLANTILLA FICTICIA: sustituir antes de importar",
+      "text": "Ejemplo inventado, no es una observación del D14.",
+      "published_at": "2026-10-20T12:00:00Z",
+      "collected_at": "2026-10-20T13:00:00Z",
+      "actor_ids": [
+        1
+      ],
+      "views": null,
+      "interactions": null
+    }
+  ]
+}

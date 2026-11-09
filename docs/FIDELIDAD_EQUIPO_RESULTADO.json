@@ -1,0 +1,96 @@
+{
+  "updated_utc": "2026-10-27T19:13:55.036088+00:00",
+  "scope": "Registered work collaborators: observed actions only; unregistered community aggregate only",
+  "source_zip": "atalaya-codigo-completo.zip",
+  "source_code_executed": false,
+  "changed_existing_files": [
+    "app/controls.py",
+    "app/fidelity_api.py",
+    "scripts/fidelity_preview.py",
+    "static/fidelity.css",
+    "static/fidelity.js",
+    "static/index.html",
+    "tests/test_documentary_digest.py"
+  ],
+  "added_files": [
+    "app/fidelity_team.py",
+    "app/fidelity_team_api.py",
+    "static/fidelity_team.js",
+    "tests/test_fidelity_team.py",
+    "tests/check_fidelity_team_ui.mjs",
+    "docs/FIDELIDAD_EQUIPO.md"
+  ],
+  "protected_files": {
+    "app/main.py": "3021b70f4aca828708c92fb7624e0cff76bcf2a0e23a523ea41efc88f1c3858e",
+    "app/knowledge.py": "466b2227eddcce317694ea185faf3bb339909c3c29541917cbd0208396113883"
+  },
+  "territory_map_unchanged": true,
+  "database": {
+    "new_tables": [
+      "fidelity_team_members",
+      "fidelity_team_observations"
+    ],
+    "pilot_rows_unchanged_during_preparation": true,
+    "cloud_migrations_rls_pending": true
+  },
+  "features": {
+    "xlsx_csv_roster": true,
+    "stable_member_codes": true,
+    "exact_network_account_matching": true,
+    "fuzzy_name_matching": false,
+    "owner_only_management": true,
+    "read_only_client": true,
+    "reactions_and_commented_posts": true,
+    "exact_comment_count_requires_source_id": true,
+    "idempotent_imports": true,
+    "soft_deactivation": true,
+    "project_isolation": true,
+    "registered_staff_activity_ordering": true,
+    "unregistered_individual_profiles": false,
+    "political_or_belief_labels": false,
+    "community_totals_include_team": true
+  },
+  "python": {
+    "wide": {
+      "passed": 716,
+      "failed": 1
+    },
+    "initial_failure": "Test assumed owner membership in foreign project; fixture corrected; no application permission loosened",
+    "final": {
+      "passed": 192
+    },
+    "targeted_after_last_changes": {
+      "passed": 55
+    },
+    "runs_overlap": true,
+    "runs_not_summed": true,
+    "network_blocked": true
+  },
+  "javascript": {
+    "modules": 19,
+    "checks_passed": 295,
+    "dom_simulated": true,
+    "browser_rendering_verified": false
+  },
+  "preview": {
+    "team_members": 3,
+    "team_records_present": true,
+    "synthetic_only": true,
+    "accounts": 2,
+    "publications": 30,
+    "interactions": 2115,
+    "return_rate": 60.0,
+    "continuity_participants": 1200,
+    "owner_grants": 0,
+    "pilot_database_unchanged": true,
+    "external_calls": 0,
+    "browser_visual_qa": false
+  },
+  "apify_connected": false,
+  "external_calls": 0,
+  "ai_used": false,
+  "cloud_modified": false,
+  "new_spending": false,
+  "production_ready": false,
+  "human_visual_acceptance": false
+}

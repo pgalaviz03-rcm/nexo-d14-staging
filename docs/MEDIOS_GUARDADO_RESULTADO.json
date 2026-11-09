@@ -1,0 +1,44 @@
+{
+  "updated_utc": "2026-10-27T23:13:52.141789+00:00",
+  "scope": "Media configuration save feedback and single add flow",
+  "changed_files": [
+    "docs/CONFIGURACION_UNIFICADA.md",
+    "static/index.html",
+    "static/settings.css",
+    "static/settings.js",
+    "tests/check_settings_ui.mjs"
+  ],
+  "single_add_entry": true,
+  "editor_initially_closed": true,
+  "form_closes_only_after_success": true,
+  "named_success_confirmation": true,
+  "saved_record_highlighted": true,
+  "record_count_and_public_links_visible": true,
+  "edit_uses_existing_id_and_version": true,
+  "failed_save_preserves_input": true,
+  "double_submit_blocked": true,
+  "rss_button_distinct": true,
+  "project_scoping_preserved": true,
+  "consultant_permissions_unchanged": true,
+  "backend_code_unchanged": true,
+  "tests": {
+    "python_passed": 51,
+    "python_failed": 0,
+    "javascript_modules": 21,
+    "javascript_checks_passed": 348,
+    "new_media_flow_cases": 13,
+    "syntax_passed": true,
+    "network_blocked": true,
+    "dom_simulated": true,
+    "browser_visual_qa": false
+  },
+  "protected_files_unchanged": {
+    "app/main.py": "3021b70f4aca828708c92fb7624e0cff76bcf2a0e23a523ea41efc88f1c3858e",
+    "app/knowledge.py": "466b2227eddcce317694ea185faf3bb339909c3c29541917cbd0208396113883"
+  },
+  "territory_map_unchanged": true,
+  "pilot_database_written": false,
+  "external_calls": 0,
+  "cloud_modified": false,
+  "new_spending": false
+}

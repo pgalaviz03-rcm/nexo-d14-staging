@@ -1,0 +1,11 @@
+﻿pantalla,estado,alcance
+Pulso,Aceptado por usuario,Adaptadores apagados; validación final de proveedores pendiente
+Briefing,Base aceptada; controles vistos; simplificación de análisis pendiente de revisión,206 Python; 106 SQL WASM; 44 JS; modelo y envíos desconectados
+Actores,Configurado D14; usuario indica listo,4 actores y referencias Facebook; identidad compartida con Pulso; respaldo verificado
+Territorio,Vista validada reutilizada por indicación del usuario,Mismo SVG: 45 secciones y 721 manzanas; búsqueda detalle y CSV; aislamiento y respuestas tardías comprobados
+Redes,Aceptado visualmente por usuario,271 Python; 119 SQL WASM; 92 JS; referencias D14 presentes; sin estadísticas ficticias
+Fidelidad,Aceptado visualmente por usuario,310 Python de regresión + 1 recuperación; 134 SQL WASM; 107 JS; cortes por cuenta y medición; sin datos ficticios añadidos
+Alertas,Aceptado visualmente por usuario,341 Python; 159 SQL WASM; 124 JS; incidentes por corte; evidencia y estados versionados; sin datos ficticios añadidos
+Explorador,Aceptado visualmente por usuario,368 Python; 159 SQL WASM; 142 JS; fuentes y fechas; selección verificada; informe congelado; sin cambios en datos reales
+Reportes,Pantalla y descarga HTML aceptadas por usuario,383 Python; 159 SQL WASM; 161 JS; estados y tipos; versiones; habilitación; HTML imprimible; fuentes preservadas
+Auditoría de cuentas,Aceptado por usuario: controles de diagnóstico y estado de captura visibles,Botones explícitos y estado de primera captura visible; 184 JS y 2 estáticas; backend intacto con regresión previa 420 Python

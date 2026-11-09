@@ -1,0 +1,66 @@
+{
+  "updated_utc": "2026-10-27T19:43:49.846076+00:00",
+  "issue": "Empty project had no actor, so nested Fidelidad and Equipo controllers returned before reading owner capabilities",
+  "fix": "Load project activity and team with actor_id=0; distinguish account readiness from roster management rights",
+  "changed_existing_code": [
+    "static/fidelity.js",
+    "static/fidelity_team.js",
+    "static/index.html"
+  ],
+  "added_files": [
+    "tests/test_project_admin.py",
+    "tests/check_project_admin_ui.mjs",
+    "docs/SUPERADMIN_PROYECTOS.md"
+  ],
+  "protected_files_unchanged": {
+    "app/main.py": "3021b70f4aca828708c92fb7624e0cff76bcf2a0e23a523ea41efc88f1c3858e",
+    "app/knowledge.py": "466b2227eddcce317694ea185faf3bb339909c3c29541917cbd0208396113883"
+  },
+  "territory_map_unchanged": true,
+  "membership_roles_changed": false,
+  "pilot_database_written": false,
+  "new_tables": false,
+  "synthetic_team_written_to_real_projects": false,
+  "owner_can_register_team_before_first_actor": true,
+  "project_creation_preserves_all_active_superadmin_memberships": true,
+  "client_read_only_preserved": true,
+  "project_isolation_preserved": true,
+  "reviewed_screens": [
+    "Pulso",
+    "Briefing",
+    "Actores",
+    "Territorio",
+    "Redes",
+    "Fidelidad",
+    "Alertas",
+    "Explorador",
+    "Reportes",
+    "Auditoria de cuentas",
+    "Biblioteca",
+    "Revision documental",
+    "Fuentes"
+  ],
+  "python": {
+    "wide_passed": 279,
+    "wide_failed": 1,
+    "failure": "New test incorrectly used configuration version 0 after project creation had initialized version 1; fixture corrected; no application permission or locking changes",
+    "corrected_regression_passed": 8,
+    "corrected_regression_failed": 0,
+    "runs_overlap": true,
+    "runs_not_summed": true,
+    "network_blocked": true
+  },
+  "javascript": {
+    "modules": 20,
+    "checks_passed": 310,
+    "dom_simulated": true,
+    "nested_controller_empty_project_regression": true,
+    "browser_rendering_verified": false
+  },
+  "apify_connected": false,
+  "external_calls": 0,
+  "cloud_modified": false,
+  "new_spending": false,
+  "production_ready": false,
+  "human_visual_acceptance": false
+}

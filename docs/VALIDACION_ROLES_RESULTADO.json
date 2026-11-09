@@ -1,0 +1,168 @@
+{
+  "date": "2026-10-20T22:55:20.344721+00:00",
+  "scope": "Local cross-module role and project journeys",
+  "verification": {
+    "new_journey_cases": 29,
+    "python": {
+      "exit_code": 0,
+      "counts": {
+        "passed": 29
+      },
+      "seconds": 24.27,
+      "modules": [
+        "test_project_journeys.py"
+      ]
+    },
+    "previous_full_regression_cases": 420,
+    "previous_js_controller_cases": 184,
+    "previous_checks_not_rerun": true,
+    "actual_configuration_read_only": {
+      "read_only": true,
+      "active_projects": 2,
+      "active_users": 1,
+      "explicit_platform_owners": 1,
+      "platform_owners_have_admin_memberships_to_all_active_projects": true,
+      "non_owner_accounts": 0,
+      "non_owner_project_counts": [],
+      "real_accounts_created": 0,
+      "real_memberships_changed": 0,
+      "passwords_read_or_reset": false,
+      "external_calls": 0,
+      "authentication_or_browser_acceptance_test": false,
+      "all_existing_rows_unchanged": true
+    },
+    "full_http_suite": false,
+    "browser_acceptance": false,
+    "protected_files_unchanged": true,
+    "superadmin_console_visual_acceptance": true,
+    "consultant_login_visual_acceptance": true,
+    "consultant_module_visual_acceptance": true,
+    "basic_role_journey_accepted": true
+  },
+  "checked": {
+    "project_roles": [
+      "admin",
+      "editor",
+      "analyst",
+      "viewer"
+    ],
+    "modules": [
+      "Pulso",
+      "Briefing",
+      "Actores",
+      "Territorio",
+      "Redes",
+      "Fidelidad",
+      "Alertas",
+      "Explorador",
+      "Reportes",
+      "Auditoría de cuentas"
+    ],
+    "isolated_synthetic_databases": true,
+    "foreign_project_reads_rejected": true,
+    "membership_revocation_blocks_next_request": true,
+    "inactive_projects_not_selectable": true,
+    "project_admin_not_global_admin": true,
+    "superadmin_all_active_projects": true,
+    "new_project_has_no_inherited_client_data": true,
+    "role_capabilities_checked": true,
+    "reads_do_not_add_audit_events": true
+  },
+  "application_code_changed": false,
+  "schema_changed": false,
+  "cloud_modified": false,
+  "new_spending": false,
+  "external_calls": 0,
+  "messages_sent": 0,
+  "pending": [
+    "Native HTTP/authentication, PostgreSQL and separate cloud administration acceptance before deployment"
+  ],
+  "superadmin_console_acceptance": {
+    "accepted": true,
+    "date": "2026-10-20T22:57:30.908573+00:00",
+    "by": "user",
+    "confirmation": "Sí, aparecen las cuatro secciones",
+    "scope": "Visibility of brand, new project, local account and project membership sections; not account creation or consultant login"
+  },
+  "consultant_assignment": {
+    "date": "2026-10-20T22:59:54.935829+00:00",
+    "read_only": true,
+    "account_exists": true,
+    "account_active": true,
+    "total_memberships": 1,
+    "only_d14": true,
+    "d14_active": true,
+    "role": "analyst",
+    "is_platform_admin": false,
+    "password_or_hash_read": false,
+    "credentials_submitted": false,
+    "external_calls": 0,
+    "account_or_membership_changes_by_agent": 0,
+    "browser_login_acceptance": false,
+    "assignment_correct": true,
+    "created_by": "user",
+    "confirmation": "Sí, creada y asignada al D14"
+  },
+  "real_accounts_created_by_agent": 0,
+  "real_memberships_changed_by_agent": 0,
+  "backup_after_user_creation": {
+    "date_utc": "2026-10-20T23:00:22.839221+00:00",
+    "encrypted": true,
+    "dpapi_current_user": true,
+    "isolated_restore_verified": true,
+    "table_counts": {
+      "actor_profiles": 4,
+      "alert_events": 0,
+      "alert_incidents": 0,
+      "article_reviews": 0,
+      "audience_snapshots": 0,
+      "audit_events": 46,
+      "briefing_schedules": 0,
+      "content_analyses": 16,
+      "content_assessments": 0,
+      "dataset_blobs": 0,
+      "datasets": 0,
+      "delivery_jobs": 0,
+      "feed_sources": 2,
+      "memberships": 4,
+      "news_articles": 20,
+      "platform_brand": 1,
+      "platform_grants": 1,
+      "projects": 2,
+      "pulse_accounts": 2,
+      "pulse_actors": 7,
+      "pulse_batches": 1,
+      "pulse_configs": 1,
+      "pulse_documents": 170,
+      "pulse_mentions": 170,
+      "pulse_rules": 4,
+      "report_releases": 1,
+      "report_versions": 1,
+      "reports": 1,
+      "review_changes": 0,
+      "review_topics": 0,
+      "section_metrics": 45,
+      "topics": 1,
+      "usage_counters": 2,
+      "users": 3
+    },
+    "backup_file": "20261020T230022Z-61ff7cd7.nexobak",
+    "sha256": "68d0afb35ecb3ded9a43f506480c2c835cba959d3f6ce3e8757e562cce7c7257",
+    "cloud_backup": false,
+    "offsite_backup": false
+  },
+  "consultant_login_acceptance": {
+    "accepted": true,
+    "date": "2026-10-20T23:03:19.301569+00:00",
+    "by": "user",
+    "confirmation": "Sí, solo D14 y sin Superadministración",
+    "scope": "Human local consultant login, project selector limited to D14 and absence of platform navigation; module action review pending"
+  },
+  "consultant_module_acceptance": {
+    "accepted": true,
+    "date": "2026-10-20T23:07:58.087692+00:00",
+    "by": "user",
+    "confirmation": "Sí, actores e informe correctos",
+    "scope": "Consultant sees four project actors without management controls and reads existing report with sources; basic role journey only"
+  }
+}

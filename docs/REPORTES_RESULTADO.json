@@ -1,0 +1,194 @@
+{
+  "date": "2026-10-20T22:24:58.034851+00:00",
+  "scope": "Local report library, versioned reading and printable evidence documents",
+  "behavior": {
+    "archive_filters": [
+      "title",
+      "origin",
+      "state"
+    ],
+    "archive_scope": "Latest 100 authorized reports; local filters, not global historical search",
+    "origins": [
+      "briefing",
+      "selection",
+      "documentary"
+    ],
+    "states": [
+      "draft",
+      "released",
+      "updated"
+    ],
+    "reader_metadata_excludes_newer_drafts": true,
+    "exact_version_release_status": true,
+    "frozen_briefing_and_selection_sources": true,
+    "legacy_revision_expected_version_checked_before_retrieval": true,
+    "publication_requires_reviewed_current_version": true,
+    "json_export_retained": true,
+    "printable_export": "Standalone HTML from stored snapshot, generated locally; JSON authenticated transport",
+    "pdf": "Browser print to PDF only; no PDF binary generation or external renderer",
+    "print_brand_and_project_dynamic": true,
+    "briefing_saved_analytics_preserved": true,
+    "unknown_metrics_not_zero": true,
+    "source_links_and_dates": true,
+    "actual_reports_created_by_agent": 0,
+    "messages_sent": 0,
+    "external_calls": 0
+  },
+  "security": {
+    "membership_and_release_gate_on_document": true,
+    "writer_roles": [
+      "admin",
+      "editor",
+      "analyst"
+    ],
+    "publisher_roles": [
+      "admin",
+      "editor"
+    ],
+    "snapshot_hash_checked_before_printing": true,
+    "source_notes_brand_project_escaped": true,
+    "unsafe_links_omitted": true,
+    "html_no_scripts_forms_remote_assets": true,
+    "html_restrictive_csp": true,
+    "html_referrer_disabled": true,
+    "export_cache_no_store": true,
+    "late_list_detail_version_mutation_export_results_discarded": true,
+    "same_project_return_still_invalidates_old_results": true,
+    "notes_retained_on_conflict_and_list_refresh": true,
+    "mutation_blocks_project_switch": true,
+    "historical_controls_cannot_release_unreviewed_head": true,
+    "draft_view_cleared_after_write_permission_loss": true,
+    "html_not_inserted_in_app_dom": true,
+    "downloaded_copy_not_revocable": true,
+    "printed_hash_identifies_stored_json_not_html_file": true
+  },
+  "verification": {
+    "python": {
+      "exit_code": 0,
+      "counts": {
+        "passed": 383
+      },
+      "seconds": 299.97,
+      "modules": [
+        "test_report_workbench.py",
+        "test_explorer.py",
+        "test_alerts.py",
+        "test_continuity.py",
+        "test_networks.py",
+        "test_territory.py",
+        "test_actors.py",
+        "test_content_analysis.py",
+        "test_delivery.py",
+        "test_briefing.py",
+        "test_pulse.py",
+        "test_reports.py",
+        "test_documentary_digest.py",
+        "test_manual_reviews.py",
+        "test_local_knowledge.py",
+        "test_news_review.py",
+        "test_backup_local.py"
+      ]
+    },
+    "python_cases_passed": 383,
+    "new_report_cases_passed": 15,
+    "javascript_controller_checks_passed": 161,
+    "new_report_safety_checks": 19,
+    "sql_policy_checks_passed": 159,
+    "sql_engine": {
+      "version": "PostgreSQL 18.6 (PGlite 0.5.10) on wasm32-unknown-emscripten, compiled by emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 6.0.5 (1db513782be24469589d7cb8a1f1834e9a33f271), 32-bit"
+    },
+    "actual_d14": {
+      "read_only": true,
+      "stored_report_integrity_verified": true,
+      "existing_report_printable_rendered": true,
+      "private_export_file_created": false,
+      "reports_in_d14": 1,
+      "sources_in_checked_report": 8,
+      "actual_reports_created_by_agent": 0,
+      "external_calls": 0,
+      "all_existing_rows_unchanged": true,
+      "protected_files_unchanged": true,
+      "map_unchanged": true,
+      "browser_visual_acceptance": false
+    },
+    "protected_file_hashes": {
+      "app/main.py": "3021b70f4aca828708c92fb7624e0cff76bcf2a0e23a523ea41efc88f1c3858e",
+      "app/knowledge.py": "466b2227eddcce317694ea185faf3bb339909c3c29541917cbd0208396113883"
+    },
+    "csp_hash_matches": true,
+    "javascript_syntax": true,
+    "browser_visual_acceptance": true,
+    "agent_browser_qa_performed": false,
+    "native_print_acceptance": false,
+    "native_pdf_acceptance": false,
+    "native_postgres_acceptance": false,
+    "full_http_suite_rerun": false,
+    "browser_visual_acceptance_by": "user",
+    "download_acceptance": true
+  },
+  "schema": {
+    "changed": false,
+    "head": "010_alerts",
+    "tables": 34
+  },
+  "backup": {
+    "date_utc": "2026-10-20T22:20:21.628698+00:00",
+    "encrypted": true,
+    "dpapi_current_user": true,
+    "isolated_restore_verified": true,
+    "table_counts": {
+      "actor_profiles": 4,
+      "alert_events": 0,
+      "alert_incidents": 0,
+      "article_reviews": 0,
+      "audience_snapshots": 0,
+      "audit_events": 43,
+      "briefing_schedules": 0,
+      "content_analyses": 16,
+      "content_assessments": 0,
+      "dataset_blobs": 0,
+      "datasets": 0,
+      "delivery_jobs": 0,
+      "feed_sources": 2,
+      "memberships": 3,
+      "news_articles": 20,
+      "platform_brand": 1,
+      "platform_grants": 1,
+      "projects": 2,
+      "pulse_accounts": 2,
+      "pulse_actors": 7,
+      "pulse_batches": 1,
+      "pulse_configs": 1,
+      "pulse_documents": 170,
+      "pulse_mentions": 170,
+      "pulse_rules": 4,
+      "report_releases": 1,
+      "report_versions": 1,
+      "reports": 1,
+      "review_changes": 0,
+      "review_topics": 0,
+      "section_metrics": 45,
+      "topics": 1,
+      "usage_counters": 2,
+      "users": 2
+    },
+    "backup_file": "20261020T222021Z-2e6c8f24.nexobak",
+    "sha256": "0f6903f8b9c3ff85f761f1327b7cd74183a6eb353faf78c7a0c5bd4be7ae148c",
+    "cloud_backup": false,
+    "offsite_backup": false
+  },
+  "cloud_modified": false,
+  "new_spending": false,
+  "pending": [
+    "Browser print/PDF layout acceptance on user device",
+    "Authorized message delivery and model connections at integration stage",
+    "Native PostgreSQL and separate cloud environment acceptance"
+  ],
+  "acceptance": {
+    "accepted": true,
+    "date": "2026-10-20T22:34:36.233993+00:00",
+    "by": "user",
+    "confirmation": "Sí, descarga y se ve bien",
+    "scope": "Report library visual review and legible downloaded HTML; native print/PDF not tested"
+  }
+}

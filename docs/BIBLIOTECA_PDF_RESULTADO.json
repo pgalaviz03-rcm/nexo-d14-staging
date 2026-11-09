@@ -1,0 +1,198 @@
+{
+  "date": "2026-10-21T00:32:12.686535+00:00",
+  "scope": "Local PDF text extraction, document-first catalogue, selected document search and page citations",
+  "accepted": true,
+  "actual": {
+    "prepared": [
+      {
+        "dataset_id": 3,
+        "pages": 4,
+        "query": "rezago",
+        "citations": 5,
+        "cited_pages": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "original_unchanged": true,
+        "foreign_project_denied": true
+      },
+      {
+        "dataset_id": 4,
+        "pages": 16,
+        "query": "lista nominal",
+        "citations": 5,
+        "cited_pages": [
+          2,
+          3,
+          4,
+          6,
+          16
+        ],
+        "original_unchanged": true,
+        "foreign_project_denied": true
+      }
+    ],
+    "protected_tables_unchanged": true,
+    "originals_unchanged": true,
+    "cloud_used": false,
+    "external_calls": 0,
+    "ai_used": false,
+    "table_count": 34,
+    "new_tables": false,
+    "agent_browser_qa": false,
+    "visual_acceptance_pending": true
+  },
+  "restored_search": {
+    "verified": true,
+    "active_database_not_overwritten": true,
+    "documents": [
+      {
+        "dataset_id": 3,
+        "citations": 5,
+        "isolated_restored_search": true
+      },
+      {
+        "dataset_id": 4,
+        "citations": 5,
+        "isolated_restored_search": true
+      }
+    ],
+    "external_calls": 0
+  },
+  "verification": {
+    "python": {
+      "exit_code": 0,
+      "counts": {
+        "passed": 127
+      },
+      "modules": [
+        "test_pdf_library.py",
+        "test_evidence_rows.py",
+        "test_workbook_evidence.py",
+        "test_local_knowledge.py",
+        "test_reports.py",
+        "test_documentary_digest.py"
+      ],
+      "seconds": 98.16
+    },
+    "javascript_checks": 239,
+    "javascript_modules": 16,
+    "syntax": true,
+    "static_binding_tests_in_python_suite": 2,
+    "csp_matches": true,
+    "agent_browser_qa": false,
+    "browser_visual_acceptance": true,
+    "direct_async_route_tests_use_inline_scheduler": true,
+    "browser_visual_acceptance_scope": "Document catalogue, selected PDF search, page provenance, text page reader and saved report version 2 with persistent document scope"
+  },
+  "protected_files": {
+    "app/main.py": "3021b70f4aca828708c92fb7624e0cff76bcf2a0e23a523ea41efc88f1c3858e",
+    "app/knowledge.py": "466b2227eddcce317694ea185faf3bb339909c3c29541917cbd0208396113883"
+  },
+  "territory_map_unchanged": true,
+  "tables": 34,
+  "schema_changed": false,
+  "originals_changed": false,
+  "historical_data_changed": false,
+  "cloud_modified": false,
+  "external_calls": 0,
+  "new_spending": false,
+  "pending": [
+    "Human review of automatic preparation during a new PDF upload",
+    "OCR for image-only pages and documents",
+    "Visual table and diagram interpretation",
+    "Native PostgreSQL and cloud activation",
+    "Semantic retrieval/model evaluation and live provider adapters"
+  ],
+  "accepted_scope": "Document catalogue, selected PDF search, page provenance, text page reader and saved report version 2 with persistent document scope",
+  "human_acceptance": {
+    "accepted": true,
+    "date": "2026-10-21T00:35:53.963546+00:00",
+    "by": "user",
+    "confirmation": "Sí, aparecen y la búsqueda funciona",
+    "scope": "Both uploaded PDFs visible in catalogue; selected PDF search shows results with page of origin. Page reader, automatic new upload and scoped report save not manually confirmed in this response."
+  },
+  "page_reader_acceptance": {
+    "accepted": true,
+    "date": "2026-10-21T00:37:25.912071+00:00",
+    "by": "user",
+    "confirmation": "Sí, cambia la página y se lee el texto",
+    "scope": "Human PDF text reader review: next page changes page number and displays its text. Does not confirm OCR, automatic new upload or scoped report saving."
+  },
+  "report_scope_notice_adjustment": {
+    "date": "2026-10-21T00:38:38.026766+00:00",
+    "scope": "Show selected document scope immediately when opening report preparation",
+    "javascript_controller_checks": 231,
+    "python_unchanged": true,
+    "browser_acceptance_pending": false
+  },
+  "scoped_report_acceptance": {
+    "accepted": true,
+    "date": "2026-10-21T00:50:36.606228+00:00",
+    "by": "user",
+    "confirmation": "Sí, solo aparecen fuentes de ese PDF y sus páginas",
+    "scope": "User confirmed only the intended PDF and page references in the original saved report; fixed filter in version 2 verified automatically and awaits human review",
+    "verification": {
+      "active_report": [
+        {
+          "report_id": 2,
+          "version": 1,
+          "citations": 5,
+          "source_dataset_id": 3,
+          "document_filter": null,
+          "pages": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "sha256": "e63ea2f6863a21fdbac209a8b70dfa4f6267c6512ae80142b546308aeda8e84a"
+        },
+        {
+          "report_id": 2,
+          "version": 2,
+          "citations": 5,
+          "source_dataset_id": 3,
+          "document_filter": 3,
+          "pages": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "sha256": "898d6634b41d5129baab6be2eb38bdf17cccc80823f436396ebbd69959b352d6"
+        }
+      ],
+      "isolated_restored_report_matches": true
+    }
+  },
+  "report_filter_fix": {
+    "report_id": 2,
+    "version": 2,
+    "document_id": 3,
+    "citations": 5,
+    "original_versions_unchanged": true,
+    "scope_persisted": true,
+    "external_calls": 0,
+    "cloud_modified": false,
+    "handoff_uses_successful_search_packet": true,
+    "manual_review_pending": false,
+    "isolated_restore_matches": true,
+    "human_acceptance": {
+      "accepted": true,
+      "date": "2026-10-21T00:55:09.270139+00:00",
+      "by": "user",
+      "confirmation": "Sí, versión 2 y documento limitado correctos",
+      "scope": "Human confirms report version 2, explicit selected-document scope and citations only from the intended PDF; automatic new upload, OCR and semantic RAG not covered"
+    }
+  },
+  "corrected_report_acceptance": {
+    "accepted": true,
+    "date": "2026-10-21T00:55:09.270139+00:00",
+    "by": "user",
+    "confirmation": "Sí, versión 2 y documento limitado correctos",
+    "scope": "Human confirms report version 2, explicit selected-document scope and citations only from the intended PDF; automatic new upload, OCR and semantic RAG not covered"
+  }
+}

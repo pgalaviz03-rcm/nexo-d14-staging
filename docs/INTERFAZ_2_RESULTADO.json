@@ -1,0 +1,99 @@
+{
+  "date_local": "2026-10-19",
+  "recorded_at_utc": "2026-10-20T01:44:17.432466+00:00",
+  "input": {
+    "file": "html2code-1792460355931.html",
+    "sha256": "cb0f4252ee8b1487a5348c0196c2deee33f89f2e25e69b90898afa6576d156d8"
+  },
+  "changed_app_source": [
+    "static/index.html"
+  ],
+  "server_files_unchanged_by_sha256": {
+    "app/cloud_auth.py": true,
+    "app/config.py": true,
+    "app/controls.py": true,
+    "app/database.py": true,
+    "app/integration_ports.py": true,
+    "app/knowledge.py": true,
+    "app/listening.py": true,
+    "app/main.py": true,
+    "app/models.py": true,
+    "app/news_review.py": true,
+    "app/preflight.py": true,
+    "app/review_api.py": true,
+    "app/rss_api.py": true,
+    "app/security.py": true,
+    "app/workspace_api.py": true,
+    "app/__init__.py": true,
+    "static/reviews.js": true
+  },
+  "preserved": {
+    "historical_svg_byte_identical_as_text": true,
+    "section_geometries": 45,
+    "manual_review_module": true,
+    "documentary_dossier": true,
+    "authenticated_project_dependencies": true
+  },
+  "interface": {
+    "operational_demo_pending_states": true,
+    "executive_numbers_are_demo": true,
+    "reports_layout": true,
+    "reports_persistence": false,
+    "social_ingestion": false,
+    "demographic_political_simulation": false,
+    "generation": false,
+    "query_cache": false
+  },
+  "verification": {
+    "python_specific_cases_passed": 65,
+    "failed": 0,
+    "elapsed_seconds": 24.76,
+    "javascript_syntax": "passed: inline and reviews.js",
+    "complete_map_and_report_status_regression": true,
+    "html_identifiers_and_navigation": "passed",
+    "csp_inline_hash": "matches server middleware",
+    "final_accessibility_label_check": "2 UI regression cases passed",
+    "full_http_suite_rerun": false,
+    "new_browser_visual_acceptance": false,
+    "browser_limitation": "Prior browser URL policy block; no workaround attempted",
+    "postgres_retested": false
+  },
+  "data": {
+    "counts_before": {
+      "news_articles": 20,
+      "section_metrics": 45,
+      "topics": 1,
+      "article_reviews": 0,
+      "review_topics": 0,
+      "review_changes": 0,
+      "datasets": 0
+    },
+    "counts_after": {
+      "news_articles": 20,
+      "section_metrics": 45,
+      "topics": 1,
+      "article_reviews": 0,
+      "review_topics": 0,
+      "review_changes": 0,
+      "datasets": 0
+    },
+    "historical": {
+      "sections": 45,
+      "territorial_votes": 41984,
+      "nominal_list": 65378
+    },
+    "quick_check": "ok",
+    "foreign_key_violations": 0,
+    "active_database_written_by_task": false
+  },
+  "cloud": {
+    "deployed": false,
+    "provider_changes": false,
+    "connections_activated": false,
+    "spend_activated": false
+  },
+  "pending": [
+    "Human restart and visual acceptance on existing local port 8002",
+    "Persistent reports with versions and source references"
+  ]
+}

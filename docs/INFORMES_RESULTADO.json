@@ -1,0 +1,187 @@
+{
+  "date_local": "2026-10-19",
+  "recorded_at_utc": "2026-10-20T02:23:20.789311+00:00",
+  "module": "Persistent documentary reports and consultant navigation",
+  "vision": {
+    "inspiration": "BRUJULA",
+    "functional_reference": "Atalaya",
+    "integrated_product": "NEXO"
+  },
+  "protected_files_unchanged_by_sha256": {
+    "app/main.py": true,
+    "app/knowledge.py": true
+  },
+  "implementation": {
+    "tables": [
+      "reports",
+      "report_versions",
+      "report_releases"
+    ],
+    "future_migration": "004_reports",
+    "report_writer_roles": [
+      "admin",
+      "editor",
+      "analyst"
+    ],
+    "release_roles": [
+      "admin",
+      "editor"
+    ],
+    "reader_role": "viewer",
+    "reader_scope": "Released report versions only; original news/library permissions unchanged",
+    "versions_append_only_via_api": true,
+    "versions_per_report_cap": 50,
+    "payload_bytes_cap": 65536,
+    "list_cap": 100,
+    "source_snapshot_retrieved_on_server": true,
+    "sha256_checked_on_read": true,
+    "generative_ai": false,
+    "network_calls": false,
+    "synthetic_voter_profiles": false,
+    "personalized_political_message_simulation": false,
+    "platform_superadmin_implemented": false,
+    "complete_candidate_profile_implemented": false
+  },
+  "interface": {
+    "default_page": "Resumen",
+    "primary_navigation": [
+      "Resumen",
+      "Explorar",
+      "Territorio",
+      "Informes",
+      "Fuentes"
+    ],
+    "reviews_and_library_preserved": true,
+    "source_tools_collapsed": true,
+    "complete_historical_svg_preserved": true
+  },
+  "verification": {
+    "python_specific_cases_passed": 90,
+    "new_report_cases": 25,
+    "previous_cases": 65,
+    "failed": 0,
+    "final_run_seconds": 26.06,
+    "sql_policy_cases_passed": 48,
+    "postgres_engine": {
+      "version": "PostgreSQL 18.6 (PGlite 0.5.10) on wasm32-unknown-emscripten, compiled by emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 6.0.5 (1db513782be24469589d7cb8a1f1834e9a33f271), 32-bit"
+    },
+    "native_postgres_acceptance": false,
+    "network_tls_pool_retested": false,
+    "javascript_syntax": "passed for inline app, reviews.js and reports.js",
+    "isolated_js_controller_cases": [
+      "create",
+      "release",
+      "append_version",
+      "historical_readonly",
+      "export",
+      "reader_controls",
+      "literal_source_rendering"
+    ],
+    "csp_inline_hash": "matches server middleware",
+    "full_http_suite_rerun": false,
+    "browser_visual_acceptance": false,
+    "browser_limitation": "Prior URL-policy block; no bypass attempted",
+    "sqlite_schema_trial_and_repeat_passed": true,
+    "synthetic_report_backup_restore_passed": true
+  },
+  "current_private_workspace": {
+    "table_counts": {
+      "users": 1,
+      "projects": 1,
+      "memberships": 1,
+      "datasets": 0,
+      "section_metrics": 45,
+      "audit_events": 19,
+      "feed_sources": 2,
+      "usage_counters": 1,
+      "news_articles": 20,
+      "dataset_blobs": 0,
+      "topics": 1,
+      "article_reviews": 0,
+      "review_topics": 0,
+      "review_changes": 0,
+      "reports": 0,
+      "report_versions": 0,
+      "report_releases": 0
+    },
+    "historical": {
+      "sections": 45,
+      "territorial_votes": 41984,
+      "nominal_list": 65378
+    },
+    "historical_and_existing_rows_preserved": true,
+    "new_schema_applied": true,
+    "new_example_reports_added": false,
+    "integrity_check": "ok",
+    "foreign_key_violations": 0
+  },
+  "backup_before_schema": {
+    "date_utc": "2026-10-20T02:17:02.708673+00:00",
+    "encrypted": true,
+    "dpapi_current_user": true,
+    "isolated_restore_verified": true,
+    "table_counts": {
+      "article_reviews": 0,
+      "audit_events": 19,
+      "dataset_blobs": 0,
+      "datasets": 0,
+      "feed_sources": 2,
+      "memberships": 1,
+      "news_articles": 20,
+      "projects": 1,
+      "review_changes": 0,
+      "review_topics": 0,
+      "section_metrics": 45,
+      "topics": 1,
+      "usage_counters": 1,
+      "users": 1
+    },
+    "backup_file": "20261020T021702Z-218be752.nexobak",
+    "sha256": "c8382791a8c56779aab178c5933a6c27c9bb582505a9f9af17d9d0295b4051aa",
+    "cloud_backup": false,
+    "offsite_backup": false
+  },
+  "backup_after_schema": {
+    "date_utc": "2026-10-20T02:17:33.847422+00:00",
+    "encrypted": true,
+    "dpapi_current_user": true,
+    "isolated_restore_verified": true,
+    "table_counts": {
+      "article_reviews": 0,
+      "audit_events": 19,
+      "dataset_blobs": 0,
+      "datasets": 0,
+      "feed_sources": 2,
+      "memberships": 1,
+      "news_articles": 20,
+      "projects": 1,
+      "report_releases": 0,
+      "report_versions": 0,
+      "reports": 0,
+      "review_changes": 0,
+      "review_topics": 0,
+      "section_metrics": 45,
+      "topics": 1,
+      "usage_counters": 1,
+      "users": 1
+    },
+    "backup_file": "20261020T021733Z-b0fc8265.nexobak",
+    "sha256": "f1b69ebdcc40ed40cc6c15bfde8b39bc7303d825c7bf45a1569840f34e34d373",
+    "cloud_backup": false,
+    "offsite_backup": false
+  },
+  "cloud": {
+    "deployed": false,
+    "migration_applied": false,
+    "provider_changed": false,
+    "new_spending": false
+  },
+  "pending": [
+    "Human visual acceptance and full report/release workflow on existing port 8002",
+    "PDF/XLSX extraction and retrieval evaluation",
+    "Complete candidate and platform-admin authorization",
+    "Native PostgreSQL 17.11 acceptance before cloud release",
+    "Authorized API/model connections at final stage",
+    "Offsite recovery with key custody independent of this Windows profile"
+  ]
+}

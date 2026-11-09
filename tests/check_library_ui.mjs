@@ -1,0 +1,51 @@
+import fs from 'node:fs';import vm from 'node:vm';import assert from 'node:assert/strict';
+class Element{constructor(tag='div'){this.tagName=tag;this.children=[];this.value='';this.textContent='';this.hidden=false;this.disabled=false;}append(...x){this.children.push(...x);}replaceChildren(...x){this.children=x;}querySelectorAll(tag){return this.children.flatMap(n=>[...(n.tagName===tag?[n]:[]),...n.querySelectorAll(tag)]);}focus(){this.focused=true;}scrollIntoView(){this.scrolled=true;}click(){this.clicked=true;}set innerHTML(v){throw Error('Unsafe HTML');}}
+const ids=['knowledgeDocument','knowledgeKind','knowledgeScope','libraryReader','libraryPageText','libraryPageTitle','libraryPrevious','libraryNext','libraryStatus','libraryAdd','libraryRefresh','libraryDocuments','datasetsList','libraryFile','sourceRegisteredCount','knowledgeQuery','workbookTools'];
+const nodes=Object.fromEntries(ids.map(id=>[id,new Element()])),byId=id=>{assert(nodes[id],id);return nodes[id];};
+let pid=1,scopeChanges=0,focus=0,canPrepare=true,pending=null;
+const items=[{id:3,filename:'Informe <script>.pdf',size_bytes:3000,format:'PDF',state:'needs_prepare',searchable:false,pages:null},{id:4,filename:'Otro.pdf',size_bytes:2000,format:'PDF',state:'ready',searchable:true,pages:2},{id:5,filename:'Imagen.pdf',size_bytes:4000,format:'PDF',state:'needs_ocr',searchable:false,pages:1}];
+const calls=[],cases=[],check=(name,fn)=>{fn();cases.push(name);},text=n=>[n.textContent,...n.children.map(text)].join(' ');
+async function api(path,options={}){calls.push({path,options});if(pending)return pending;
+ if(path.endsWith('/documents'))return {items:structuredClone(items),can_prepare:canPrepare,bounded:false};
+ if(path.endsWith('/prepare')){Object.assign(items[0],{state:'ready',searchable:true,pages:2});return{searchable:true};}
+ if(path.endsWith('/upload')){const item={id:6,filename:'Subido.pdf',size_bytes:20,format:'PDF',state:'ready',searchable:true,pages:1};items.push(item);return{id:6,detail:'Documento listo'};}
+ const page=Number(path.split('/').at(-1));return{filename:'Otro.pdf',page,pages:2,text:page===1?'Texto <img src=x>':'Página dos'};
+}
+const window={};vm.runInNewContext(fs.readFileSync(new URL('../static/library.js',import.meta.url),'utf8'),{window,document:{createElement:t=>new Element(t)},Number,String,FormData,console});
+const module=window.NexoLibrary.install({api,byId,getProject:()=>pid,onScopeChange:()=>scopeChanges++,onSearchFocus:()=>focus++});
+await module.reload();
+check('catalogue_has_actionable_status_and_original_filename',()=>assert(text(nodes.libraryDocuments).includes('Informe <script>.pdf')));
+check('not_ready_options_are_disabled',()=>assert(nodes.knowledgeDocument.children.find(r=>r.value==='3').disabled));
+check('ready_option_can_be_selected',()=>assert(!nodes.knowledgeDocument.children.find(r=>r.value==='4').disabled));
+check('cache_is_not_listed_as_a_second_document',()=>assert.equal(nodes.libraryDocuments.children.length,3));
+check('ocr_needed_has_a_clear_explanation',()=>assert(text(nodes.libraryDocuments).includes('No se encontró texto seleccionable')));
+let card=nodes.libraryDocuments.children[1];await card.querySelectorAll('button').find(b=>b.textContent==='Buscar en este documento').onclick();
+check('search_card_sets_document_filter',()=>assert.equal(module.selectedId(),4));
+check('search_card_sets_document_source_and_focus',()=>{assert.equal(nodes.knowledgeKind.value,'documents');assert(nodes.knowledgeQuery.focused);assert(focus);assert(scopeChanges);});
+check('scope_is_visible_to_reader',()=>assert(nodes.knowledgeScope.textContent.includes('Otro.pdf')));
+await card.querySelectorAll('button').find(b=>b.textContent==='Leer texto por página').onclick();
+await new Promise(r=>setTimeout(r,0));
+check('page_reader_displays_literal_text',()=>assert.equal(nodes.libraryPageText.textContent,'Texto <img src=x>'));
+check('page_reader_disables_previous_at_start',()=>assert(nodes.libraryPrevious.disabled));
+await nodes.libraryNext.onclick();
+check('reader_moves_to_second_physical_page',()=>{assert(nodes.libraryPageTitle.textContent.includes('página 2 de 2'));assert(nodes.libraryNext.disabled);});
+await nodes.libraryDocuments.children[0].querySelectorAll('button').find(b=>b.textContent==='Preparar para buscar').onclick();
+check('one_action_prepare_selects_ready_document',()=>assert.equal(module.selectedId(),3));
+await module.uploadFile(new Blob(['synthetic']));
+check('upload_goes_to_automatic_preparation_endpoint',()=>assert(calls.some(r=>r.path.endsWith('/library/upload')&&r.options.method==='POST')));
+check('new_document_is_selected_after_upload',()=>assert.equal(module.selectedId(),6));
+nodes.knowledgeKind.value='news';nodes.knowledgeKind.onchange();
+check('changing_to_news_clears_document_filter',()=>assert.equal(module.selectedId(),null));
+canPrepare=false;await module.reload();
+check('viewer_has_no_upload_or_preparation_controls',()=>{assert(nodes.libraryAdd.hidden);assert(!nodes.libraryDocuments.querySelectorAll('button').some(b=>b.textContent==='Preparar para buscar'));});
+let resolve;pending=new Promise(r=>resolve=r);const stale=module.reload();pid=2;module.resetProject();resolve({items:[{id:777,filename:'Previous project',state:'ready'}],can_prepare:true});await stale;pending=null;
+check('project_switch_discards_stale_document_list',()=>{assert.equal(nodes.libraryDocuments.children.length,0);assert.equal(module.selectedId(),null);});
+check('project_switch_clears_previous_page_text',()=>{assert(nodes.libraryReader.hidden);assert.equal(nodes.libraryPageText.textContent,'');});
+let configured=0,addOpened=0;canPrepare=true;items.push({id:8,filename:'Libro del proyecto.xlsx',format:'XLSX',state:'stored',searchable:false,size_bytes:1200});
+const central=window.NexoLibrary.install({api,byId,getProject:()=>pid,onScopeChange:()=>{},onSearchFocus:()=>{},onConfigureDocument:id=>{configured=id;},onAddDocument:()=>{addOpened++;}});await central.reload();
+nodes.libraryAdd.onclick();check('add_document_shortcut_has_one_canonical_location',()=>assert.equal(addOpened,1));
+let workbookCard=nodes.libraryDocuments.children.find(n=>text(n).includes('Libro del proyecto.xlsx'));workbookCard.querySelectorAll('button').find(b=>b.textContent==='Elegir filas y columnas').onclick();
+check('workbook_selection_opens_configuration_for_correct_file',()=>assert.equal(configured,8));
+canPrepare=false;await central.reload();workbookCard=nodes.libraryDocuments.children.find(n=>text(n).includes('Libro del proyecto.xlsx'));
+check('reader_has_no_workbook_configuration_shortcut',()=>assert(!workbookCard.querySelectorAll('button').some(b=>b.textContent==='Elegir filas y columnas')));
+console.log(JSON.stringify({passed:true,cases,browser_rendering:false}));

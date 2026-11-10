@@ -5,7 +5,7 @@ TABLES = ('users','memberships','projects','datasets','dataset_blobs','section_m
           'topics','article_reviews','review_topics','review_changes',
           'reports','report_versions','report_releases','platform_grants','platform_brand','pulse_configs','pulse_actors',
           'pulse_batches','pulse_documents','pulse_mentions','pulse_accounts','pulse_rules',
-          'content_assessments','briefing_schedules','delivery_jobs','content_analyses','actor_profiles','audience_snapshots','alert_incidents','alert_events','fidelity_captures','fidelity_team_members','fidelity_team_observations','integration_settings','media_outlets','media_article_links')
+          'content_assessments','briefing_schedules','delivery_jobs','content_analyses','actor_profiles','audience_snapshots','alert_incidents','alert_events','fidelity_captures','fidelity_team_members','fidelity_team_observations','integration_settings','media_outlets','media_article_links','project_refresh_runs')
 
 
 def check_database(engine):
@@ -16,9 +16,11 @@ def check_database(engine):
         if c.execute(text('''SELECT EXISTS(SELECT 1 FROM pg_auth_members
             WHERE member=(SELECT oid FROM pg_roles WHERE rolname=current_user))''')).scalar():
             raise RuntimeError('El rol de aplicación pertenece a otros roles')
-        if c.execute(text('SELECT version_num FROM alembic_version')).scalar() != '011_workspace_cloud':
+        revision=c.execute(text('SELECT version_num FROM alembic_version')).scalar()
+        if revision not in {'011_workspace_cloud','012_project_refresh'}:
             raise RuntimeError('Migraciones incompletas')
         for table in TABLES:
+            if table=="project_refresh_runs" and revision=="011_workspace_cloud":continue # additive rolling upgrade; refresh API stays closed
             row=c.execute(text('''SELECT c.relrowsecurity,c.relforcerowsecurity,
                 pg_has_role(current_user,c.relowner,'MEMBER') FROM pg_class c
                 JOIN pg_namespace n ON c.relnamespace=n.oid WHERE n.nspname='public' AND c.relname=:t'''), {'t':table}).one()

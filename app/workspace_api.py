@@ -56,6 +56,9 @@ def install_workspace_api(app,db,current_user,allow,uploads):
     from .platform_api import install_platform_api
     install_pulse_api(app,db,current_user,allow)
     install_platform_api(app,db,current_user)
+    from .refresh_api import install_refresh_api
+    if hasattr(app.state,"SessionLocal"):
+        install_refresh_api(app,db,current_user,allow)
     @app.get('/api/projects/{pid}/workspace')
     def status(pid:int,user=Depends(current_user),session:Session=Depends(db)):
         allow(pid,user,session)

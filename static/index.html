@@ -85,6 +85,7 @@
   </div>
   <div class="top-right">
     <button type="button" id="logoutNexo" class="pill">Cerrar sesión</button>
+    <span class="pill refresh-cut" id="refreshCut">Corte diario · 08:00 h</span><button type="button" id="refreshNow" class="pill refresh-button" hidden>↻ Actualizar datos</button><span id="refreshFeedback" class="refresh-feedback" role="status" data-owner-only></span>
     <span class="pill demo-pill" id="dataStatus">● DATOS DEL PROYECTO</span>
     <div class="avatar" id="projectAvatar">P</div>
   </div>
@@ -487,7 +488,7 @@
 <div class="modalwrap" id="modal"><div class="modal"><button class="close" id="closeModal">×</button><h2 id="modalTitle">Información</h2><p id="modalText"></p><button class="solid" id="modalDone" style="margin-top:8px">Entendido</button></div></div>
 <div class="toast" id="toast" role="status"></div>
 
-<script src="/assets/nexo-modules.js?v=fde2d3ca98860802"></script>
+<script src="/assets/nexo-modules.js?v=2e6c1cb83ecfa7c2"></script>
 <script>
 (function(){
 const byId=id=>document.getElementById(id);
@@ -600,7 +601,7 @@ const htmlSafe=x=>String(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'
 function resetProjectViews(){
  resetTerritory();
  libraryModule.resetProject();workbookModule.resetProject();accountAuditModule.resetProject();explorerModule.resetProject();alertsModule.resetProject();continuityModule.resetProject();networksModule.resetProject();actorsModule.resetProject();pulseModule.resetProject();reportsModule.resetProject();manualReviewModule.resetProject();workbenchModule.resetProject();briefingModule.resetProject();deliveryModule.resetProject();
- settingsModule.resetProject();contextSequence++;digestSequence++;rssRequestSequence++;lastContextPacket=null;lastDigest=null;
+ refreshModule.resetProject();settingsModule.resetProject();contextSequence++;digestSequence++;rssRequestSequence++;lastContextPacket=null;lastDigest=null;
  for(const id of ['knowledgeResults','criticalOutput','datasetsList','rssArticles','rssFeedList','connectionList'])byId(id).replaceChildren();
  for(const id of ['knowledgeQuery','criticalQuery','rssQuery'])byId(id).value='';
  byId('knowledgeDownload').hidden=true;byId('knowledgePrepareReport').hidden=true;byId('criticalDownload').hidden=true;clearBrief();
@@ -620,7 +621,7 @@ async function loadProject(requestedId=null){
  const [sectionsData,summaryData]=await Promise.all([api(`/api/projects/${p.id}/sections`),api(`/api/projects/${p.id}/summary`)]);
  loadTerritory(p,summaryData,sectionsData);
  byId('sourceRegisteredCount').textContent=summaryData.datasets;
- await Promise.all([refreshDatasets(),loadRssData(),loadKnowledge(),manualReviewModule.reload(),reportsModule.reload(),pulseModule.reload()]);
+ await Promise.all([refreshDatasets(),loadRssData(),loadKnowledge(),manualReviewModule.reload(),reportsModule.reload(),pulseModule.reload(),refreshModule.reload()]);
  page('pulse');byId('nexoLogin').classList.add('hidden');
 }
 async function selectProject(id){
@@ -813,6 +814,7 @@ const accountAuditModule=window.NexoAccountAudit.install({api,byId,getProject:()
 const networksModule=window.NexoNetworks.install({api,byId,getProject:()=>activeProjectId,onConfigure:()=>settingsModule.open('actors')});
 const actorsModule=window.NexoActors.install({api,byId,getProject:()=>activeProjectId,onChanged:async()=>{await pulseModule.reload();await settingsModule.refreshActors(actorsModule.catalogue());await alertsModule.reload();},onOpenPulse:async id=>{try{await pulseModule.focusActor(id);page('pulse');}catch(e){modal('No se pudo abrir Pulso',e.message);}}});
 const platformModule=window.NexoPlatform.install({api,byId,onBrandChanged:applyBrand,onProjectsChanged:async()=>{const wasPlatform=document.querySelector('.section.visible')?.id==='platform';await loadProject(activeProjectId);if(wasPlatform)page('platform');}});
+const refreshModule=window.NexoRefresh.install({api,byId,getProject:()=>activeProjectId,canManage:()=>platformModule.allowed(),onCompleted:async()=>{const pid=activeProjectId,view=document.querySelector('.section.visible')?.id;await loadProject(pid);if(view&&view!=='pulse')page(view);}});
 const briefingModule=window.NexoBriefing.install({api,byId,getProject:()=>activeProjectId,onCutChanged:p=>deliveryModule.cutChanged(p),onSaved:async id=>{await reportsModule.reload();if(await reportsModule.open(id))page('reports');}});
 const deliveryModule=window.NexoDelivery.install({api,byId,getProject:()=>activeProjectId,getCut:()=>briefingModule.getCut(),canConfigure:()=>platformModule.allowed(),onAssessmentSaved:()=>briefingModule.reload()});
 const reportsModule=window.NexoReports.install({api,byId,page,getProject:()=>activeProjectId});

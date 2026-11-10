@@ -99,8 +99,10 @@ def test_ui_bindings_and_navigation_have_unique_existing_elements():
     elements=Elements();elements.feed(html)
     assert len(elements.ids)==len(set(elements.ids))
     assert set(elements.pages)<=set(elements.ids)
-    assert elements.scripts==['/assets/experience.js?v=20261021-1','/assets/reviews.js','/assets/reports.js','/assets/pulse.js','/assets/platform.js','/assets/settings.js?v=20261027-1','/assets/workbench.js','/assets/actors.js','/assets/networks.js','/assets/account_audit.js?v=20261020-2','/assets/workbooks.js','/assets/evidence_cards.js?v=20261020-2','/assets/library.js?v=20261020-1','/assets/fidelity_team.js?v=20261027-1','/assets/fidelity.js?v=20261027-1','/assets/continuity.js','/assets/alerts.js','/assets/explorer.js','/assets/briefing.js','/assets/delivery.js',None]
-    scripts=re.search(r'<script>([\s\S]*?)</script>',html).group(1)+''.join((static/name).read_text(encoding='utf-8') for name in ['reviews.js','reports.js','pulse.js','platform.js','settings.js','workbench.js','actors.js','networks.js','account_audit.js','workbooks.js','evidence_cards.js','library.js','fidelity_team.js','fidelity.js','continuity.js','alerts.js','explorer.js','briefing.js','delivery.js'])
+    assert len(elements.scripts)==2 and elements.scripts[1] is None
+    bundle=(Path(__file__).resolve().parents[1]/'static/nexo-modules.js').read_bytes()
+    assert elements.scripts[0]=='/assets/nexo-modules.js?v='+__import__('hashlib').sha256(bundle).hexdigest()[:16]
+    scripts=re.search(r'<script>([\s\S]*?)</script>',html).group(1)+(static/'nexo-modules.js').read_text(encoding='utf-8')
     referenced=set(re.findall(r"byId\(['\"]([^'\"]+)['\"]\)",scripts))
     assert referenced<=set(elements.ids),referenced-set(elements.ids)
     assert all(x in html for x in ['Temas y revisión','Ficha documental','Métricas ilustrativas'])

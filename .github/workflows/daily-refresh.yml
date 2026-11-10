@@ -1,0 +1,20 @@
+name: NEXO daily refresh
+on:
+  schedule:
+    - cron: '0 14 * * *' # 08:00 America/Mexico_City, UTC-6
+  workflow_dispatch:
+permissions:
+  contents: read
+  id-token: write
+concurrency:
+  group: nexo-daily-refresh
+  cancel-in-progress: false
+jobs:
+  daily:
+    if: vars.NEXO_DAILY_REFRESH_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - name: Request shared daily project cut
+        run: python scripts/github_daily_refresh.py

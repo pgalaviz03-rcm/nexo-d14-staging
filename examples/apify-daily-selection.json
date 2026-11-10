@@ -1,0 +1,75 @@
+{
+  "date": "2026-11-10",
+  "usd_mxn_planning": 20,
+  "days": 30,
+  "shared_per_project": true,
+  "paid_execution_activated": false,
+  "actors": [
+    {
+      "ref": "apify/facebook-posts-scraper",
+      "purpose": "Publicaciones y métricas públicas"
+    },
+    {
+      "ref": "apify/facebook-comments-scraper",
+      "purpose": "Comentarios; insumo de análisis agregado y acciones observadas"
+    },
+    {
+      "ref": "apify/facebook-pages-scraper",
+      "purpose": "Seguidores y estadísticas públicas de cuenta"
+    },
+    {
+      "ref": "scraper_one/facebook-reactions-scraper",
+      "purpose": "Identidades de reacciones visibles para Fidelidad; validar cobertura"
+    }
+  ],
+  "scenarios": [
+    {
+      "escenario": "Austero",
+      "cuentas": 4,
+      "publicaciones_dia": 20,
+      "comentarios_dia": 100,
+      "reacciones_dia": 0,
+      "consumo_apify_usd": 10.044,
+      "pago_estimado_starter_usd": 19,
+      "mxn": 380.0,
+      "desglose": {
+        "posts": 3.0300000000000002,
+        "comments": 6.03,
+        "pages": 0.9840000000000001,
+        "reactions": 0
+      }
+    },
+    {
+      "escenario": "Piloto con equipo",
+      "cuentas": 4,
+      "publicaciones_dia": 40,
+      "comentarios_dia": 300,
+      "reacciones_dia": 100,
+      "consumo_apify_usd": 34.0455,
+      "pago_estimado_starter_usd": 34.05,
+      "mxn": 680.91,
+      "desglose": {
+        "posts": 6.03,
+        "comments": 18.03,
+        "pages": 0.9840000000000001,
+        "reactions": 9.0015
+      }
+    },
+    {
+      "escenario": "Amplio",
+      "cuentas": 4,
+      "publicaciones_dia": 80,
+      "comentarios_dia": 1000,
+      "reacciones_dia": 500,
+      "consumo_apify_usd": 118.0455,
+      "pago_estimado_starter_usd": 118.05,
+      "mxn": 2360.91,
+      "desglose": {
+        "posts": 12.030000000000001,
+        "comments": 60.029999999999994,
+        "pages": 0.9840000000000001,
+        "reactions": 45.0015
+      }
+    }
+  ]
+}

@@ -6,7 +6,8 @@ from sqlalchemy import text,inspect
 from app.fidelity import FidelityCapture
 from app.fidelity_team import TeamMember,TeamObservation
 from app.configuration import IntegrationSetting,MediaOutlet,MediaArticleLink
-from app.preflight import TABLES
+# Original table set is frozen so later additive migrations do not alter 011.
+TABLES=('users', 'memberships', 'projects', 'datasets', 'dataset_blobs', 'section_metrics', 'feed_sources', 'news_articles', 'audit_events', 'usage_counters', 'topics', 'article_reviews', 'review_topics', 'review_changes', 'reports', 'report_versions', 'report_releases', 'platform_grants', 'platform_brand', 'pulse_configs', 'pulse_actors', 'pulse_batches', 'pulse_documents', 'pulse_mentions', 'pulse_accounts', 'pulse_rules', 'content_assessments', 'briefing_schedules', 'delivery_jobs', 'content_analyses', 'actor_profiles', 'audience_snapshots', 'alert_incidents', 'alert_events', 'fidelity_captures', 'fidelity_team_members', 'fidelity_team_observations', 'integration_settings', 'media_outlets', 'media_article_links')
 revision='011_workspace_cloud'
 down_revision='010_alerts'
 branch_labels=None

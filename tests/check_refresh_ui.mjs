@@ -1,0 +1,16 @@
+import fs from 'node:fs';import vm from 'node:vm';import assert from 'node:assert/strict';
+const nodes=Object.fromEntries(['refreshNow','refreshCut','refreshFeedback'].map(id=>[id,{hidden:false,disabled:false,textContent:''}]));let pid=1,owner=true,timers=[],completed=0,hold=null;
+const calls=[],cases=[];let packet={can_refresh:true,running:false,last_completed_at:null,last_status:null,next_scheduled_for:'2026-11-11T14:00:00Z'};
+const ctx={window:{},Intl,Date,setTimeout:f=>{timers.push(f);return timers.length;},clearTimeout(){},console};vm.createContext(ctx);vm.runInContext(fs.readFileSync(new URL('../static/refresh.js',import.meta.url),'utf8'),ctx);
+const api=async(path,opts={})=>{calls.push({path,method:opts.method||'GET'});if(hold)return hold;if(opts.method==='POST'){packet.running=true;return{accepted:true};}return structuredClone(packet);};
+const mod=ctx.window.NexoRefresh.install({api,byId:id=>nodes[id],getProject:()=>pid,canManage:()=>owner,onCompleted:async()=>{completed++;}});
+const check=(n,fn)=>{fn();cases.push(n);};await mod.reload();
+check('owner_button_visible',()=>assert(!nodes.refreshNow.hidden));check('opening_panel_only_reads_saved_status',()=>assert(calls.every(c=>c.method==='GET')));
+owner=false;await mod.reload();check('reader_has_no_manual_refresh',()=>assert(nodes.refreshNow.hidden));const before=calls.length;await nodes.refreshNow.onclick();check('reader_cannot_trigger_even_direct_handler',()=>assert.equal(calls.length,before));
+owner=true;await mod.reload();await nodes.refreshNow.onclick();check('owner_requests_one_collection',()=>assert.equal(calls.filter(c=>c.method==='POST').length,1));check('active_job_disables_button',()=>assert(nodes.refreshNow.disabled));
+packet={...packet,running:false,last_status:'succeeded',last_completed_at:'2026-11-10T14:02:00Z'};await mod.reload();check('first_completed_manual_cut_reloads_views',()=>assert.equal(completed,1));check('cut_displays_actual_timestamp',()=>assert(nodes.refreshCut.textContent.startsWith('Último corte:')));
+let resolve;hold=new Promise(r=>resolve=r);const stale=mod.reload();pid=2;mod.resetProject();resolve({...packet,last_completed_at:'2026-11-10T14:03:00Z'});await stale;hold=null;
+check('switch_discards_old_project_status',()=>assert.equal(nodes.refreshCut.textContent,'Corte diario · 08:00 h'));check('switch_hides_owner_control_until_new_scope_loads',()=>assert(nodes.refreshNow.hidden));
+owner=false;packet={...packet,running:false,last_status:null,last_completed_at:null};await mod.reload();packet.last_completed_at='2026-11-10T14:05:00Z';await mod.reload();
+check('reader_sees_first_new_cut_without_scraping',()=>{assert.equal(completed,2);assert.equal(calls.filter(c=>c.method==='POST').length,1);});
+console.log(JSON.stringify({passed:true,cases,browser_rendering:false}));

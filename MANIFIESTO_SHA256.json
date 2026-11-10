@@ -332,9 +332,9 @@
   "examples/apify-networks-catalog.json": "e22d50805e2a9d619099e3e30808a8de33229d2f2ad2e5d0962f0eb17b603dde",
   "docs/APIFY_REDES.md": "d87dab394271a137f8feb6f776c38f5be95e4e86d95e262150145be18c9e5c9e",
   "app/apify_http.py": "be236c9a35b9e82ffb6e9b13a7f035a63efbbda0567ede378e5c37e941c42cec",
-  "app/facebook_ingest.py": "fced5b8d9b9fd0bb4c94e58e2b4b116e77246a232d9acd5e236cfa7ecdb4e9e5",
-  "app/apify_runtime.py": "3165cbd183ee0b2622cb7be1d934fd0674516eecabd739c7415953f94bbf062b",
-  "tests/test_apify_runtime.py": "4610a60b029ed04206932f47360d9ab5c23d36e3798f9f69694d2204847c6857",
+  "app/facebook_ingest.py": "f455ef6eeedf5272ed6f3240bfc2a9aa1b7c525229c658b93fb85dc98cac0f27",
+  "app/apify_runtime.py": "2eb0eec470c2373adfcac4e70fb43a3611384008fa1283bcde86aee09960736b",
+  "tests/test_apify_runtime.py": "a07b3636986dd99b76eb30bb428a9b56dc7f5982be23d9967b39c8c9b947eb73",
   "docs/APIFY_EJECUCION_FACEBOOK.md": "3da49f608d867b1305d9c28f2c98a4c76aee50c143155c1faa288a3fa7437674",
   "docs/APIFY_EJECUCION_RESULTADO.json": "a031c7c4a3c5cc9f873be927fbf531c4dad81c26e7efcf958ce8ce9d83826160"
 }

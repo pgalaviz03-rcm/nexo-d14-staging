@@ -31,7 +31,7 @@ def match(raw,targets,fields):
  for key in fields:
   try:canonical=fburl(raw.get(key))
   except (ValueError,TypeError):continue
-  found=[t for t in targets if fburl(t['url'])==canonical]
+  found=[t for t in targets if canonical in {fburl(t['url']),fburl(t.get('provider_url') or t['url'])}]
   if len(found)==1:return found[0]
  return None
 
@@ -73,7 +73,13 @@ def ingest(session,pid,uid,job,rows,at):
      else:stats['duplicates']+=1
      existing=session.scalar(select(MediaArticleLink.id).where(MediaArticleLink.project_id==pid,MediaArticleLink.media_id==mid,MediaArticleLink.external_id==external,MediaArticleLink.network=='facebook'))
      if not existing:session.add(MediaArticleLink(project_id=pid,media_id=mid,article_id=article.id,network='facebook',account_url=target['url'],external_id=external,captured_at=at))
-    posts_for_next.append(dict(url=url,actor_id=aid,media_id=mid,name=target['name'],account_url=target['url'],published_at=published.isoformat()))
+    provider_url=url
+    # Facebook supplies a numeric public permalink for reels and vanity links.
+    # Keep the original evidence URL; use only a validated Facebook alias upstream.
+    if raw.get('topLevelUrl'):
+     try:provider_url=PublicChannel(network='facebook',url=raw['topLevelUrl']).url
+     except ValueError:pass
+    posts_for_next.append(dict(url=url,provider_url=provider_url,actor_id=aid,media_id=mid,name=target['name'],account_url=target['url'],published_at=published.isoformat()))
    else:
     # Only an observed, exactly matched registered team profile becomes a team event.
     user_url=raw.get('profileUrl') if key=='facebook.comments' else raw.get('reactorProfileUrl')

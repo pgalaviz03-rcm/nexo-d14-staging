@@ -174,3 +174,15 @@ def test_input_validation_failure_never_starts_paid_actor():
  with pytest.raises(ProviderError) as e:c.start('apify/facebook-posts-scraper',{},'.05',3)
  assert e.value.code=='provider_invalid_input' and len(calls)==1 and calls[0].url.path.endswith('/validate-input') and SECRET not in str(e.value)
  c.close()
+
+def test_reel_uses_supplied_public_permalink_without_changing_evidence_identity():
+ from app.apify_runtime import build_input
+ from app.facebook_ingest import match
+ target=dict(url='https://www.facebook.com/reel/123',provider_url='https://www.facebook.com/100/posts/456',actor_id=9)
+ body=build_input(dict(key='facebook.reactions',targets=[target],max_items=4))
+ assert body['postUrls']==[target['provider_url']]
+ assert match(dict(inputUrl=target['provider_url']),[target],('inputUrl',))['url']==target['url']
+
+def test_external_link_cannot_be_used_as_facebook_permalink():
+ from app.facebook_ingest import fburl
+ with pytest.raises(ValueError):fburl('https://example.org/100/posts/456')

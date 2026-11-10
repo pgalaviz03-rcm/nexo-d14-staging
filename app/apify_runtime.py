@@ -73,7 +73,7 @@ def initialize(session,pid,trigger):
  return dict(state='running' if jobs else 'blocked',jobs=jobs,posts=[],test=policy.mode=='test',accounts_bounded=bounded,message='' if jobs else 'Selecciona los procesos de Facebook para este proyecto.')
 
 def build_input(job):
- urls=[t['url'] for t in job['targets']]
+ urls=[t.get('provider_url') or t['url'] for t in job['targets']]
  if job['key']=='facebook.reactions':return dict(postUrls=urls,reactionType='ALL',resultsLimit=job['max_items'])
  body=dict(startUrls=[dict(url=u) for u in urls])
  if job['key']=='facebook.posts':body.update(resultsLimit=job['max_items'],onlyPostsNewerThan=date_utc(job['since']).isoformat().replace('+00:00','Z'),captionText=False)

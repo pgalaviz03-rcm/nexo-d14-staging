@@ -144,7 +144,7 @@ def test_http_transport_fixed_origin_bearer_caps_and_no_post_retry():
   calls.append(r);assert r.url.host=='api.apify.com' and r.headers['authorization']=='Bearer '+SECRET and 'token=' not in str(r.url)
   return httpx.Response(201,json={'data':dict(id='r1',defaultDatasetId='d1')})
  c=ApifyHTTP(SECRET,httpx.MockTransport(serve));c.start('apify/facebook-posts-scraper',{'startUrls':[]},'.05',3);c.close()
- assert len(calls)==1 and calls[0].url.params['maxTotalChargeUsd']=='.05' and calls[0].url.params['restartOnError']=='false'
+ assert len(calls)==2 and calls[0].url.path.endswith('/validate-input') and calls[1].url.params['maxTotalChargeUsd']=='.05' and calls[1].url.params['restartOnError']=='false'
 
 @pytest.mark.parametrize('code',[302,401,403,429,500])
 def test_provider_errors_redacted_and_redirects_never_followed(code):
@@ -157,4 +157,20 @@ def test_provider_errors_redacted_and_redirects_never_followed(code):
 def test_malicious_provider_id_cannot_change_HTTP_destination():
  c=ApifyHTTP(SECRET,httpx.MockTransport(lambda r:pytest.fail('Must reject before HTTP')))
  with pytest.raises(ProviderError):c.items('https://evil.example/',1)
+ c.close()
+
+def test_generated_date_matches_official_posts_actor_schema():
+ import re
+ from app.apify_runtime import build_input
+ body=build_input(dict(key='facebook.posts',targets=[dict(url=URL)],max_items=3,since='2026-11-03T23:06:14.000000+00:00'))
+ # Pattern from the Actor's current public input schema, verified 2026-11-10.
+ pattern=r'^(\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])(T[0-2]\d:[0-5]\d(:[0-5]\d)?(\.\d+)?Z?)?$|^(\d+)\s*(minute|hour|day|week|month|year)s?$'
+ assert re.fullmatch(pattern,body['onlyPostsNewerThan']) and body['onlyPostsNewerThan'].endswith('Z')
+
+def test_input_validation_failure_never_starts_paid_actor():
+ calls=[]
+ def serve(r):calls.append(r);return httpx.Response(400,json={'error':{'type':'invalid-input','message':SECRET}})
+ c=ApifyHTTP(SECRET,httpx.MockTransport(serve))
+ with pytest.raises(ProviderError) as e:c.start('apify/facebook-posts-scraper',{},'.05',3)
+ assert e.value.code=='provider_invalid_input' and len(calls)==1 and calls[0].url.path.endswith('/validate-input') and SECRET not in str(e.value)
  c.close()

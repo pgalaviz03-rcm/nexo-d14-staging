@@ -76,7 +76,7 @@ def build_input(job):
  urls=[t['url'] for t in job['targets']]
  if job['key']=='facebook.reactions':return dict(postUrls=urls,reactionType='ALL',resultsLimit=job['max_items'])
  body=dict(startUrls=[dict(url=u) for u in urls])
- if job['key']=='facebook.posts':body.update(resultsLimit=job['max_items'],onlyPostsNewerThan=job['since'],captionText=False)
+ if job['key']=='facebook.posts':body.update(resultsLimit=job['max_items'],onlyPostsNewerThan=date_utc(job['since']).isoformat().replace('+00:00','Z'),captionText=False)
  if job['key']=='facebook.comments':body.update(resultsLimit=job['max_items'],includeNestedComments=False,viewOption='RECENT_ACTIVITY')
  return body
 

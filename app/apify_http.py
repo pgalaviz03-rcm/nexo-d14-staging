@@ -18,6 +18,13 @@ class ApifyHTTP:
   try:
    with self.client.stream(method,path,**kwargs) as response:
     if response.status_code not in (200,201):
+     if response.status_code==400:
+      # Record a safe classification, never provider messages or submitted input.
+      raw=bytearray()
+      for part in response.iter_bytes():
+       raw.extend(part)
+       if len(raw)>16000:raise ProviderError('provider_http_400')
+      if json.loads(raw).get('error',{}).get('type')=='invalid-input':raise ProviderError('provider_invalid_input')
      raise ProviderError({401:'invalid_token',403:'provider_permission',402:'provider_credit_required',429:'provider_rate_limit'}.get(response.status_code,'provider_http_'+str(response.status_code)))
     raw=bytearray()
     for part in response.iter_bytes():
@@ -27,6 +34,7 @@ class ApifyHTTP:
   except (httpx.HTTPError,ValueError,UnicodeError):raise ProviderError('provider_transport_or_json') from None
  def start(self,actor,body,cap,limit):
   if actor not in {'apify/facebook-posts-scraper','apify/facebook-comments-scraper','apify/facebook-pages-scraper','scraper_one/facebook-reactions-scraper'}:raise ProviderError('unsupported_actor')
+  self.request('POST','acts/'+actor.replace('/','~')+'/validate-input',json=body)
   return self.request('POST','acts/'+actor.replace('/','~')+'/runs',json=body,
    params={'maxTotalChargeUsd':str(cap),'maxItems':limit,'timeout':180,'waitForFinish':0,'restartOnError':'false'})['data']
  def run(self,run_id):return self.request('GET','actor-runs/'+ident(run_id))['data']

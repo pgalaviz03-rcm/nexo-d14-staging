@@ -1,0 +1,26 @@
+import fs from 'node:fs';import vm from 'node:vm';import assert from 'node:assert/strict';
+const rootURL=new URL('../',import.meta.url),catalog=JSON.parse(fs.readFileSync(new URL('examples/apify-networks-catalog.json',rootURL),'utf8'));
+class Element{constructor(tag){this.tagName=tag;this.children=[];this.attributes={};this.value='';this.checked=false;this.hidden=false;this.textContent='';}append(...n){this.children.push(...n);}replaceChildren(...n){this.children=n;}setAttribute(k,v){this.attributes[k]=v;}set innerHTML(v){throw Error('Unsafe HTML');}}
+const root=new Element('div'),window={},document={createElement:t=>new Element(t)};let dirty=0;
+vm.runInNewContext(fs.readFileSync(new URL('static/apify_settings.js',rootURL),'utf8'),{window,document,JSON,Number,Object,String});
+const module=window.NexoApifySettings.install({root,onDirty:()=>dirty++});
+const text=n=>[n.textContent,...n.children.map(text)].join(' '),all=(tag,n=root)=>n.children.flatMap(c=>[...(c.tagName===tag?[c]:[]),...all(tag,c)]);
+const button=name=>all('button').find(n=>n.textContent===name),input=label=>all('label').find(n=>n.textContent===label).children[0];
+const cases=[],check=(name,f)=>{f();cases.push(name);};
+const row={kind:'apify',settings:{apify_processes:{}},apify_catalog:catalog};module.show(row);
+check('five_networks_and_no_credential_field_repetition',()=>{assert.equal(all('button').length,5);assert.equal(all('input').filter(n=>n.type==='password').length,0);assert(!root.hidden);});
+check('facebook_has_four_separate_processes',()=>{assert.equal(all('a').length,4);assert(text(root).includes('Reacciones identificables'));});
+const fb=input('Resultados por consulta');fb.value='33';fb.oninput();all('input').find(n=>n.type==='checkbox').checked=true;
+button('Instagram').onclick();
+check('instagram_has_explicit_distinct_modes',()=>{assert.equal(all('a').length,3);assert(text(root).includes('Modo: comments'));assert(text(root).includes('Modo: details'));assert(!text(root).includes('facebook-posts'));});
+input('Resultados por consulta').value='15';input('Resultados por consulta').oninput();input('ID de tarea de Apify · opcional').value='instagram_task_1';
+button('TikTok').onclick();check('tiktok_uses_clockworks_actors',()=>assert(all('a').every(n=>n.href.startsWith('https://apify.com/clockworks/'))));
+button('X').onclick();check('standby_API_not_presented_as_batch_task',()=>{assert(text(root).includes('API directa'));assert.equal(all('label').filter(n=>n.textContent==='ID de tarea de Apify · opcional').length,1);});
+button('YouTube').onclick();check('youtube_three_separate_processes',()=>{assert.equal(all('a').length,3);assert(all('a').every(n=>n.href.startsWith('https://apify.com/streamers/')));});
+button('Facebook').onclick();check('switching_networks_preserves_unsaved_values',()=>{assert.equal(input('Resultados por consulta').value,'33');assert(all('input').find(n=>n.type==='checkbox').checked);});
+const plans=module.collect();check('one_payload_preserves_all_sixteen_processes_and_distinct_values',()=>{assert.equal(Object.keys(plans).length,16);assert.equal(plans['instagram.posts'].max_items,15);assert.equal(plans['facebook.posts'].max_items,33);assert.equal(plans['instagram.posts'].task_ref,'instagram_task_1');assert(dirty>=2);});
+module.show({...row,settings:{apify_processes:plans}});button('Instagram').onclick();check('saved_configuration_reloads_without_reentry',()=>assert.equal(input('Resultados por consulta').value,'15'));
+module.reset();module.show(row);check('reset_project_clears_previous_project_values',()=>{assert.equal(input('Resultados por consulta').value,'20');assert(!all('input').find(n=>n.type==='checkbox').checked);});
+module.show({kind:'email',settings:{}});check('other_services_hide_social_process_controls',()=>{assert(root.hidden);assert.equal(root.children.length,0);});
+check('actor_links_safe_and_no_network_side_effects',()=>{module.show(row);assert(all('a').every(n=>n.rel==='noopener noreferrer'));});
+console.log(JSON.stringify({passed:true,cases,browser_rendering:false}));

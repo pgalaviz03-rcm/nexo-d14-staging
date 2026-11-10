@@ -1,0 +1,161 @@
+{
+  "reviewed_on": "2026-11-10",
+  "networks": {
+    "facebook": "Facebook",
+    "instagram": "Instagram",
+    "tiktok": "TikTok",
+    "x": "X",
+    "youtube": "YouTube"
+  },
+  "processes": [
+    {
+      "key": "facebook.posts",
+      "network": "facebook",
+      "label": "Publicaciones",
+      "actor_ref": "apify/facebook-posts-scraper",
+      "mode": "",
+      "transport": "batch",
+      "url": "https://apify.com/apify/facebook-posts-scraper"
+    },
+    {
+      "key": "facebook.comments",
+      "network": "facebook",
+      "label": "Comentarios",
+      "actor_ref": "apify/facebook-comments-scraper",
+      "mode": "",
+      "transport": "batch",
+      "url": "https://apify.com/apify/facebook-comments-scraper"
+    },
+    {
+      "key": "facebook.profile",
+      "network": "facebook",
+      "label": "Estadísticas de cuenta",
+      "actor_ref": "apify/facebook-pages-scraper",
+      "mode": "",
+      "transport": "batch",
+      "url": "https://apify.com/apify/facebook-pages-scraper"
+    },
+    {
+      "key": "facebook.reactions",
+      "network": "facebook",
+      "label": "Reacciones identificables",
+      "actor_ref": "scraper_one/facebook-reactions-scraper",
+      "mode": "",
+      "transport": "batch",
+      "url": "https://apify.com/scraper_one/facebook-reactions-scraper"
+    },
+    {
+      "key": "instagram.posts",
+      "network": "instagram",
+      "label": "Publicaciones y reels",
+      "actor_ref": "apify/instagram-scraper",
+      "mode": "posts",
+      "transport": "batch",
+      "url": "https://apify.com/apify/instagram-scraper"
+    },
+    {
+      "key": "instagram.comments",
+      "network": "instagram",
+      "label": "Comentarios",
+      "actor_ref": "apify/instagram-scraper",
+      "mode": "comments",
+      "transport": "batch",
+      "url": "https://apify.com/apify/instagram-scraper"
+    },
+    {
+      "key": "instagram.profile",
+      "network": "instagram",
+      "label": "Estadísticas de cuenta",
+      "actor_ref": "apify/instagram-scraper",
+      "mode": "details",
+      "transport": "batch",
+      "url": "https://apify.com/apify/instagram-scraper"
+    },
+    {
+      "key": "tiktok.posts",
+      "network": "tiktok",
+      "label": "Videos",
+      "actor_ref": "clockworks/tiktok-scraper",
+      "mode": "",
+      "transport": "batch",
+      "url": "https://apify.com/clockworks/tiktok-scraper"
+    },
+    {
+      "key": "tiktok.comments",
+      "network": "tiktok",
+      "label": "Comentarios",
+      "actor_ref": "clockworks/tiktok-comments-scraper",
+      "mode": "",
+      "transport": "batch",
+      "url": "https://apify.com/clockworks/tiktok-comments-scraper"
+    },
+    {
+      "key": "tiktok.profile",
+      "network": "tiktok",
+      "label": "Estadísticas de cuenta",
+      "actor_ref": "clockworks/tiktok-profile-scraper",
+      "mode": "",
+      "transport": "batch",
+      "url": "https://apify.com/clockworks/tiktok-profile-scraper"
+    },
+    {
+      "key": "x.posts",
+      "network": "x",
+      "label": "Publicaciones y búsquedas",
+      "actor_ref": "apidojo/tweet-scraper",
+      "mode": "",
+      "transport": "batch",
+      "url": "https://apify.com/apidojo/tweet-scraper"
+    },
+    {
+      "key": "x.comments",
+      "network": "x",
+      "label": "Respuestas",
+      "actor_ref": "apidojo/x-api",
+      "mode": "replies",
+      "transport": "standby",
+      "url": "https://apify.com/apidojo/x-api"
+    },
+    {
+      "key": "x.profile",
+      "network": "x",
+      "label": "Estadísticas de cuenta",
+      "actor_ref": "apidojo/x-api",
+      "mode": "profile",
+      "transport": "standby",
+      "url": "https://apify.com/apidojo/x-api"
+    },
+    {
+      "key": "youtube.posts",
+      "network": "youtube",
+      "label": "Videos",
+      "actor_ref": "streamers/youtube-scraper",
+      "mode": "",
+      "transport": "batch",
+      "url": "https://apify.com/streamers/youtube-scraper"
+    },
+    {
+      "key": "youtube.comments",
+      "network": "youtube",
+      "label": "Comentarios",
+      "actor_ref": "streamers/youtube-comments-scraper",
+      "mode": "",
+      "transport": "batch",
+      "url": "https://apify.com/streamers/youtube-comments-scraper"
+    },
+    {
+      "key": "youtube.profile",
+      "network": "youtube",
+      "label": "Estadísticas del canal",
+      "actor_ref": "streamers/youtube-channel-scraper",
+      "mode": "",
+      "transport": "batch",
+      "url": "https://apify.com/streamers/youtube-channel-scraper"
+    }
+  ],
+  "schedule": {
+    "time": "08:00",
+    "timezone": "America/Mexico_City"
+  },
+  "runtime_enabled": false
+}

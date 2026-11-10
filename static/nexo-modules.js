@@ -431,6 +431,38 @@ window.NexoPlatform={install({api,byId,onProjectsChanged,onBrandChanged}){
 }};
 
 ;
+/* apify_settings.js */
+/* Owner form component. Plans are independent of credential storage and execution. */
+window.NexoApifySettings={install({root,onDirty}){
+ let catalog=null,values={},network='facebook',inputs=[];
+ const el=(tag,text,cls)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n;};
+ function capture(){for(const {key,selected,max,daily,task,dataset,definition} of inputs)values[key]={selected:selected.checked,actor_ref:definition.actor_ref,max_items:Number(max.value),daily_limit:Number(daily.value),task_ref:task?.value.trim()||'',dataset_ref:dataset?.value.trim()||''};}
+ function field(card,label,value,type='text',limits={}){const l=el('label',label),input=el('input');input.type=type;input.value=String(value);for(const [k,v] of Object.entries(limits))input[k]=v;input.oninput=()=>{capture();onDirty();};l.append(input);card.append(l);return input;}
+ function render(){root.replaceChildren();inputs=[];if(!catalog)return;
+  root.append(el('h4','Redes y procesos de este proyecto'),el('p','Un solo token de Apify. Elige qué preparar en cada red y guarda al terminar.','note'));
+  const nav=el('div',undefined,'apify-network-tabs');nav.setAttribute('role','group');nav.setAttribute('aria-label','Red social de Apify');
+  for(const [key,name] of Object.entries(catalog.networks)){const b=el('button',name);b.type='button';b.setAttribute('aria-pressed',String(key===network));b.onclick=()=>{capture();network=key;render();};nav.append(b);}root.append(nav);
+  const list=el('div',undefined,'apify-process-list');
+  for(const definition of catalog.processes.filter(p=>p.network===network)){
+   const v=values[definition.key]||{selected:false,max_items:20,daily_limit:1,task_ref:'',dataset_ref:''};
+   const card=el('div',undefined,'apify-process'),head=el('label',undefined,'apify-process-choice'),selected=el('input');selected.type='checkbox';selected.checked=v.selected;selected.onchange=()=>{capture();onDirty();};head.append(selected,el('strong',definition.label));card.append(head);
+   const a=el('a',definition.actor_ref);a.href=definition.url;a.target='_blank';a.rel='noopener noreferrer';card.append(a);
+   if(definition.mode)card.append(el('small','Modo: '+definition.mode+(definition.transport==='standby'?' · API directa de Apify':'')));
+   const grid=el('div',undefined,'apify-process-fields');
+   const max=field(grid,'Resultados por consulta',v.max_items,'number',{min:1,max:500,required:true}),daily=field(grid,'Consultas máximas por día',v.daily_limit,'number',{min:0,max:2,required:true});
+   let task=null,dataset=null;
+   if(definition.transport!=='standby'){
+    task=field(grid,'ID de tarea de Apify · opcional',v.task_ref,'text',{maxLength:100,pattern:'[A-Za-z0-9_-]*'});
+    dataset=field(grid,'ID de dataset existente · opcional',v.dataset_ref,'text',{maxLength:100,pattern:'[A-Za-z0-9_-]*'});
+   }
+   card.append(grid);list.append(card);inputs.push({key:definition.key,selected,max,daily,task,dataset,definition});
+  }root.append(list);
+  root.append(el('p','Las cuentas públicas se registran una sola vez en Actores y Medios. Los límites son por proceso y proyecto; no equivalen a un tope monetario.','note'));
+ }
+ return{show(row){catalog=row?.kind==='apify'?row.apify_catalog:null;values=JSON.parse(JSON.stringify(row?.settings?.apify_processes||{}));if(!catalog?.networks[network])network='facebook';root.hidden=!catalog;render();},collect(){capture();return JSON.parse(JSON.stringify(values));},reset(){catalog=null;values={};inputs=[];network='facebook';root.replaceChildren();root.hidden=true;}};
+}};
+
+;
 /* settings.js */
 /* One project-scoped administration page. Saving never starts a provider job. */
 window.NexoSettings={install({api,byId,getProject,getProjectName,canManage,page,onReload,onActorFocus=async()=>{},onWorkbookFocus=async()=>{}}){
@@ -443,10 +475,13 @@ window.NexoSettings={install({api,byId,getProject,getProjectName,canManage,page,
  function showTab(next){tab=tabs.includes(next)?next:'project';byId('settingsObservedActorLabel').hidden=!['team','data'].includes(tab);for(const key of tabs){byId('settingsPanel_'+key).hidden=key!==tab;const button=byId('settingsTab_'+key);button.setAttribute('aria-selected',String(key===tab));button.tabIndex=key===tab?0:-1;}}
  for(const key of tabs){const button=byId('settingsTab_'+key);button.onclick=()=>showTab(key);button.onkeydown=e=>{let n=tabs.indexOf(tab);if(e.key==='ArrowRight')n=(n+1)%tabs.length;else if(e.key==='ArrowLeft')n=(n+tabs.length-1)%tabs.length;else if(e.key==='Home')n=0;else if(e.key==='End')n=tabs.length-1;else return;e.preventDefault();showTab(tabs[n]);byId('settingsTab_'+tabs[n]).focus();};}
  const secretLabels={api_token:'Token de Apify',api_key:'Clave de API',bot_token:'Token del bot',access_token:'Token de acceso',connection_string:'Conexión privada a la base de datos',access_key:'Identificador de acceso',secret_key:'Clave secreta'};
+ const apify=window.NexoApifySettings?.install({root:byId('settingsApifyProcesses'),onDirty:()=>{integrationDirty=true;}});
  const fields={provider:'settingsProvider',base_url:'settingsEndpoint',model:'settingsModel',resource_ref:'settingsResource',dataset_ref:'settingsDataset',account_ref:'settingsAccount',max_items:'settingsMaxItems',daily_limit:'settingsDaily'};
  function clearSecrets(){for(const input of byId('settingsSecretFields').querySelectorAll('input'))input.value='';byId('settingsSecretFields').replaceChildren();byId('settingsClearSecrets').checked=false;}
  function selectIntegration(id){if(integrationDirty&&!confirm('¿Descartar los cambios de configuración sin guardar?'))return;kind=id;integrationDirty=false;const row=integrations.find(r=>r.kind===id);clearSecrets();byId('settingsIntegrationForm').hidden=!row;if(!row)return;
+  apify?.show(row);for(const key of ['Model','Resource','Dataset','Account','MaxItems','Daily'])byId('settingsGeneric'+key).hidden=id==='apify';
   text('settingsIntegrationTitle',row.name);for(const [key,node] of Object.entries(fields))byId(node).value=String(row.settings[key]??'');
+  if(id==='apify'){byId('settingsProvider').value=row.settings.provider||'Apify';byId('settingsEndpoint').value=row.settings.base_url||'https://api.apify.com/v2';}
   for(const key of row.secret_fields){const label=el('label',secretLabels[key]||key.replaceAll('_',' ')),input=el('input');input.type='password';input.autocomplete='new-password';input.maxLength=4000;input.setAttribute('data-secret-field',key);input.placeholder=row.credentials_saved?'Nueva credencial para reemplazar':'Credencial del proveedor';label.append(input);byId('settingsSecretFields').append(label);}
   text('settingsSecretState',row.credentials_saved?'Credenciales guardadas y cifradas. Los campos vacíos las conservan.':'Sin credenciales guardadas.');text('settingsIntegrationStatus','');
  }
@@ -470,6 +505,7 @@ window.NexoSettings={install({api,byId,getProject,getProjectName,canManage,page,
  byId('settingsIntegrationForm').oninput=()=>{integrationDirty=true;};byId('settingsMediaForm').oninput=()=>{mediaDirty=true;};
  byId('settingsIntegrationForm').onsubmit=async e=>{e.preventDefault();if(busy||!canManage()||!kind)return;const row=integrations.find(r=>r.kind===kind);if(!row)return;const pid=getProject(),selected=kind,body={expected_version:row.version,secrets:{},clear_secrets:byId('settingsClearSecrets').checked,monthly_budget_usd:0};
   for(const [key,id] of Object.entries(fields))body[key]=['max_items','daily_limit'].includes(key)?Number(byId(id).value):byId(id).value.trim();
+  if(selected==='apify'&&row.apify_catalog&&apify)body.apify_processes=apify.collect();
   for(const input of byId('settingsSecretFields').querySelectorAll('input'))if(input.value)body.secrets[input.getAttribute('data-secret-field')]=input.value;
   busy=true;byId('settingsIntegrationSave').disabled=true;try{const result=await send('/integrations/'+selected,body);if(pid!==getProject())return;integrationDirty=false;clearSecrets();integrations=integrations.map(r=>r.kind===selected?result:r);integrationList();text('settingsIntegrationStatus','Configuración guardada.');}
   catch(err){if(pid===getProject())text('settingsIntegrationStatus',err.message);}finally{busy=false;byId('settingsIntegrationSave').disabled=false;for(const key of Object.keys(body.secrets))body.secrets[key]='';}
@@ -489,7 +525,7 @@ window.NexoSettings={install({api,byId,getProject,getProjectName,canManage,page,
   catch(err){if(pid===getProject())text('settingsMediaImportStatus',err instanceof SyntaxError?'El archivo no contiene JSON válido.':err.message);}finally{busy=false;byId('settingsMediaImportButton').disabled=false;}
  };
  byId('settingsMediaTemplate').onclick=()=>{const {m,c}=chosen();if(!m||!c)return;const now=new Date().toISOString(),data={network:c.network,account_url:c.url,captured_at:now,items:[{external_id:'REEMPLAZAR_ID',url:c.url+'/posts/REEMPLAZAR_ID',title:'Reemplazar con el titular de origen',text:'Extracto de la publicación',published_at:now}]};const href=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'})),a=el('a');a.href=href;a.download='NEXO_Medio_Publicaciones.json';a.click();setTimeout(()=>URL.revokeObjectURL(href),1000);};
- function resetProject(){sequence++;pendingWorkbook=null;observedActor=0;byId('settingsObservedActor').replaceChildren();kind=null;editing=null;integrations=[];media=[];integrationDirty=false;mediaDirty=false;clearSecrets();closeMedia();text('settingsMediaCount','0 registrados');byId('settingsMediaCancel').disabled=false;byId('settingsIntegrationForm').hidden=true;byId('settingsIntegrationList').replaceChildren();byId('settingsMediaList').replaceChildren();byId('settingsMediaImportSource').replaceChildren();byId('settingsMediaImportAccount').replaceChildren();byId('settingsMediaImportFile').value='';for(const id of Object.values(fields))byId(id).value='';for(const id of ['settingsStatus','settingsIntegrationStatus','settingsSecretState','settingsMediaImportStatus','settingsProjectLabel','settingsPulseStatus'])text(id,'');}
+ function resetProject(){apify?.reset();sequence++;pendingWorkbook=null;observedActor=0;byId('settingsObservedActor').replaceChildren();kind=null;editing=null;integrations=[];media=[];integrationDirty=false;mediaDirty=false;clearSecrets();closeMedia();text('settingsMediaCount','0 registrados');byId('settingsMediaCancel').disabled=false;byId('settingsIntegrationForm').hidden=true;byId('settingsIntegrationList').replaceChildren();byId('settingsMediaList').replaceChildren();byId('settingsMediaImportSource').replaceChildren();byId('settingsMediaImportAccount').replaceChildren();byId('settingsMediaImportFile').value='';for(const id of Object.values(fields))byId(id).value='';for(const id of ['settingsStatus','settingsIntegrationStatus','settingsSecretState','settingsMediaImportStatus','settingsProjectLabel','settingsPulseStatus'])text(id,'');}
  return{refreshActors,focusWorkbook:id=>{if(!canManage())return;pendingWorkbook=id;showTab('data');page('platform');},reload,resetProject,open:key=>{if(!canManage())return;showTab(key);page('platform');},canLeaveProject:()=>!busy&&(!(integrationDirty||mediaDirty||byId('settingsMediaImportFile').files.length)||confirm('Hay cambios de configuración sin guardar. ¿Descartarlos al cambiar de proyecto?'))};
 }};
 

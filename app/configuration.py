@@ -10,6 +10,7 @@ from sqlalchemy.orm import Mapped,mapped_column
 from .models import Base
 from .apify_port import Strict,public_url
 from .actors_api import PublicChannel
+from .apify_catalog import ApifyProcessInput,validate_processes,catalog as apify_catalog
 
 CATALOG={
  'apify':('Apify · escucha y cuentas',['api_token']),
@@ -44,8 +45,10 @@ class IntegrationInput(Strict):
  secrets:dict[str,SecretStr]=Field(default_factory=dict,max_length=2)
  clear_secrets:bool=False
  expected_version:int=Field(default=0,ge=0,strict=True)
+ apify_processes:dict[str,ApifyProcessInput]|None=Field(default=None,max_length=16)
  @model_validator(mode='after')
  def safe(self):
+  validate_processes(self.apify_processes)
   if self.base_url:self.base_url=public_url(self.base_url)
   for value in [self.provider,self.model,self.resource_ref,self.account_ref]:
    if any(ord(c)<32 or ord(c)==127 for c in value):raise ValueError('Texto no admitido.')
@@ -67,7 +70,8 @@ def integration_record(row,kind):
  config=json.loads(row.config_json) if row else IntegrationInput().model_dump(exclude={'secrets','clear_secrets','expected_version'})
  return dict(kind=kind,name=CATALOG[kind][0],secret_fields=CATALOG[kind][1],settings=config,
   version=row.version if row else 0,credentials_saved=bool(row and row.secrets_ciphertext),
-  state='saved_locally' if row else 'not_configured',connection_verified=False,external_calls=0,runtime_enabled=False)
+  state='saved_locally' if row else 'not_configured',connection_verified=False,external_calls=0,runtime_enabled=False,
+  **({'apify_catalog':apify_catalog()} if kind=='apify' else {}))
 
 class MediaOutlet(Base):
  __tablename__='media_outlets'

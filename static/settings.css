@@ -51,3 +51,18 @@
 @media(max-width:640px){#platform .settings-media-links{flex-direction:column;gap:3px}#platform .settings-media-links a{min-height:44px}#platform .settings-media-record>button{margin-left:auto}#platform .settings-media-actions button{flex:1}}
 
 .refresh-cut{font-size:11px;white-space:nowrap}.refresh-button{background:#6d55cf;color:#fff;border:0;white-space:nowrap}.refresh-button:disabled{opacity:.65}.refresh-feedback{font-size:11px;line-height:1.4;max-width:260px;color:#64748b}.refresh-feedback:empty{display:none}@media(max-width:640px){.top-right{gap:7px;flex-wrap:wrap}.refresh-cut{font-size:10px}.refresh-feedback{flex-basis:100%;max-width:none}.refresh-button{font-size:11px;padding:9px 12px}}
+
+/* Independent social connector plans; shared token remains write-only. */
+#settingsApifyProcesses{grid-column:1/-1;min-width:0}
+#settingsApifyProcesses h4{font-size:15px;color:#243554;margin:0 0 8px}
+#platform .apify-network-tabs{display:flex;flex-wrap:wrap;gap:6px;margin:15px 0}
+#platform .apify-network-tabs button{border:1px solid #ded8ef;border-radius:20px;background:white;color:#665387;min-height:42px;padding:9px 13px;font-size:12px}
+#platform .apify-network-tabs button[aria-pressed=true]{background:#6954bb;color:white;border-color:#6954bb}
+#platform .apify-process-list{display:grid;gap:12px}
+#platform .apify-process{border:1px solid #e0e5ef;border-radius:12px;padding:15px;min-width:0;background:#fafbfe}
+#platform .apify-process .apify-process-choice{display:flex;flex-direction:row;gap:9px;align-items:center;color:#243554;font-size:13px;margin-bottom:8px}
+#platform .apify-process>a{font-size:11px;color:#6a54b5;overflow-wrap:anywhere;text-decoration:underline;text-underline-offset:3px}
+#platform .apify-process>small{display:block;font-size:10px;color:#748097;margin-top:5px}
+#platform .apify-process-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:13px}
+#platform .apify-process-fields input{font-size:12px}
+@media(max-width:640px){#platform .apify-process-fields{grid-template-columns:minmax(0,1fr)}#platform .apify-network-tabs button{flex:1;min-height:44px}#platform .apify-process{padding:12px}}

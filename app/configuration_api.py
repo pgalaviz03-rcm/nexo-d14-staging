@@ -45,6 +45,7 @@ def install_configuration_api(app,db,current_user,allow):
  def save_integration(pid:int,kind:str,body:IntegrationInput,user=Depends(current_user),session:Session=Depends(db)):
   owner(pid,user,session)
   if kind not in CATALOG:raise HTTPException(404,'Integración no disponible.')
+  if kind!='apify' and body.apify_processes is not None:raise HTTPException(422,'Estos procesos corresponden a Apify.')
   if set(body.secrets)-set(CATALOG[kind][1]):raise HTTPException(422,'Credencial no admitida para esta integración.')
   take_quota(session,pid,'settings.integration',100);lock_project(session,pid)
   previous=session.get(IntegrationSetting,(pid,kind))
@@ -58,6 +59,10 @@ def install_configuration_api(app,db,current_user,allow):
    saved.update({k:v.get_secret_value() for k,v in body.secrets.items()})
    encrypted=cipher.encrypt(json.dumps(saved).encode()).decode()
   config=body.model_dump(exclude={'secrets','clear_secrets','expected_version'})
+  if body.apify_processes is None:
+   config.pop('apify_processes',None)
+   previous_config=json.loads(previous.config_json) if previous else {}
+   if kind=='apify' and 'apify_processes' in previous_config:config['apify_processes']=previous_config['apify_processes']
   values=dict(config_json=json.dumps(config,ensure_ascii=False),secrets_ciphertext=encrypted,version=body.expected_version+1,updated_by=user.id,updated_at=datetime.now(timezone.utc))
   try:
    if previous:

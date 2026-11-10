@@ -2,7 +2,7 @@
 
 ## Estado de esta entrega
 
-Se implementó el transporte HTTP real de Apify y la importación por proyecto para los cuatro procesos de Facebook. Las pruebas automatizadas usan respuestas simuladas. La comprobación con una cuenta real requiere autorización de consumo; el modo predeterminado sigue en **Pausado**. Instagram, TikTok, X y YouTube conservan sus configuraciones preparadas, pero sus ejecutores siguen pendientes. IA y RAG no se activan con esta entrega.
+Se implementó el transporte HTTP real de Apify y la importación por proyecto para los cuatro procesos de Facebook. La prueba real autorizada del 10 de noviembre de 2026 obtuvo y guardó **tres publicaciones de Rodrigo Cervantes**, con costo reportado por Apify de **USD 0.016**, dentro del límite autorizado de USD 0.05. La aplicación quedó en **Pausado** después de esa prueba. Estadísticas de cuenta, comentarios y reacciones pasaron pruebas con respuestas simuladas; todavía no se han ejecutado con la cuenta real. Instagram, TikTok, X y YouTube conservan sus configuraciones preparadas, pero sus ejecutores siguen pendientes. IA y RAG no se activan con esta entrega.
 
 ## Prueba acotada propuesta
 
@@ -44,6 +44,12 @@ Los identificadores de corrida y dataset quedan en el corte. Una marca temporal 
 El navegador del superadministrador da seguimiento al corte admitido. El programador firmado de GitHub también observa el corte diario durante varios minutos, renovando sus credenciales temporales. Si la plataforma se interrumpe entre guardar una reserva y conocer el ID de Apify, se informa el inicio incierto y se conserva el presupuesto reservado.
 
 Las capturas usan una identidad persistida antes de importarse; volver a leer un dataset no suma otra vez sus documentos o interacciones. Los errores de cada proceso se muestran sin respuestas crudas ni secretos. Un corte parcial se presenta como parcial y con números de piezas/cuentas/interacciones incorporadas.
+
+## Resultado comprobado
+
+La corrida `0uYN6arvDepkp0YkA` terminó `SUCCEEDED`; su dataset es `DLzmWPsmftd7QWqPZ`. NEXO incorporó tres documentos, tres menciones sin clasificar y una captura de publicaciones para Fidelidad, sin rechazos ni duplicados. Pulso muestra las tres al seleccionar siete días. El corte compartido permanece parcial porque El Heraldo falla por RSS; la parte de Apify sí terminó correctamente. La reserva interna de USD 0.05 se conserva como control conservador y no se presenta como gasto facturado.
+
+La validación real detectó que el Actor exige sufijo UTC `Z` en `onlyPostsNewerThan`; se corrigió el formato y se añadió validación de entrada antes de iniciar una corrida. La solicitud rechazada con HTTP 400 no creó una corrida, se documentó en auditoría y se retomó con el mismo tope autorizado. No hubo recarga ni contratación de plan.
 
 ## Fuentes del contrato
 

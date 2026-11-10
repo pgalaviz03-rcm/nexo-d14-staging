@@ -1,0 +1,15 @@
+{
+  "date": "2026-11-10",
+  "scope": "Facebook posts; one public account, three recent posts",
+  "status": "SUCCEEDED",
+  "provider_run": "0uYN6arvDepkp0YkA",
+  "provider_reported_usd": 0.016,
+  "authorized_cap_usd": 0.05,
+  "inserted": 3,
+  "duplicates": 0,
+  "rejected": 0,
+  "final_mode": "paused",
+  "other_facebook_processes": "simulated_tests_only",
+  "other_networks": "runtime_pending",
+  "ai": "not_activated"
+}

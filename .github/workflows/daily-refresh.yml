@@ -13,7 +13,7 @@ jobs:
   daily:
     if: vars.NEXO_DAILY_REFRESH_ENABLED == 'true'
     runs-on: ubuntu-latest
-    timeout-minutes: 3
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - name: Request shared daily project cut

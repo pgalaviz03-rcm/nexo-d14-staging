@@ -2,6 +2,7 @@
 window.NexoRefresh={install({api,byId,getProject,canManage,onCompleted=async()=>{}}){
  let sequence=0,timer=null,lastCut=null,busy=false,loaded=false;
  const current=(pid,stamp)=>pid===getProject()&&stamp===sequence;
+ const errors={invalid_token:'Apify rechazó el token',provider_permission:'El token no tiene permiso para ese Actor',provider_credit_required:'Apify solicita saldo o un plan compatible',provider_rate_limit:'Apify limitó temporalmente las consultas',monthly_budget_exhausted:'Se alcanzó el presupuesto reservado',process_daily_limit:'Se alcanzó el límite diario del proceso',no_posts_for_process:'No se obtuvieron publicaciones para consultar interacciones',ambiguous_start_no_retry:'La solicitud quedó incierta; no se repetirá para evitar otro cargo',dataset_ingestion_failed:'Los resultados necesitan revisión del formato',execution_paused:'Ejecución pausada',partial_provider_output:'La fuente entregó resultados parciales'};
  const date=value=>new Intl.DateTimeFormat('es-MX',{timeZone:'America/Mexico_City',day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}).format(new Date(value));
  function resetProject(){sequence++;clearTimeout(timer);timer=null;lastCut=null;busy=false;loaded=false;byId('refreshNow').hidden=true;byId('refreshNow').disabled=false;byId('refreshCut').textContent='Corte diario · 08:00 h';byId('refreshFeedback').textContent='';}
  async function reload(){
@@ -12,8 +13,9 @@ window.NexoRefresh={install({api,byId,getProject,canManage,onCompleted=async()=>
    byId('refreshNow').textContent=packet.running?'Actualizando…':'↻ Actualizar datos';
    byId('refreshCut').textContent=packet.last_completed_at?'Último corte: '+date(packet.last_completed_at):'Corte diario · 08:00 h';
    byId('refreshCut').title='Actualización diaria a las 08:00, hora de Aguascalientes';
+   if(packet.running&&packet.continuable&&canManage()&&packet.run_id)await api('/api/projects/'+pid+'/refresh/'+packet.run_id+'/continue',{method:'POST'});
    const completedRequest=busy&&!packet.running&&['succeeded','partial'].includes(packet.last_status);
-   if(!packet.running&&busy){busy=false;byId('refreshFeedback').textContent=['succeeded','partial'].includes(packet.last_status)?'Actualización completada.':'No se completó la actualización. Revisa las fuentes en Configuración.';}
+   if(!packet.running&&(busy||(canManage()&&packet.last_status))){busy=false;const s=packet.summary;byId('refreshFeedback').textContent=s?((packet.last_status==='partial'?'Corte parcial. ':packet.last_status==='failed'?'El corte tuvo errores. ':'')+s.rss_inserted+' notas nuevas · '+s.social_inserted+' piezas sociales · '+s.accounts+' cuentas · '+s.team_events+' interacciones del equipo.'+(canManage()&&packet.apify_state==='blocked'?' '+packet.apify_message:'')+(canManage()&&packet.process_errors?.length?' Apify: '+packet.process_errors.map(e=>e.process+': '+(errors[e.error]||e.error)).join(', '):'')):['succeeded','partial'].includes(packet.last_status)?'Actualización completada.':'No se completó la actualización. Revisa las fuentes en Configuración.';}
    byId('refreshNow').disabled=busy||packet.running;
    const changed=completedRequest||(loaded&&packet.last_completed_at&&lastCut!==packet.last_completed_at);lastCut=packet.last_completed_at;loaded=true;
    if(changed){await onCompleted();return;}

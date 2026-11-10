@@ -32,9 +32,7 @@ Instagram distingue perfil, publicaciones y comentarios por el modo del Actor y 
 
 Esta entrega habilita **configuración y persistencia separadas por red/proceso/proyecto**. Mantiene token cifrado, control de versiones y permisos exclusivos del superadministrador. No cambia tablas ni requiere migración de la base de datos.
 
-**El ejecutor de Apify todavía no está implementado ni activado.** Guardar un token o marcar procesos no inicia consultas. El programador diario existente de las 08:00 America/Mexico_City ejecuta RSS; no ejecuta estos 16 procesos. No se hicieron llamadas pagadas durante esta preparación. IA y envíos permanecen apagados.
-
-Antes de activar consumo faltan los adaptadores de entrada/salida de cada Actor, validación con exportaciones reales, deduplicación por identificador de origen, periodos incrementales, cupos monetarios y una prueba acotada autorizada. La IA de emociones y RAG requiere su integración aparte. No basta con proporcionar un token para afirmar que estas funciones están conectadas.
+**Facebook incorpora ahora un ejecutor con límites y modo de prueba, pausado de forma predeterminada.** Su comprobación real queda pendiente de autorización de consumo. Consulta [Ejecución de Facebook](APIFY_EJECUCION_FACEBOOK.md). Los ejecutores de Instagram, TikTok, X y YouTube todavía no están implementados; sus procesos permanecen como configuración preparada. La IA requiere integración aparte.
 
 El presupuesto previo es **solo de Facebook**: no incluye estas otras cuatro redes ni IA. Los resultados por consulta no son unidades de facturación equivalentes entre Actors. Debe recalcularse el presupuesto según redes, cuentas, publicaciones, comentarios y funciones activadas antes de autorizar ejecuciones.
 

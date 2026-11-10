@@ -434,12 +434,16 @@ window.NexoPlatform={install({api,byId,onProjectsChanged,onBrandChanged}){
 /* apify_settings.js */
 /* Owner form component. Plans are independent of credential storage and execution. */
 window.NexoApifySettings={install({root,onDirty}){
- let catalog=null,values={},network='facebook',inputs=[];
+ let catalog=null,values={},network='facebook',inputs=[],policy={},policyInputs=null;
  const el=(tag,text,cls)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n;};
- function capture(){for(const {key,selected,max,daily,task,dataset,definition} of inputs)values[key]={selected:selected.checked,actor_ref:definition.actor_ref,max_items:Number(max.value),daily_limit:Number(daily.value),task_ref:task?.value.trim()||'',dataset_ref:dataset?.value.trim()||''};}
+ function capture(){for(const {key,selected,max,daily,task,dataset,definition} of inputs)values[key]={selected:selected.checked,actor_ref:definition.actor_ref,max_items:Number(max.value),daily_limit:Number(daily.value),task_ref:task?.value.trim()||'',dataset_ref:dataset?.value.trim()||''};if(policyInputs){policy={mode:policyInputs.mode.value,monthly_budget_usd:policyInputs.month.value,per_run_usd:policyInputs.cap.value,account_limit:Number(policyInputs.accounts.value)};}}
  function field(card,label,value,type='text',limits={}){const l=el('label',label),input=el('input');input.type=type;input.value=String(value);for(const [k,v] of Object.entries(limits))input[k]=v;input.oninput=()=>{capture();onDirty();};l.append(input);card.append(l);return input;}
- function render(){root.replaceChildren();inputs=[];if(!catalog)return;
+ function render(){root.replaceChildren();inputs=[];policyInputs=null;if(!catalog)return;
   root.append(el('h4','Redes y procesos de este proyecto'),el('p','Un solo token de Apify. Elige qué preparar en cada red y guarda al terminar.','note'));
+  const budget=el('div',undefined,'apify-process'),label=el('label','Ejecución de Facebook'),mode=el('select');
+  for(const [key,title] of [['paused','Pausado'],['test','Prueba única · 1 cuenta, hasta 3 publicaciones'],['scheduled','Procesos seleccionados · diario a las 08:00']]){const option=el('option',title);option.value=key;mode.append(option);}mode.value=policy.mode||'paused';label.append(mode);budget.append(label);
+  const budgetFields=el('div',undefined,'apify-process-fields'),month=field(budgetFields,'Presupuesto mensual máximo · USD',policy.monthly_budget_usd||'0','number',{min:0,max:100,step:'0.01',required:true}),cap=field(budgetFields,'Límite por ejecución de Actor · USD',policy.per_run_usd||'0','number',{min:0,max:1,step:'0.01',required:true}),accounts=field(budgetFields,'Máximo de cuentas por corte',policy.account_limit||1,'number',{min:1,max:5,required:true});
+  policyInputs={mode,month,cap,accounts};mode.onchange=()=>{capture();onDirty();};budget.append(budgetFields,el('p','La prueba usa solo la cuenta principal y publicaciones. Operación diaria usa los procesos de Facebook seleccionados. Al guardar un modo activo autorizas consumo dentro de estos límites. Las reservas se conservan ante fallos; no son una factura.','note'));root.append(budget);
   const nav=el('div',undefined,'apify-network-tabs');nav.setAttribute('role','group');nav.setAttribute('aria-label','Red social de Apify');
   for(const [key,name] of Object.entries(catalog.networks)){const b=el('button',name);b.type='button';b.setAttribute('aria-pressed',String(key===network));b.onclick=()=>{capture();network=key;render();};nav.append(b);}root.append(nav);
   const list=el('div',undefined,'apify-process-list');
@@ -459,7 +463,7 @@ window.NexoApifySettings={install({root,onDirty}){
   }root.append(list);
   root.append(el('p','Las cuentas públicas se registran una sola vez en Actores y Medios. Los límites son por proceso y proyecto; no equivalen a un tope monetario.','note'));
  }
- return{show(row){catalog=row?.kind==='apify'?row.apify_catalog:null;values=JSON.parse(JSON.stringify(row?.settings?.apify_processes||{}));if(!catalog?.networks[network])network='facebook';root.hidden=!catalog;render();},collect(){capture();return JSON.parse(JSON.stringify(values));},reset(){catalog=null;values={};inputs=[];network='facebook';root.replaceChildren();root.hidden=true;}};
+ return{show(row){catalog=row?.kind==='apify'?row.apify_catalog:null;values=JSON.parse(JSON.stringify(row?.settings?.apify_processes||{}));policy=row?.execution||{};if(!catalog?.networks[network])network='facebook';root.hidden=!catalog;render();},collect(){capture();return JSON.parse(JSON.stringify(values));},collectExecution(){capture();return {...policy};},reset(){catalog=null;values={};policy={};policyInputs=null;inputs=[];network='facebook';root.replaceChildren();root.hidden=true;}};
 }};
 
 ;
@@ -505,7 +509,7 @@ window.NexoSettings={install({api,byId,getProject,getProjectName,canManage,page,
  byId('settingsIntegrationForm').oninput=()=>{integrationDirty=true;};byId('settingsMediaForm').oninput=()=>{mediaDirty=true;};
  byId('settingsIntegrationForm').onsubmit=async e=>{e.preventDefault();if(busy||!canManage()||!kind)return;const row=integrations.find(r=>r.kind===kind);if(!row)return;const pid=getProject(),selected=kind,body={expected_version:row.version,secrets:{},clear_secrets:byId('settingsClearSecrets').checked,monthly_budget_usd:0};
   for(const [key,id] of Object.entries(fields))body[key]=['max_items','daily_limit'].includes(key)?Number(byId(id).value):byId(id).value.trim();
-  if(selected==='apify'&&row.apify_catalog&&apify)body.apify_processes=apify.collect();
+  if(selected==='apify'&&row.apify_catalog&&apify){body.apify_processes=apify.collect();body.apify_execution=apify.collectExecution();}
   for(const input of byId('settingsSecretFields').querySelectorAll('input'))if(input.value)body.secrets[input.getAttribute('data-secret-field')]=input.value;
   busy=true;byId('settingsIntegrationSave').disabled=true;try{const result=await send('/integrations/'+selected,body);if(pid!==getProject())return;integrationDirty=false;clearSecrets();integrations=integrations.map(r=>r.kind===selected?result:r);integrationList();text('settingsIntegrationStatus','Configuración guardada.');}
   catch(err){if(pid===getProject())text('settingsIntegrationStatus',err.message);}finally{busy=false;byId('settingsIntegrationSave').disabled=false;for(const key of Object.keys(body.secrets))body.secrets[key]='';}
@@ -1518,6 +1522,7 @@ window.NexoDelivery={install({api,byId,getProject,getCut,onAssessmentSaved,canCo
 window.NexoRefresh={install({api,byId,getProject,canManage,onCompleted=async()=>{}}){
  let sequence=0,timer=null,lastCut=null,busy=false,loaded=false;
  const current=(pid,stamp)=>pid===getProject()&&stamp===sequence;
+ const errors={invalid_token:'Apify rechazó el token',provider_permission:'El token no tiene permiso para ese Actor',provider_credit_required:'Apify solicita saldo o un plan compatible',provider_rate_limit:'Apify limitó temporalmente las consultas',monthly_budget_exhausted:'Se alcanzó el presupuesto reservado',process_daily_limit:'Se alcanzó el límite diario del proceso',no_posts_for_process:'No se obtuvieron publicaciones para consultar interacciones',ambiguous_start_no_retry:'La solicitud quedó incierta; no se repetirá para evitar otro cargo',dataset_ingestion_failed:'Los resultados necesitan revisión del formato',execution_paused:'Ejecución pausada',partial_provider_output:'La fuente entregó resultados parciales'};
  const date=value=>new Intl.DateTimeFormat('es-MX',{timeZone:'America/Mexico_City',day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}).format(new Date(value));
  function resetProject(){sequence++;clearTimeout(timer);timer=null;lastCut=null;busy=false;loaded=false;byId('refreshNow').hidden=true;byId('refreshNow').disabled=false;byId('refreshCut').textContent='Corte diario · 08:00 h';byId('refreshFeedback').textContent='';}
  async function reload(){
@@ -1528,8 +1533,9 @@ window.NexoRefresh={install({api,byId,getProject,canManage,onCompleted=async()=>
    byId('refreshNow').textContent=packet.running?'Actualizando…':'↻ Actualizar datos';
    byId('refreshCut').textContent=packet.last_completed_at?'Último corte: '+date(packet.last_completed_at):'Corte diario · 08:00 h';
    byId('refreshCut').title='Actualización diaria a las 08:00, hora de Aguascalientes';
+   if(packet.running&&packet.continuable&&canManage()&&packet.run_id)await api('/api/projects/'+pid+'/refresh/'+packet.run_id+'/continue',{method:'POST'});
    const completedRequest=busy&&!packet.running&&['succeeded','partial'].includes(packet.last_status);
-   if(!packet.running&&busy){busy=false;byId('refreshFeedback').textContent=['succeeded','partial'].includes(packet.last_status)?'Actualización completada.':'No se completó la actualización. Revisa las fuentes en Configuración.';}
+   if(!packet.running&&(busy||(canManage()&&packet.last_status))){busy=false;const s=packet.summary;byId('refreshFeedback').textContent=s?((packet.last_status==='partial'?'Corte parcial. ':packet.last_status==='failed'?'El corte tuvo errores. ':'')+s.rss_inserted+' notas nuevas · '+s.social_inserted+' piezas sociales · '+s.accounts+' cuentas · '+s.team_events+' interacciones del equipo.'+(canManage()&&packet.apify_state==='blocked'?' '+packet.apify_message:'')+(canManage()&&packet.process_errors?.length?' Apify: '+packet.process_errors.map(e=>e.process+': '+(errors[e.error]||e.error)).join(', '):'')):['succeeded','partial'].includes(packet.last_status)?'Actualización completada.':'No se completó la actualización. Revisa las fuentes en Configuración.';}
    byId('refreshNow').disabled=busy||packet.running;
    const changed=completedRequest||(loaded&&packet.last_completed_at&&lastCut!==packet.last_completed_at);lastCut=packet.last_completed_at;loaded=true;
    if(changed){await onCompleted();return;}

@@ -10,7 +10,7 @@ from sqlalchemy.orm import Mapped,mapped_column
 from .models import Base
 from .apify_port import Strict,public_url
 from .actors_api import PublicChannel
-from .apify_catalog import ApifyProcessInput,validate_processes,catalog as apify_catalog
+from .apify_catalog import ApifyProcessInput,ExecutionInput,validate_processes,catalog as apify_catalog
 
 CATALOG={
  'apify':('Apify · escucha y cuentas',['api_token']),
@@ -46,6 +46,7 @@ class IntegrationInput(Strict):
  clear_secrets:bool=False
  expected_version:int=Field(default=0,ge=0,strict=True)
  apify_processes:dict[str,ApifyProcessInput]|None=Field(default=None,max_length=16)
+ apify_execution:ExecutionInput|None=None
  @model_validator(mode='after')
  def safe(self):
   validate_processes(self.apify_processes)
@@ -68,10 +69,15 @@ def secret_cipher():
 
 def integration_record(row,kind):
  config=json.loads(row.config_json) if row else IntegrationInput().model_dump(exclude={'secrets','clear_secrets','expected_version'})
+ runtime={}
+ if kind=='apify':
+  from .apify_runtime import public_execution
+  runtime=public_execution(config)
+ config={k:v for k,v in config.items() if not k.startswith('_')}
  return dict(kind=kind,name=CATALOG[kind][0],secret_fields=CATALOG[kind][1],settings=config,
   version=row.version if row else 0,credentials_saved=bool(row and row.secrets_ciphertext),
-  state='saved_locally' if row else 'not_configured',connection_verified=False,external_calls=0,runtime_enabled=False,
-  **({'apify_catalog':apify_catalog()} if kind=='apify' else {}))
+  state='saved_locally' if row else 'not_configured',connection_verified=bool(runtime.get('verified_at')),external_calls=0,runtime_enabled=bool(runtime and runtime['mode']!='paused' and row and row.secrets_ciphertext),
+  **({'apify_catalog':apify_catalog(),'execution':runtime} if kind=='apify' else {}))
 
 class MediaOutlet(Base):
  __tablename__='media_outlets'

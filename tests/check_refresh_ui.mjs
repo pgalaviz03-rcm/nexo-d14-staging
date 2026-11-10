@@ -13,4 +13,10 @@ let resolve;hold=new Promise(r=>resolve=r);const stale=mod.reload();pid=2;mod.re
 check('switch_discards_old_project_status',()=>assert.equal(nodes.refreshCut.textContent,'Corte diario · 08:00 h'));check('switch_hides_owner_control_until_new_scope_loads',()=>assert(nodes.refreshNow.hidden));
 owner=false;packet={...packet,running:false,last_status:null,last_completed_at:null};await mod.reload();packet.last_completed_at='2026-11-10T14:05:00Z';await mod.reload();
 check('reader_sees_first_new_cut_without_scraping',()=>{assert.equal(completed,2);assert.equal(calls.filter(c=>c.method==='POST').length,1);});
+
+owner=true;packet={...packet,run_id:7,continuable:true,running:true};const continuationBefore=calls.filter(c=>c.path.endsWith('/7/continue')).length;await mod.reload();
+check('owner_continues_only_existing_admitted_job',()=>assert.equal(calls.filter(c=>c.path.endsWith('/7/continue')).length,continuationBefore+1));
+owner=false;await mod.reload();check('reader_does_not_drive_provider_worker',()=>assert.equal(calls.filter(c=>c.path.endsWith('/7/continue')).length,continuationBefore+1));
+owner=true;packet={...packet,running:false,last_status:'partial',summary:{rss_inserted:0,rss_failed:1,social_inserted:3,accounts:1,team_events:2},process_errors:[{process:'facebook.comments',error:'invalid_token'}]};await mod.reload();
+check('partial_cut_shows_actual_counts_and_actionable_provider_failure',()=>{assert(nodes.refreshFeedback.textContent.includes('Corte parcial'));assert(nodes.refreshFeedback.textContent.includes('3 piezas sociales'));assert(nodes.refreshFeedback.textContent.includes('Apify rechazó el token'));assert(!nodes.refreshFeedback.textContent.includes('Actualización completada'));});
 console.log(JSON.stringify({passed:true,cases,browser_rendering:false}));

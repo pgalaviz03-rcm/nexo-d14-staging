@@ -1,4 +1,5 @@
 """Reviewed public Actor references. Configuration only; never runs an Actor."""
+from decimal import Decimal
 from pydantic import Field, model_validator
 from .apify_port import Strict
 
@@ -48,3 +49,16 @@ def validate_processes(processes):
 def catalog():
     return dict(reviewed_on='2026-11-10', networks=NETWORKS, processes=PROCESSES,
                 schedule=dict(time='08:00', timezone='America/Mexico_City'), runtime_enabled=False)
+
+class ExecutionInput(Strict):
+ mode:str=Field(default='paused',pattern='^(paused|test|scheduled)$')
+ monthly_budget_usd:Decimal=Field(default=Decimal('0'),ge=0,le=100,max_digits=5,decimal_places=2)
+ per_run_usd:Decimal=Field(default=Decimal('0'),ge=0,le=1,max_digits=3,decimal_places=2)
+ account_limit:int=Field(default=1,ge=1,le=5,strict=True)
+ expected_version:int=Field(default=0,ge=0,strict=True)
+ @model_validator(mode='after')
+ def bounded(self):
+  if self.mode!='paused' and (self.per_run_usd<=0 or self.monthly_budget_usd<self.per_run_usd):raise ValueError('Define límites positivos antes de activar.')
+  if self.mode=='test' and (self.per_run_usd>Decimal('.10') or self.account_limit!=1):raise ValueError('La prueba usa una cuenta y hasta USD 0.10.')
+  return self
+

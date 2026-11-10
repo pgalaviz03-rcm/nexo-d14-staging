@@ -34,9 +34,15 @@ def status(session,pid,can_refresh=False,now=None):
  last=session.scalar(select(Run).where(Run.project_id==pid).order_by(Run.id.desc()).limit(1))
  done=session.scalar(select(Run).where(Run.project_id==pid,Run.status.in_(['succeeded','partial'])).order_by(Run.finished_at.desc()).limit(1))
  active=session.scalar(select(Run.id).where(Run.project_id==pid,Run.active_key=='active'))
+ result=json.loads(last.result_json) if last else {};jobs=result.get('apify',{}).get('jobs',[])
+ summary=dict(rss_inserted=sum(s.get('inserted',0) for s in result.get('sources',[])),rss_failed=sum(s.get('status')=='failed' for s in result.get('sources',[])),
+  social_inserted=sum(j.get('stats',{}).get('inserted',0) for j in jobs),accounts=sum(j.get('stats',{}).get('accounts',0) for j in jobs),team_events=sum(j.get('stats',{}).get('team_events',0) for j in jobs))
  return dict(can_refresh=can_refresh,daily_time='08:00',timezone=str(ZONE),next_scheduled_for=next_cut(now).isoformat(),
   last_completed_at=utc(done.finished_at).isoformat() if done else None,last_status=last.status if last else None,
-  running=bool(active),source_scope=['rss'],paid_provider_runs=0)
+  running=bool(active),run_id=last.id if last else None,continuable=bool(can_refresh and active and jobs),summary=summary,
+  apify_state=result.get('apify',{}).get('state','paused'),apify_message=result.get('apify',{}).get('message',''),
+  process_errors=[dict(process=j['key'],error=j.get('error') or j.get('warning') or j.get('last_poll_error')) for j in jobs if j.get('error') or j.get('warning') or j.get('last_poll_error')] if can_refresh else [],
+  source_scope=result.get('scope',['rss']),paid_provider_runs=result.get('paid_provider_runs',0))
 
 def admit(session,pid,user,trigger='manual',now=None):
  now=now or now_utc()
@@ -55,10 +61,12 @@ def admit(session,pid,user,trigger='manual',now=None):
  previous=session.scalar(select(Run).where(Run.project_id==pid,Run.slot_key==key))
  if previous:return previous,False
  if trigger=='manual':
+  from .apify_runtime import pending_test
+  activation_test=pending_test(session,pid)
   recent=session.scalar(select(Run.id).where(Run.project_id==pid,Run.trigger=='manual',Run.created_at>now-timedelta(hours=1)))
-  if recent:raise HTTPException(429,'Ya se solicitó una actualización. Espera una hora antes de iniciar otra.')
+  if recent and not activation_test:raise HTTPException(429,'Ya se solicitó una actualización. Espera una hora antes de iniciar otra.')
   # Admission persists separately; failed attempts also consume the daily cap.
-  session.commit();take_quota(session,pid,'refresh.manual',2);lock_project(session,pid)
+  session.commit();take_quota(session,pid,'refresh.activation_test' if activation_test else 'refresh.manual',1 if activation_test else 2);lock_project(session,pid)
  row=Run(project_id=pid,slot_key=key,trigger=trigger,requested_by=user.id,status='queued',active_key='active',created_at=now)
  try:
   session.add(row);session.flush();session.add(AuditEvent(project_id=pid,user_id=user.id,action='refresh.request',target=trigger+':'+str(row.id)));session.commit();return row,True
@@ -96,10 +104,11 @@ def execute_run(sessions,run_id,uid,refresh_feed):
     results.append(dict(source_id=fid,status='ok',inserted=packet['inserted']))
   except Exception:
    results.append(dict(source_id=fid,status='failed',inserted=0))
- good=sum(x['status']=='ok'for x in results)
- state=('succeeded'if good==len(results)else'partial')if good else'failed'
  with sessions()as s:
   s.info['nexo.actor_id']=str(uid);user=s.get(User,uid)
   if not user or not is_owner(s,user):return
-  s.execute(update(Run).where(Run.id==run_id,Run.project_id==pid,Run.status=='running').values(status=state,active_key=None,finished_at=now_utc(),result_json=json.dumps(dict(sources=results,scope=['rss'],paid_provider_runs=0))))
-  s.add(AuditEvent(project_id=pid,user_id=uid,action='refresh.complete',target=str(run_id)+':'+state));s.commit()
+  from .apify_runtime import initialize,finalize
+  row=s.get(Run,run_id);packet=initialize(s,pid,row.trigger);result=dict(sources=results,scope=['rss']+(['facebook'] if packet.get('jobs') else []),paid_provider_runs=0,apify=packet)
+  finalize(row,result);row.result_json=json.dumps(result);s.add(AuditEvent(project_id=pid,user_id=uid,action='refresh.collection',target=str(run_id)+':'+row.status));s.commit()
+ from .apify_runtime import advance
+ advance(sessions,run_id,uid)

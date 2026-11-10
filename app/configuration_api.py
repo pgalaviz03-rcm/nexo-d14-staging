@@ -13,13 +13,14 @@ from .actors_api import lock_project
 from .controls import take_quota
 from .network_service import aware
 from .config import cloud
+from .apify_runtime import ExecutionInput,execution
 
 def install_configuration_api(app,db,current_user,allow):
  from fastapi.exceptions import RequestValidationError
  from fastapi.exception_handlers import request_validation_exception_handler
  from starlette.responses import JSONResponse
  async def validation_error(request,exc):
-  if '/settings/integrations/' in request.url.path:return JSONResponse({'detail':'Revisa los campos de la integración.'},status_code=422)
+  if '/settings/integrations/' in request.url.path or '/settings/apify/' in request.url.path:return JSONResponse({'detail':'Revisa los campos de la integración.'},status_code=422)
   if '/settings/media' in request.url.path:
    labels={'name':'nombre','site_url':'sitio web','channels':'cuentas','url':'enlace','published_at':'fecha de publicación','captured_at':'fecha de captura','items':'publicaciones'}
    fields=[]
@@ -45,7 +46,7 @@ def install_configuration_api(app,db,current_user,allow):
  def save_integration(pid:int,kind:str,body:IntegrationInput,user=Depends(current_user),session:Session=Depends(db)):
   owner(pid,user,session)
   if kind not in CATALOG:raise HTTPException(404,'Integración no disponible.')
-  if kind!='apify' and body.apify_processes is not None:raise HTTPException(422,'Estos procesos corresponden a Apify.')
+  if kind!='apify' and (body.apify_processes is not None or body.apify_execution is not None):raise HTTPException(422,'Estos procesos corresponden a Apify.')
   if set(body.secrets)-set(CATALOG[kind][1]):raise HTTPException(422,'Credencial no admitida para esta integración.')
   take_quota(session,pid,'settings.integration',100);lock_project(session,pid)
   previous=session.get(IntegrationSetting,(pid,kind))
@@ -63,6 +64,12 @@ def install_configuration_api(app,db,current_user,allow):
    config.pop('apify_processes',None)
    previous_config=json.loads(previous.config_json) if previous else {}
    if kind=='apify' and 'apify_processes' in previous_config:config['apify_processes']=previous_config['apify_processes']
+  config.pop('apify_execution',None)
+  if kind=='apify' and previous:
+   config.update({k:v for k,v in json.loads(previous.config_json).items() if k.startswith('_apify_')})
+  if body.apify_execution is not None:
+   if body.apify_execution.mode!='paused' and not encrypted:raise HTTPException(409,'Guarda el token de Apify antes de activar.')
+   config['_apify_execution']=body.apify_execution.model_dump(mode='json',exclude={'expected_version'})
   values=dict(config_json=json.dumps(config,ensure_ascii=False),secrets_ciphertext=encrypted,version=body.expected_version+1,updated_by=user.id,updated_at=datetime.now(timezone.utc))
   try:
    if previous:
@@ -71,6 +78,16 @@ def install_configuration_api(app,db,current_user,allow):
    session.add(AuditEvent(project_id=pid,user_id=user.id,action='settings.integration',target=kind+':v'+str(values['version'])))
    session.commit();return integration_record(session.get(IntegrationSetting,(pid,kind)),kind)
   except IntegrityError:session.rollback();raise HTTPException(409,'La configuración cambió. Vuelve a cargarla.') from None
+ @app.put('/api/projects/{pid}/settings/apify/execution')
+ def save_execution(pid:int,body:ExecutionInput,user=Depends(current_user),session:Session=Depends(db)):
+  owner(pid,user,session);lock_project(session,pid)
+  row=session.get(IntegrationSetting,(pid,'apify'))
+  if not row:raise HTTPException(409,'Guarda primero la configuración y el token de Apify.')
+  if row.version!=body.expected_version:raise HTTPException(409,'La configuración cambió. Vuelve a cargarla.')
+  if body.mode!='paused' and not row.secrets_ciphertext:raise HTTPException(409,'Falta guardar el token de Apify.')
+  config=json.loads(row.config_json);config['_apify_execution']=body.model_dump(mode='json',exclude={'expected_version'});row.config_json=json.dumps(config);row.version+=1;row.updated_at=datetime.now(timezone.utc);row.updated_by=user.id
+  session.add(AuditEvent(project_id=pid,user_id=user.id,action='apify.execution_policy',target=body.mode+':v'+str(row.version)));session.commit()
+  return integration_record(row,'apify')
  def media_record(row):return dict(id=row.id,name=row.name,site_url=row.site_url,channels=json.loads(row.channels_json),active=row.active,version=row.version)
  @app.get('/api/projects/{pid}/settings/media')
  def media(pid:int,user=Depends(current_user),session:Session=Depends(db)):

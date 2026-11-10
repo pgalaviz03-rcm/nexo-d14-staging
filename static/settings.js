@@ -39,7 +39,7 @@ window.NexoSettings={install({api,byId,getProject,getProjectName,canManage,page,
  byId('settingsIntegrationForm').oninput=()=>{integrationDirty=true;};byId('settingsMediaForm').oninput=()=>{mediaDirty=true;};
  byId('settingsIntegrationForm').onsubmit=async e=>{e.preventDefault();if(busy||!canManage()||!kind)return;const row=integrations.find(r=>r.kind===kind);if(!row)return;const pid=getProject(),selected=kind,body={expected_version:row.version,secrets:{},clear_secrets:byId('settingsClearSecrets').checked,monthly_budget_usd:0};
   for(const [key,id] of Object.entries(fields))body[key]=['max_items','daily_limit'].includes(key)?Number(byId(id).value):byId(id).value.trim();
-  if(selected==='apify'&&row.apify_catalog&&apify)body.apify_processes=apify.collect();
+  if(selected==='apify'&&row.apify_catalog&&apify){body.apify_processes=apify.collect();body.apify_execution=apify.collectExecution();}
   for(const input of byId('settingsSecretFields').querySelectorAll('input'))if(input.value)body.secrets[input.getAttribute('data-secret-field')]=input.value;
   busy=true;byId('settingsIntegrationSave').disabled=true;try{const result=await send('/integrations/'+selected,body);if(pid!==getProject())return;integrationDirty=false;clearSecrets();integrations=integrations.map(r=>r.kind===selected?result:r);integrationList();text('settingsIntegrationStatus','Configuración guardada.');}
   catch(err){if(pid===getProject())text('settingsIntegrationStatus',err.message);}finally{busy=false;byId('settingsIntegrationSave').disabled=false;for(const key of Object.keys(body.secrets))body.secrets[key]='';}

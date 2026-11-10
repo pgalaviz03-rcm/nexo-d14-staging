@@ -1,0 +1,350 @@
+{
+  "date": "2026-11-10",
+  "project_id": 1,
+  "environment": "existing Render Free staging",
+  "runtime_commit": "97c09d8cc74d7dd8477f9f04e14dcd18814e0842",
+  "deployment": "verified Live",
+  "policy": {
+    "execution": {
+      "mode": "scheduled",
+      "monthly_budget_usd": "10.00",
+      "per_run_usd": "0.07",
+      "account_limit": 4,
+      "reserved_this_month_usd": "0.47",
+      "supported_processes": [
+        "facebook.posts",
+        "facebook.profile",
+        "facebook.comments",
+        "facebook.reactions"
+      ],
+      "verified_at": "2026-11-10T23:38:47.797478+00:00"
+    },
+    "processes": {
+      "facebook.posts": {
+        "selected": true,
+        "actor_ref": "apify/facebook-posts-scraper",
+        "task_ref": "",
+        "dataset_ref": "",
+        "max_items": 2,
+        "daily_limit": 1
+      },
+      "facebook.profile": {
+        "selected": true,
+        "actor_ref": "apify/facebook-pages-scraper",
+        "task_ref": "",
+        "dataset_ref": "",
+        "max_items": 1,
+        "daily_limit": 1
+      },
+      "facebook.comments": {
+        "selected": true,
+        "actor_ref": "apify/facebook-comments-scraper",
+        "task_ref": "",
+        "dataset_ref": "",
+        "max_items": 5,
+        "daily_limit": 1
+      },
+      "facebook.reactions": {
+        "selected": true,
+        "actor_ref": "scraper_one/facebook-reactions-scraper",
+        "task_ref": "",
+        "dataset_ref": "",
+        "max_items": 4,
+        "daily_limit": 1
+      }
+    },
+    "version": 8
+  },
+  "scheduler": {
+    "cron_utc": "0 14 * * *",
+    "local_time": "08:00",
+    "timezone": "America/Mexico_City",
+    "enabled": true,
+    "oidc_smoke_run": 42923958805,
+    "job": 130205562036,
+    "status": "success",
+    "accepted_projects": 0,
+    "reason": "daily slot already admitted; no duplicate",
+    "next_scheduled_execution_observed": false
+  },
+  "live_runs": [
+    {
+      "refresh_id": 4,
+      "status": "partial",
+      "provider_runs": 4,
+      "jobs": [
+        {
+          "key": "facebook.posts",
+          "state": "succeeded",
+          "run_id": "2nstorjnBHdrOcvqI",
+          "dataset_id": "kYEgSjKg9q5KxqtYE",
+          "stats": {
+            "inserted": 2,
+            "duplicates": 2,
+            "rejected": 2,
+            "team_events": 0,
+            "accounts": 0
+          },
+          "error": null,
+          "warning": "partial_provider_output"
+        },
+        {
+          "key": "facebook.profile",
+          "state": "succeeded",
+          "run_id": "ZugQkatuZDUQkt1kB",
+          "dataset_id": "Fx90xodaog2tmm3fR",
+          "stats": {
+            "inserted": 0,
+            "duplicates": 0,
+            "rejected": 2,
+            "team_events": 0,
+            "accounts": 2
+          },
+          "error": null,
+          "warning": "partial_provider_output"
+        },
+        {
+          "key": "facebook.comments",
+          "state": "succeeded",
+          "run_id": "kJBz76RE60ojvwpjO",
+          "dataset_id": "Gi013qgWGm1Rqxg4B",
+          "stats": {
+            "inserted": 0,
+            "duplicates": 0,
+            "rejected": 2,
+            "team_events": 0,
+            "accounts": 0
+          },
+          "error": null,
+          "warning": "partial_provider_output"
+        },
+        {
+          "key": "facebook.reactions",
+          "state": "succeeded",
+          "run_id": "bdW9wZed5cntrmaEW",
+          "dataset_id": "UT9GDgeVP0BhaeEvK",
+          "stats": {
+            "inserted": 0,
+            "duplicates": 0,
+            "rejected": 1,
+            "team_events": 0,
+            "accounts": 0
+          },
+          "error": null,
+          "warning": "partial_provider_output"
+        }
+      ]
+    },
+    {
+      "refresh_id": 5,
+      "status": "partial",
+      "provider_runs": 2,
+      "jobs": [
+        {
+          "key": "facebook.comments",
+          "state": "succeeded",
+          "run_id": "dp1SWVIjcv9meAN11",
+          "dataset_id": "RGRnE0pwO9eV7fyfG",
+          "stats": {
+            "inserted": 0,
+            "duplicates": 0,
+            "rejected": 2,
+            "team_events": 0,
+            "accounts": 0
+          },
+          "error": null,
+          "warning": "partial_provider_output"
+        },
+        {
+          "key": "facebook.reactions",
+          "state": "succeeded",
+          "run_id": "on4oMOgLmGvLOBEDL",
+          "dataset_id": "TPsoHLZcdq7Iz9gZ2",
+          "stats": {
+            "inserted": 0,
+            "duplicates": 0,
+            "rejected": 1,
+            "team_events": 0,
+            "accounts": 0
+          },
+          "error": null,
+          "warning": "partial_provider_output"
+        }
+      ]
+    }
+  ],
+  "provider_costs": [
+    {
+      "key": "facebook.posts",
+      "run_id": "2nstorjnBHdrOcvqI",
+      "status": "SUCCEEDED",
+      "usageTotalUsd": 0.031,
+      "cap": 0.07,
+      "rows": 6,
+      "errors": [
+        {
+          "url": "https://www.facebook.com/almahildam",
+          "error": "not_available",
+          "errorDescription": "This content isn't available because the owner only shared it with a small group of people or changed who can see it, or it's been deleted."
+        },
+        {
+          "url": "https://www.facebook.com/api/graphql/",
+          "error": "no_items",
+          "errorDescription": "Empty or private data for provided input"
+        }
+      ],
+      "output_fields": [
+        "url",
+        "error",
+        "errorDescription"
+      ]
+    },
+    {
+      "key": "facebook.profile",
+      "run_id": "ZugQkatuZDUQkt1kB",
+      "status": "SUCCEEDED",
+      "usageTotalUsd": 0.0328,
+      "cap": 0.07,
+      "rows": 4,
+      "errors": [
+        {
+          "url": "https://www.facebook.com/almahildam",
+          "error": "not_available",
+          "errorDescription": "This content isn't available because the owner only shared it with a small group of people or changed who can see it, or it's been deleted."
+        }
+      ],
+      "output_fields": [
+        "url",
+        "error",
+        "errorDescription"
+      ]
+    },
+    {
+      "key": "facebook.comments",
+      "run_id": "kJBz76RE60ojvwpjO",
+      "status": "SUCCEEDED",
+      "usageTotalUsd": 0.005,
+      "cap": 0.07,
+      "rows": 2,
+      "errors": [
+        {
+          "url": "https://www.facebook.com/api/graphql/",
+          "error": "no_items",
+          "errorDescription": "Empty or private data for provided input"
+        },
+        {
+          "url": "https://www.facebook.com/api/graphql/",
+          "error": "no_items",
+          "errorDescription": "Empty or private data for provided input"
+        }
+      ],
+      "output_fields": [
+        "url",
+        "error",
+        "errorDescription"
+      ]
+    },
+    {
+      "key": "facebook.reactions",
+      "run_id": "bdW9wZed5cntrmaEW",
+      "status": "SUCCEEDED",
+      "usageTotalUsd": 0.01205,
+      "cap": 0.07,
+      "rows": 5,
+      "errors": [
+        {
+          "inputUrl": "https://www.facebook.com/reel/1137061372435522/",
+          "error": "INVALID_URL"
+        }
+      ],
+      "output_fields": [
+        "inputUrl",
+        "error"
+      ]
+    },
+    {
+      "key": "facebook.comments",
+      "status": "SUCCEEDED",
+      "usageTotalUsd": 0.005,
+      "rows": 2,
+      "errors": [
+        {
+          "error": "no_items",
+          "errorDescription": "Empty or private data for provided input"
+        },
+        {
+          "error": "no_items",
+          "errorDescription": "Empty or private data for provided input"
+        }
+      ],
+      "valid_rows": 0
+    },
+    {
+      "key": "facebook.reactions",
+      "status": "SUCCEEDED",
+      "usageTotalUsd": 0.01205,
+      "rows": 5,
+      "errors": [
+        {
+          "error": "INVALID_URL"
+        }
+      ],
+      "valid_rows": 4
+    }
+  ],
+  "actual_this_activation_usd": "0.09790",
+  "previous_test_usd": "0.016",
+  "actual_all_verified_tests_usd": "0.11390",
+  "monthly_reservation_model": {
+    "per_process_usd": "0.07",
+    "processes": 4,
+    "per_day_usd": "0.28",
+    "days": 31,
+    "monthly_usd": "8.68",
+    "monthly_mxn": "173.60",
+    "illustrative_mxn_per_usd": 20
+  },
+  "observed": {
+    "facebook_documents": 5,
+    "followers": {
+      "Rodrigo Cervantes": 4047,
+      "Quique Galo": 10410
+    },
+    "matched_team_events": 0,
+    "comment_rows": 0,
+    "valid_reaction_rows_per_test": 4
+  },
+  "limitations": [
+    "Alma Hilda: provider not_available",
+    "Jose Juan: no posts returned and followers missing",
+    "Comments: provider no_items for both sampled posts, also with canonical URLs",
+    "Reactions: Rodrigo returned 4; Quique reel returned INVALID_URL also with provider canonical alias",
+    "No matched staff profiles in the observed reaction sample; not a verdict on activity",
+    "Instagram/TikTok/X/YouTube runtime adapters and AI remain pending",
+    "Cron configured and signed endpoint tested; next morning execution has not yet occurred"
+  ],
+  "code_checks": {
+    "protected_files": {
+      "app/main.py": true,
+      "app/knowledge.py": true
+    },
+    "historical_svg_unchanged": true,
+    "cloud_http": {
+      "/api/health": 200,
+      "/api/ready": 200,
+      "/api/projects/1/settings/integrations": 401,
+      "unsigned_scheduler_tick": 403
+    },
+    "schema_changes": false
+  },
+  "canonical_tests": {
+    "exit_code": 0,
+    "counts": {
+      "passed": 30
+    },
+    "network_blocked": true
+  },
+  "plans_purchased": false,
+  "balance_refills": false,
+  "credentials_preserved": true
+}

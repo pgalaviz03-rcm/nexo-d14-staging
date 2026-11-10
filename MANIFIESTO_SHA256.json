@@ -330,11 +330,14 @@
   "tests/test_apify_configuration.py": "5d3db7648371066f401272ec6f2ccae05024e0c82150cf8f592442e0d5b8d10c",
   "tests/check_apify_settings_ui.mjs": "05e57176e1bd27746232302623d7f8c179dd38490a831b96230b8aeb56ce97c3",
   "examples/apify-networks-catalog.json": "e22d50805e2a9d619099e3e30808a8de33229d2f2ad2e5d0962f0eb17b603dde",
-  "docs/APIFY_REDES.md": "d87dab394271a137f8feb6f776c38f5be95e4e86d95e262150145be18c9e5c9e",
+  "docs/APIFY_REDES.md": "096c3f300fba3e7a840208f95f384071eff5882a918e10800e479aa751519f0d",
   "app/apify_http.py": "be236c9a35b9e82ffb6e9b13a7f035a63efbbda0567ede378e5c37e941c42cec",
   "app/facebook_ingest.py": "f455ef6eeedf5272ed6f3240bfc2a9aa1b7c525229c658b93fb85dc98cac0f27",
   "app/apify_runtime.py": "2eb0eec470c2373adfcac4e70fb43a3611384008fa1283bcde86aee09960736b",
   "tests/test_apify_runtime.py": "a07b3636986dd99b76eb30bb428a9b56dc7f5982be23d9967b39c8c9b947eb73",
-  "docs/APIFY_EJECUCION_FACEBOOK.md": "3da49f608d867b1305d9c28f2c98a4c76aee50c143155c1faa288a3fa7437674",
-  "docs/APIFY_EJECUCION_RESULTADO.json": "a031c7c4a3c5cc9f873be927fbf531c4dad81c26e7efcf958ce8ce9d83826160"
+  "docs/APIFY_EJECUCION_FACEBOOK.md": "ba6eb41cfd61e0ca3ed3bbaa8e0b26823d49854cb95b5b93b0ff9c9716a0aca2",
+  "docs/APIFY_EJECUCION_RESULTADO.json": "ee720a8c109725963678829bef12672580f07fa1d103753bbc8a0b15c80fb0c9",
+  "docs/APIFY_DIARIO_D14.md": "1b8a85db91ba90cfacd838ab4b7d764544c798cca61bd43970798ed7032258cd",
+  "docs/APIFY_DIARIO_RESULTADO.json": "46e98d99b8c2a2026160b5df8d99887b62286904df5748af600fcfdaf80f3310",
+  "docs/APIFY_DIARIO_COSTOS.csv": "60d808a68808bec451bfb266b188bf94acb342483e41730573d2b7ef9227f958"
 }

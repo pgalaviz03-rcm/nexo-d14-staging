@@ -32,7 +32,7 @@ Instagram distingue perfil, publicaciones y comentarios por el modo del Actor y 
 
 Esta entrega habilita **configuración y persistencia separadas por red/proceso/proyecto**. Mantiene token cifrado, control de versiones y permisos exclusivos del superadministrador. No cambia tablas ni requiere migración de la base de datos.
 
-**Facebook incorpora ahora un ejecutor con límites y modo de prueba, pausado de forma predeterminada.** La prueba real autorizada de publicaciones terminó correctamente: tres documentos, USD 0.016 reportados por Apify, límite USD 0.05; quedó pausado después. Los otros tres procesos de Facebook se probaron con respuestas simuladas. Consulta [Ejecución de Facebook](APIFY_EJECUCION_FACEBOOK.md). Los ejecutores de Instagram, TikTok, X y YouTube todavía no están implementados; sus procesos permanecen como configuración preparada. La IA requiere integración aparte.
+**D14: Facebook quedó programado diariamente a las 08:00 con límite USD 10/mes.** La cobertura real es parcial: publicaciones y seguidores de dos cuentas, reacciones de una publicación y comentarios no disponibles en el muestreo. Consulta [Corte diario D14](APIFY_DIARIO_D14.md). Los ejecutores de Instagram, TikTok, X y YouTube todavía están pendientes; la IA requiere integración aparte.
 
 El presupuesto previo es **solo de Facebook**: no incluye estas otras cuatro redes ni IA. Los resultados por consulta no son unidades de facturación equivalentes entre Actors. Debe recalcularse el presupuesto según redes, cuentas, publicaciones, comentarios y funciones activadas antes de autorizar ejecuciones.
 

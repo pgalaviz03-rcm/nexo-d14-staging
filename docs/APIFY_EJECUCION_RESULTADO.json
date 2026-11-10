@@ -11,5 +11,12 @@
   "final_mode": "paused",
   "other_facebook_processes": "simulated_tests_only",
   "other_networks": "runtime_pending",
-  "ai": "not_activated"
+  "ai": "not_activated",
+  "daily_activation": {
+    "status": "scheduled",
+    "approved_monthly_usd": "10.00",
+    "result": "APIFY_DIARIO_RESULTADO.json",
+    "runtime_commit": "97c09d8cc74d7dd8477f9f04e14dcd18814e0842"
+  },
+  "final_execution_mode": "scheduled"
 }

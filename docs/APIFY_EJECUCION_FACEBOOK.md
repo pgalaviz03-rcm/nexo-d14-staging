@@ -2,7 +2,7 @@
 
 ## Estado de esta entrega
 
-Se implementó el transporte HTTP real de Apify y la importación por proyecto para los cuatro procesos de Facebook. La prueba real autorizada del 10 de noviembre de 2026 obtuvo y guardó **tres publicaciones de Rodrigo Cervantes**, con costo reportado por Apify de **USD 0.016**, dentro del límite autorizado de USD 0.05. La aplicación quedó en **Pausado** después de esa prueba. Estadísticas de cuenta, comentarios y reacciones pasaron pruebas con respuestas simuladas; todavía no se han ejecutado con la cuenta real. Instagram, TikTok, X y YouTube conservan sus configuraciones preparadas, pero sus ejecutores siguen pendientes. IA y RAG no se activan con esta entrega.
+El D14 quedó en modo diario a las 08:00 con tope de USD 10/mes. Publicaciones y seguidores se verificaron con datos reales de Rodrigo y Quique; comentarios y reacciones tienen cobertura parcial del proveedor. La prueba inicial de tres publicaciones de USD 0.016 es un antecedente histórico. El estado y los resultados actuales están en [Corte diario D14](APIFY_DIARIO_D14.md). Otras redes e IA siguen pendientes.
 
 ## Prueba acotada propuesta
 
